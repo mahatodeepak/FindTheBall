@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Find The Ball - Version 4</title>
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<meta name="theme-color" content="#080d35">
+
+<title>Find The Ball - Version 5</title>
 
 <style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -15,901 +26,2206 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     width:100%;
-    min-height:100%;
+    height:100%;
     overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#070b2b;
-    color:white;
 }
 
 body{
-    min-height:100vh;
-    position:relative;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:white;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #202d8c 0%,
+            #0c1246 40%,
+            #050822 100%
+        );
 }
 
-/* =========================
-   BACKGROUND
-========================= */
+
+/* =====================================================
+   GLOBAL BACKGROUND
+===================================================== */
 
 body::before{
+
     content:"";
+
     position:fixed;
-    inset:-50%;
+
+    inset:-30%;
+
     background:
-        radial-gradient(circle at 20% 20%,rgba(70,100,255,.30),transparent 28%),
-        radial-gradient(circle at 80% 30%,rgba(190,50,255,.25),transparent 30%),
-        radial-gradient(circle at 50% 90%,rgba(0,210,255,.18),transparent 32%);
-    animation:bgMove 12s ease-in-out infinite alternate;
+
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(66,91,255,.30),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 80% 25%,
+            rgba(193,60,255,.25),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(0,221,255,.15),
+            transparent 30%
+        );
+
+    animation:
+        backgroundMove 15s ease-in-out infinite alternate;
+
+    pointer-events:none;
+
     z-index:-3;
 }
 
 body::after{
+
     content:"";
+
     position:fixed;
+
     inset:0;
+
     background-image:
-        radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1.5px),
-        radial-gradient(circle,rgba(255,255,255,.45) 1px,transparent 1.5px);
-    background-size:90px 90px,140px 140px;
-    background-position:0 0,40px 60px;
-    opacity:.28;
-    animation:stars 18s linear infinite;
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.8) 1px,
+            transparent 1.5px
+        );
+
+    background-size:
+        90px 90px;
+
+    opacity:.18;
+
+    animation:
+        starMove 20s linear infinite;
+
+    pointer-events:none;
+
     z-index:-2;
 }
 
-@keyframes bgMove{
-    from{transform:translate(-2%,-2%) scale(1);}
-    to{transform:translate(2%,2%) scale(1.08);}
+@keyframes backgroundMove{
+
+    from{
+        transform:
+            translate(-2%,-2%)
+            scale(1);
+    }
+
+    to{
+        transform:
+            translate(2%,2%)
+            scale(1.08);
+    }
 }
 
-@keyframes stars{
-    from{background-position:0 0,40px 60px;}
-    to{background-position:90px 90px,180px 150px;}
+@keyframes starMove{
+
+    from{
+        background-position:
+            0 0;
+    }
+
+    to{
+        background-position:
+            180px 180px;
+    }
 }
 
-/* =========================
-   HOME SCREEN
-========================= */
 
-.home-screen{
-    position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:18px;
-    overflow:auto;
-}
+/* =====================================================
+   APP
+===================================================== */
 
-.home-container{
+.app{
+
     width:100%;
+    height:100%;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+/* =====================================================
+   HOME SCREEN
+===================================================== */
+
+.home{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    overflow:auto;
+
+    padding:
+        18px
+        15px
+        30px;
+}
+
+.home-inner{
+
+    width:100%;
+
     max-width:480px;
+
     text-align:center;
 }
 
-.top-bar{
+
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.topbar{
+
     display:flex;
-    justify-content:space-between;
+
+    justify-content:
+        space-between;
+
     align-items:center;
-    margin-bottom:15px;
+
+    margin-bottom:20px;
 }
 
-.logo{
-    font-size:15px;
+.brand{
+
+    font-size:14px;
+
     font-weight:900;
+
     letter-spacing:2px;
-    opacity:.9;
+
+    color:#dce2ff;
 }
 
-.coin-display{
-    padding:8px 13px;
-    border-radius:20px;
-    background:rgba(255,255,255,.10);
-    border:1px solid rgba(255,255,255,.18);
-    backdrop-filter:blur(12px);
-    font-weight:bold;
+.coins{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:
+        8px
+        13px;
+
+    border-radius:30px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    backdrop-filter:
+        blur(15px);
+
+    font-weight:900;
 }
 
-.coin-icon{
+.coin{
+
     color:#ffd84d;
+
+    font-size:18px;
+
+    text-shadow:
+        0 0 10px
+        rgba(255,215,60,.7);
 }
 
-/* HERO */
 
-.hero{
-    margin-top:8px;
-}
+/* =====================================================
+   HERO BALL
+===================================================== */
 
 .hero-ball{
-    width:110px;
-    height:110px;
-    margin:0 auto 18px;
+
+    width:108px;
+
+    height:108px;
+
+    margin:
+        12px
+        auto
+        20px;
+
     border-radius:50%;
+
     position:relative;
+
     background:
-        radial-gradient(circle at 32% 27%,#ffffff 0 6%,#ff8b8b 7%,#ff2020 32%,#b60000 72%,#560000 100%);
+
+        radial-gradient(
+            circle at 30% 25%,
+            #fff 0 5%,
+            #ff9b9b 7%,
+            #ff2525 30%,
+            #c30000 65%,
+            #4c0000 100%
+        );
+
     box-shadow:
-        0 0 18px #ff2929,
-        0 0 45px rgba(255,0,0,.65),
-        0 20px 55px rgba(0,0,0,.5);
-    animation:heroBall 2.5s ease-in-out infinite;
+
+        0 0 18px
+        rgba(255,40,40,.9),
+
+        0 0 55px
+        rgba(255,0,0,.55),
+
+        0 25px 50px
+        rgba(0,0,0,.45);
+
+    animation:
+        floatingBall 2.5s
+        ease-in-out
+        infinite;
 }
 
-.hero-ball::after{
+.hero-ball::before{
+
     content:"";
+
     position:absolute;
-    width:16px;
+
+    width:18px;
+
     height:8px;
+
     border-radius:50%;
+
     background:white;
-    opacity:.75;
-    top:18px;
+
+    opacity:.8;
+
+    top:20px;
+
     left:25px;
+
+    transform:
+        rotate(-25deg);
+
     filter:blur(1px);
 }
 
-@keyframes heroBall{
-    0%,100%{transform:translateY(0) rotate(0deg);}
-    50%{transform:translateY(-13px) rotate(8deg);}
+@keyframes floatingBall{
+
+    0%,
+    100%{
+        transform:
+            translateY(0)
+            rotate(0);
+    }
+
+    50%{
+        transform:
+            translateY(-14px)
+            rotate(7deg);
+    }
 }
 
-.game-title{
-    font-size:clamp(38px,10vw,60px);
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.title{
+
+    font-size:
+        clamp(
+            40px,
+            11vw,
+            62px
+        );
+
+    line-height:.88;
+
     font-weight:1000;
-    line-height:.95;
+
     letter-spacing:2px;
+
     text-shadow:
-        0 3px 0 #2635a0,
-        0 0 25px rgba(92,117,255,.8);
+
+        0 4px 0 #202c91,
+
+        0 0 25px
+        rgba(80,110,255,.65);
 }
 
-.game-title span{
+.title span{
+
     color:#ffd84d;
+
+    text-shadow:
+
+        0 3px 0 #9d6700,
+
+        0 0 20px
+        rgba(255,205,60,.5);
 }
 
-.tagline{
-    margin-top:12px;
-    color:#cbd2ff;
-    font-size:15px;
+.subtitle{
+
+    margin-top:13px;
+
+    color:#c3cbff;
+
+    font-size:14px;
 }
 
-/* CARDS */
 
-.info-cards{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin:27px 0;
+/* =====================================================
+   PLAYER CARD
+===================================================== */
+
+.player-card{
+
+    margin-top:24px;
+
+    padding:15px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.05)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    backdrop-filter:
+        blur(15px);
+
+    text-align:left;
 }
 
-.info-card{
-    padding:13px 7px;
-    border-radius:17px;
-    background:rgba(255,255,255,.09);
-    border:1px solid rgba(255,255,255,.14);
-    backdrop-filter:blur(12px);
-    box-shadow:0 10px 25px rgba(0,0,0,.2);
+.player-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
 }
 
-.info-number{
-    font-size:21px;
+.avatar{
+
+    width:48px;
+
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:15px;
+
+    font-size:25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #687aff,
+            #3645c8
+        );
+
+    box-shadow:
+        0 7px 18px
+        rgba(0,0,0,.25);
+}
+
+.player-name{
+
     font-weight:900;
-    color:#fff;
+
+    font-size:16px;
 }
 
-.info-label{
+.player-level{
+
     margin-top:4px;
+
+    font-size:11px;
+
+    color:#aeb8ef;
+}
+
+
+/* XP BAR */
+
+.xp{
+
+    margin-top:13px;
+}
+
+.xp-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
     font-size:10px;
-    color:#aeb7ef;
-    text-transform:uppercase;
-    letter-spacing:1px;
+
+    color:#aeb8ef;
+
+    margin-bottom:6px;
 }
 
-/* PLAY BUTTON */
+.xp-bar{
 
-.play-button{
-    width:100%;
-    border:none;
-    border-radius:24px;
-    padding:19px;
-    font-size:22px;
-    font-weight:1000;
-    letter-spacing:2px;
-    color:#11142c;
-    background:linear-gradient(135deg,#ffe45c,#ffb62e);
-    box-shadow:
-        0 8px 0 #9a5d00,
-        0 16px 35px rgba(255,187,0,.35);
-    cursor:pointer;
-    transition:.15s;
-}
+    height:7px;
 
-.play-button:active{
-    transform:translateY(7px);
-    box-shadow:
-        0 2px 0 #9a5d00,
-        0 7px 18px rgba(255,187,0,.25);
-}
+    border-radius:20px;
 
-.play-icon{
-    margin-right:8px;
-}
+    background:
+        rgba(0,0,0,.3);
 
-/* =========================
-   GAME UI
-========================= */
-
-.game-ui{
-    display:none;
-    position:absolute;
-    inset:0;
     overflow:hidden;
 }
 
-.game-container{
-    width:100%;
-    max-width:700px;
+.xp-fill{
+
     height:100%;
-    margin:auto;
-    padding:12px;
-    display:flex;
-    flex-direction:column;
+
+    width:35%;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6e83ff,
+            #b46cff
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(100,120,255,.7);
+
+    transition:
+        width .5s ease;
 }
 
-/* GAME HEADER */
 
-.game-header{
-    flex-shrink:0;
+/* =====================================================
+   HOME STATS
+===================================================== */
+
+.home-stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
+
+    margin-top:12px;
 }
 
-.game-header-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.home-stat{
+
+    padding:12px 5px;
+
+    border-radius:17px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
 }
 
-.small-title{
-    font-size:21px;
+.home-stat-number{
+
+    font-size:19px;
+
     font-weight:1000;
-    letter-spacing:1px;
 }
 
-.small-title span{
-    color:#ffd84d;
+.home-stat-label{
+
+    margin-top:3px;
+
+    font-size:9px;
+
+    color:#9da8e2;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
 }
 
-.sound-button{
-    width:43px;
-    height:43px;
+
+/* =====================================================
+   PLAY BUTTON
+===================================================== */
+
+.play{
+
+    width:100%;
+
+    margin-top:16px;
+
+    padding:18px;
+
     border:none;
-    border-radius:50%;
-    background:rgba(255,255,255,.11);
+
+    border-radius:22px;
+
+    font-size:21px;
+
+    font-weight:1000;
+
+    letter-spacing:2px;
+
+    color:#15192e;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe76a,
+            #ffb72e
+        );
+
+    box-shadow:
+
+        0 7px 0 #986000,
+
+        0 15px 30px
+        rgba(255,190,40,.30);
+
+    cursor:pointer;
+
+    transition:
+        transform .12s,
+        box-shadow .12s;
+}
+
+.play:active{
+
+    transform:
+        translateY(6px);
+
+    box-shadow:
+        0 2px 0 #986000;
+}
+
+
+/* =====================================================
+   HOME SECONDARY BUTTONS
+===================================================== */
+
+.home-buttons{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:8px;
+
+    margin-top:9px;
+}
+
+.home-button{
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:16px;
+
+    padding:12px;
+
+    background:
+        rgba(255,255,255,.07);
+
     color:white;
-    font-size:20px;
+
+    font-weight:800;
+
     cursor:pointer;
 }
 
+
+/* =====================================================
+   GAME SCREEN
+===================================================== */
+
+.game{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    flex-direction:column;
+
+    padding:10px;
+
+    max-width:760px;
+
+    margin:auto;
+}
+
+
+/* =====================================================
+   GAME HEADER
+===================================================== */
+
+.game-header{
+
+    flex-shrink:0;
+}
+
+.game-top{
+
+    display:flex;
+
+    justify-content:
+        space-between;
+
+    align-items:center;
+}
+
+.game-title-small{
+
+    font-size:20px;
+
+    font-weight:1000;
+
+    letter-spacing:1px;
+}
+
+.game-title-small span{
+
+    color:#ffd84d;
+}
+
+.icon-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    color:white;
+
+    font-size:19px;
+
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   LEVEL PROGRESS
+===================================================== */
+
+.level-row{
+
+    display:flex;
+
+    justify-content:
+        space-between;
+
+    align-items:center;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    color:#c3cbff;
+}
+
+.level-progress{
+
+    flex:1;
+
+    height:5px;
+
+    margin:
+        0
+        12px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    overflow:hidden;
+}
+
+.level-progress-fill{
+
+    width:3.33%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6c82ff,
+            #c46aff
+        );
+
+    transition:
+        width .4s ease;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
 .stats{
+
     display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:6px;
-    margin-top:10px;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:5px;
+
+    margin-top:9px;
 }
 
 .stat{
-    min-width:0;
-    padding:8px 4px;
+
+    padding:7px 3px;
+
     text-align:center;
-    border-radius:13px;
-    background:rgba(255,255,255,.09);
-    border:1px solid rgba(255,255,255,.10);
-    backdrop-filter:blur(10px);
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
 }
 
 .stat-label{
-    font-size:8px;
-    color:#9fa9e5;
+
+    font-size:7px;
+
+    color:#9fa9df;
+
     text-transform:uppercase;
-    letter-spacing:.5px;
 }
 
 .stat-value{
-    margin-top:2px;
-    font-size:16px;
-    font-weight:900;
+
+    margin-top:3px;
+
+    font-size:14px;
+
+    font-weight:1000;
 }
 
-/* GAME STAGE */
+
+/* =====================================================
+   GAME STAGE
+===================================================== */
 
 .stage{
+
     position:relative;
+
     flex:1;
-    min-height:300px;
-    margin-top:10px;
-    border-radius:25px;
+
+    min-height:280px;
+
+    margin-top:9px;
+
     overflow:hidden;
+
+    border-radius:25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
     background:
         linear-gradient(
-            to bottom,
-            rgba(29,38,100,.48),
-            rgba(8,12,45,.82)
+            180deg,
+            rgba(31,43,111,.65),
+            rgba(5,9,42,.92)
         );
-    border:1px solid rgba(255,255,255,.13);
+
     box-shadow:
-        inset 0 0 40px rgba(80,100,255,.10),
-        0 15px 45px rgba(0,0,0,.35);
+
+        inset 0 0 50px
+        rgba(60,80,255,.12),
+
+        0 15px 45px
+        rgba(0,0,0,.35);
 }
 
 canvas{
-    display:block;
+
     width:100%;
+
     height:100%;
+
+    display:block;
+
     touch-action:none;
 }
 
-/* GAME OVER */
 
-.game-over{
+/* =====================================================
+   GAME HINT
+===================================================== */
+
+.hint{
+
     position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:rgba(3,5,25,.74);
-    backdrop-filter:blur(9px);
-    z-index:10;
+
+    left:50%;
+
+    top:14px;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        7px
+        13px;
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.22);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    font-size:11px;
+
+    color:#dce2ff;
+
+    pointer-events:none;
+
+    white-space:nowrap;
+
+    opacity:.85;
 }
 
-.game-over.hidden{
-    display:none;
-}
 
-.game-over-card{
-    width:88%;
-    max-width:360px;
-    padding:28px 22px;
-    text-align:center;
-    border-radius:25px;
-    background:rgba(24,30,82,.88);
-    border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
-}
-
-.game-over-card h2{
-    font-size:32px;
-    margin-bottom:10px;
-}
-
-.game-message{
-    color:#cdd3ff;
-    margin-bottom:18px;
-    line-height:1.5;
-}
-
-.restart-button{
-    width:100%;
-    border:none;
-    padding:14px;
-    border-radius:16px;
-    background:linear-gradient(135deg,#6f82ff,#4357e8);
-    color:white;
-    font-weight:900;
-    font-size:16px;
-    cursor:pointer;
-}
-
-/* BOTTOM BUTTONS */
+/* =====================================================
+   BOTTOM CONTROLS
+===================================================== */
 
 .bottom-controls{
-    display:flex;
-    gap:8px;
-    padding-top:9px;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap:7px;
+
+    margin-top:8px;
+
     flex-shrink:0;
 }
 
-.control-button{
-    flex:1;
-    border:1px solid rgba(255,255,255,.13);
-    border-radius:15px;
+.control{
+
     padding:11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.11);
+
+    border-radius:15px;
+
+    background:
+        rgba(255,255,255,.07);
+
     color:white;
-    background:rgba(255,255,255,.08);
-    font-weight:bold;
+
+    font-weight:800;
+
     cursor:pointer;
 }
 
-/* =========================
-   MOBILE
-========================= */
+
+/* =====================================================
+   OVERLAY
+===================================================== */
+
+.overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        rgba(3,5,25,.72);
+
+    backdrop-filter:
+        blur(9px);
+
+    z-index:20;
+}
+
+.overlay.hidden{
+
+    display:none;
+}
+
+.modal{
+
+    width:88%;
+
+    max-width:380px;
+
+    padding:25px 20px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:
+        rgba(22,29,79,.94);
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.5);
+}
+
+.modal-icon{
+
+    font-size:48px;
+
+    margin-bottom:8px;
+}
+
+.modal h2{
+
+    font-size:28px;
+
+    margin-bottom:8px;
+}
+
+.modal-text{
+
+    color:#c8d0ff;
+
+    line-height:1.5;
+
+    font-size:14px;
+}
+
+
+/* =====================================================
+   STARS
+===================================================== */
+
+.stars{
+
+    margin:
+        14px
+        0;
+
+    font-size:30px;
+
+    letter-spacing:6px;
+}
+
+.star-off{
+
+    opacity:.2;
+}
+
+
+/* =====================================================
+   MODAL BUTTONS
+===================================================== */
+
+.primary-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:16px;
+
+    color:white;
+
+    font-weight:1000;
+
+    font-size:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #687dff,
+            #4255df
+        );
+
+    cursor:pointer;
+}
+
+.secondary-btn{
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:15px;
+
+    color:white;
+
+    background:
+        rgba(255,255,255,.07);
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+.settings-option{
+
+    display:flex;
+
+    justify-content:
+        space-between;
+
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:#dce2ff;
+}
+
+.toggle{
+
+    width:45px;
+
+    height:25px;
+
+    border-radius:20px;
+
+    background:#444b70;
+
+    position:relative;
+
+    cursor:pointer;
+}
+
+.toggle::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:19px;
+
+    height:19px;
+
+    border-radius:50%;
+
+    background:white;
+
+    top:3px;
+
+    left:3px;
+
+    transition:.2s;
+}
+
+.toggle.active{
+
+    background:#6175ff;
+}
+
+.toggle.active::after{
+
+    left:23px;
+}
+
+
+/* =====================================================
+   LEVEL SELECTOR
+===================================================== */
+
+.level-screen{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    padding:16px;
+
+    overflow:auto;
+
+    background:
+        rgba(5,8,35,.97);
+
+    z-index:50;
+}
+
+.level-header{
+
+    display:flex;
+
+    justify-content:
+        space-between;
+
+    align-items:center;
+
+    max-width:500px;
+
+    margin:auto;
+
+    padding-bottom:15px;
+}
+
+.level-header h2{
+
+    font-size:24px;
+}
+
+.level-grid{
+
+    max-width:500px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:9px;
+}
+
+.level-button{
+
+    aspect-ratio:1;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:17px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:1000;
+
+    position:relative;
+
+    cursor:pointer;
+}
+
+.level-button.locked{
+
+    opacity:.38;
+
+}
+
+.level-button.completed{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(80,100,255,.45),
+            rgba(120,70,210,.35)
+        );
+}
+
+.level-stars{
+
+    position:absolute;
+
+    bottom:5px;
+
+    left:0;
+
+    right:0;
+
+    font-size:8px;
+
+    letter-spacing:0;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media(max-width:420px){
 
-    .home-screen{
-        padding:14px;
+    .home{
+        padding-top:12px;
     }
 
     .hero-ball{
-        width:88px;
-        height:88px;
+        width:85px;
+        height:85px;
+        margin-bottom:15px;
     }
 
-    .game-title{
-        font-size:42px;
+    .title{
+        font-size:43px;
     }
 
-    .info-cards{
-        margin:20px 0;
+    .player-card{
+        margin-top:18px;
     }
 
-    .info-card{
-        padding:11px 5px;
+    .game{
+        padding:8px;
     }
 
-    .info-number{
-        font-size:18px;
-    }
-
-    .game-container{
-        padding:9px;
-    }
-
-    .small-title{
-        font-size:18px;
-    }
-
-    .stat{
-        padding:7px 2px;
-    }
-
-    .stat-label{
-        font-size:7px;
-    }
-
-    .stat-value{
-        font-size:14px;
+    .level-grid{
+        grid-template-columns:
+            repeat(4,1fr);
     }
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
-     HOME SCREEN
-========================= -->
+<div class="app">
 
-<section class="home-screen" id="homeScreen">
 
-    <div class="home-container">
+<!-- ===================================================
+     HOME
+=================================================== -->
 
-        <div class="top-bar">
-            <div class="logo">ARCADE GAME</div>
+<section class="home" id="home">
 
-            <div class="coin-display">
-                <span class="coin-icon">●</span>
-                <span id="homeCoins">0</span>
-            </div>
+<div class="home-inner">
+
+
+<div class="topbar">
+
+    <div class="brand">
+        FIND THE BALL
+    </div>
+
+    <div class="coins">
+        <span class="coin">●</span>
+        <span id="homeCoins">0</span>
+    </div>
+
+</div>
+
+
+<div class="hero-ball"></div>
+
+
+<h1 class="title">
+    FIND<br>
+    <span>THE BALL</span>
+</h1>
+
+<p class="subtitle">
+    Watch carefully. Follow the ball. Beat the shuffle.
+</p>
+
+
+<!-- PLAYER -->
+
+<div class="player-card">
+
+    <div class="player-row">
+
+        <div class="avatar">
+            🏆
         </div>
 
-        <div class="hero">
+        <div>
 
-            <div class="hero-ball"></div>
-
-            <h1 class="game-title">
-                FIND<br>
-                <span>THE BALL</span>
-            </h1>
-
-            <p class="tagline">
-                Watch carefully. Follow the cup. Find the ball!
-            </p>
-
-        </div>
-
-        <div class="info-cards">
-
-            <div class="info-card">
-                <div class="info-number" id="homeBest">0</div>
-                <div class="info-label">Best Score</div>
+            <div class="player-name">
+                Ball Hunter
             </div>
 
-            <div class="info-card">
-                <div class="info-number">8</div>
-                <div class="info-label">Sets</div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-number">24</div>
-                <div class="info-label">Rounds</div>
+            <div class="player-level">
+                Level <span id="playerLevel">1</span>
+                • XP <span id="playerXP">0</span>
             </div>
 
         </div>
 
-        <button class="play-button" id="playButton">
-            <span class="play-icon">▶</span>
-            PLAY GAME
+    </div>
+
+
+    <div class="xp">
+
+        <div class="xp-top">
+
+            <span>
+                Next Level
+            </span>
+
+            <span id="xpText">
+                0 / 100
+            </span>
+
+        </div>
+
+        <div class="xp-bar">
+
+            <div
+                class="xp-fill"
+                id="xpFill">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- HOME STATS -->
+
+<div class="home-stats">
+
+    <div class="home-stat">
+
+        <div
+            class="home-stat-number"
+            id="bestScore">
+            0
+        </div>
+
+        <div class="home-stat-label">
+            Best Score
+        </div>
+
+    </div>
+
+
+    <div class="home-stat">
+
+        <div
+            class="home-stat-number"
+            id="completedLevels">
+            0
+        </div>
+
+        <div class="home-stat-label">
+            Levels
+        </div>
+
+    </div>
+
+
+    <div class="home-stat">
+
+        <div
+            class="home-stat-number"
+            id="totalStars">
+            0
+        </div>
+
+        <div class="home-stat-label">
+            Stars
+        </div>
+
+    </div>
+
+</div>
+
+
+<button
+    class="play"
+    id="playBtn">
+
+    ▶ PLAY
+
+</button>
+
+
+<div class="home-buttons">
+
+    <button
+        class="home-button"
+        id="levelsBtn">
+
+        🎯 Levels
+
+    </button>
+
+    <button
+        class="home-button"
+        id="settingsBtn">
+
+        ⚙ Settings
+
+    </button>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- ===================================================
+     GAME
+=================================================== -->
+
+<section
+    class="game"
+    id="game">
+
+
+<div class="game-header">
+
+    <div class="game-top">
+
+        <div class="game-title-small">
+            FIND <span>THE BALL</span>
+        </div>
+
+        <button
+            class="icon-btn"
+            id="pauseBtn">
+
+            ⏸
+
         </button>
 
     </div>
 
-</section>
 
+    <div class="level-row">
 
-<!-- =========================
-     GAME UI
-========================= -->
+        <span>
+            Level <b id="levelNumber">1</b>
+        </span>
 
-<section class="game-ui" id="gameUI">
-
-    <div class="game-container">
-
-        <div class="game-header">
-
-            <div class="game-header-top">
-
-                <div class="small-title">
-                    FIND <span>THE BALL</span>
-                </div>
-
-                <button
-                    class="sound-button"
-                    id="soundButton"
-                    aria-label="Sound">
-                    🔊
-                </button>
-
-            </div>
-
-            <div class="stats">
-
-                <div class="stat">
-                    <div class="stat-label">Set</div>
-                    <div class="stat-value" id="setText">1/8</div>
-                </div>
-
-                <div class="stat">
-                    <div class="stat-label">Score</div>
-                    <div class="stat-value" id="scoreText">0</div>
-                </div>
-
-                <div class="stat">
-                    <div class="stat-label">Coins</div>
-                    <div class="stat-value" id="coinText">0</div>
-                </div>
-
-                <div class="stat">
-                    <div class="stat-label">Lives</div>
-                    <div class="stat-value" id="lifeText">❤️❤️❤️</div>
-                </div>
-
-                <div class="stat">
-                    <div class="stat-label">Time</div>
-                    <div class="stat-value" id="timeText">15</div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="stage" id="stage">
-
-            <canvas id="gameCanvas"></canvas>
+        <div class="level-progress">
 
             <div
-                class="game-over hidden"
-                id="gameOver">
+                class="level-progress-fill"
+                id="levelProgress">
+            </div>
 
-                <div class="game-over-card">
+        </div>
 
-                    <h2 id="gameOverTitle">
-                        GAME OVER
-                    </h2>
+        <span>
+            30
+        </span>
 
-                    <div
-                        class="game-message"
-                        id="gameMessage">
-                        Try again!
-                    </div>
+    </div>
 
-                    <button
-                        class="restart-button"
-                        id="restartButton">
-                        PLAY AGAIN
-                    </button>
 
-                </div>
+    <div class="stats">
 
+        <div class="stat">
+
+            <div class="stat-label">
+                Score
+            </div>
+
+            <div
+                class="stat-value"
+                id="score">
+                0
             </div>
 
         </div>
 
 
-        <div class="bottom-controls">
+        <div class="stat">
+
+            <div class="stat-label">
+                Coins
+            </div>
+
+            <div
+                class="stat-value"
+                id="coins">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Lives
+            </div>
+
+            <div
+                class="stat-value"
+                id="lives">
+                ❤️❤️❤️
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Time
+            </div>
+
+            <div
+                class="stat-value"
+                id="time">
+                15
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Round
+            </div>
+
+            <div
+                class="stat-value"
+                id="round">
+                1/3
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="stage"
+    id="stage">
+
+    <canvas
+        id="canvas">
+    </canvas>
+
+
+    <div class="hint" id="hint">
+        Watch the ball...
+    </div>
+
+
+    <!-- GAME MODAL -->
+
+    <div
+        class="overlay hidden"
+        id="overlay">
+
+        <div class="modal">
+
+            <div
+                class="modal-icon"
+                id="modalIcon">
+                🏆
+            </div>
+
+            <h2 id="modalTitle">
+                LEVEL COMPLETE
+            </h2>
+
+            <div
+                class="stars"
+                id="modalStars">
+                ★★★
+            </div>
+
+            <div
+                class="modal-text"
+                id="modalText">
+                Great job!
+            </div>
+
+            <br>
 
             <button
-                class="control-button"
-                id="restartSmall">
-                ↻ Restart
+                class="primary-btn"
+                id="modalPrimary">
+                NEXT LEVEL
             </button>
 
             <button
-                class="control-button"
-                id="homeButton">
-                ⌂ Home
+                class="secondary-btn"
+                id="modalSecondary">
+                HOME
             </button>
 
         </div>
 
     </div>
 
+
+    <!-- PAUSE MODAL -->
+
+    <div
+        class="overlay hidden"
+        id="pauseOverlay">
+
+        <div class="modal">
+
+            <div class="modal-icon">
+                ⏸️
+            </div>
+
+            <h2>
+                PAUSED
+            </h2>
+
+            <div class="modal-text">
+                Take a breath. The ball is waiting.
+            </div>
+
+            <br>
+
+            <button
+                class="primary-btn"
+                id="resumeBtn">
+                ▶ RESUME
+            </button>
+
+            <button
+                class="secondary-btn"
+                id="pauseHomeBtn">
+                HOME
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="bottom-controls">
+
+    <button
+        class="control"
+        id="restartBtn">
+        ↻ Restart
+    </button>
+
+    <button
+        class="control"
+        id="soundBtn">
+        🔊 Sound
+    </button>
+
+    <button
+        class="control"
+        id="gameHomeBtn">
+        ⌂ Home
+    </button>
+
+</div>
+
+
 </section>
 
 
+<!-- ===================================================
+     LEVEL SELECTOR
+=================================================== -->
+
+<section
+    class="level-screen"
+    id="levelScreen">
+
+    <div class="level-header">
+
+        <h2>
+            🎯 SELECT LEVEL
+        </h2>
+
+        <button
+            class="icon-btn"
+            id="closeLevels">
+            ✕
+        </button>
+
+    </div>
+
+
+    <div
+        class="level-grid"
+        id="levelGrid">
+    </div>
+
+</section>
+
+
+<!-- ===================================================
+     SETTINGS MODAL
+=================================================== -->
+
+<div
+    class="overlay hidden"
+    id="settingsOverlay">
+
+    <div class="modal">
+
+        <div class="modal-icon">
+            ⚙️
+        </div>
+
+        <h2>
+            SETTINGS
+        </h2>
+
+
+        <div class="settings-option">
+
+            <span>
+                🔊 Sound
+            </span>
+
+            <div
+                class="toggle"
+                id="soundToggle">
+            </div>
+
+        </div>
+
+
+        <div class="settings-option">
+
+            <span>
+                📳 Vibration
+            </span>
+
+            <div
+                class="toggle"
+                id="vibrationToggle">
+            </div>
+
+        </div>
+
+
+        <button
+            class="secondary-btn"
+            id="closeSettings">
+
+            CLOSE
+
+        </button>
+
+    </div>
+
+</div>
+
+
 <script>
-/* =========================================================
-   FIND THE BALL - VERSION 4
-   Complete JavaScript Game
-========================================================= */
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-
-const stage = document.getElementById("stage");
-
-const homeScreen = document.getElementById("homeScreen");
-const gameUI = document.getElementById("gameUI");
-const gameOver = document.getElementById("gameOver");
-
-const playButton = document.getElementById("playButton");
-const restartButton = document.getElementById("restartButton");
-const restartSmall = document.getElementById("restartSmall");
-const homeButton = document.getElementById("homeButton");
-const soundButton = document.getElementById("soundButton");
-
-const setText = document.getElementById("setText");
-const scoreText = document.getElementById("scoreText");
-const coinText = document.getElementById("coinText");
-const lifeText = document.getElementById("lifeText");
-const timeText = document.getElementById("timeText");
-
-const homeCoins = document.getElementById("homeCoins");
-const homeBest = document.getElementById("homeBest");
-
-const gameOverTitle = document.getElementById("gameOverTitle");
-const gameMessage = document.getElementById("gameMessage");
+/* =====================================================
+   FIND THE BALL
+   VERSION 5
+===================================================== */
 
 
-/* =========================================================
-   GAME SETTINGS
-========================================================= */
+/* =====================================================
+   DOM
+===================================================== */
 
-const sets = [
+const home =
+    document.getElementById("home");
 
-    {
-        cups:3,
-        shuffles:3,
-        speed:650,
-        time:15
-    },
+const game =
+    document.getElementById("game");
 
-    {
-        cups:3,
-        shuffles:5,
-        speed:560,
-        time:14
-    },
+const canvas =
+    document.getElementById("canvas");
 
-    {
-        cups:4,
-        shuffles:6,
-        speed:500,
-        time:13
-    },
+const ctx =
+    canvas.getContext("2d");
 
-    {
-        cups:4,
-        shuffles:8,
-        speed:440,
-        time:12
-    },
+const stage =
+    document.getElementById("stage");
 
-    {
-        cups:5,
-        shuffles:9,
-        speed:390,
-        time:11
-    },
+const overlay =
+    document.getElementById("overlay");
 
-    {
-        cups:5,
-        shuffles:11,
-        speed:340,
-        time:10
-    },
+const pauseOverlay =
+    document.getElementById("pauseOverlay");
 
-    {
-        cups:6,
-        shuffles:13,
-        speed:300,
-        time:9
-    },
+const levelScreen =
+    document.getElementById("levelScreen");
 
-    {
-        cups:6,
-        shuffles:16,
-        speed:260,
-        time:8
-    }
-
-];
+const settingsOverlay =
+    document.getElementById("settingsOverlay");
 
 
-/* =========================================================
+/* =====================================================
+   SAVED DATA
+===================================================== */
+
+let highScore =
+    Number(
+        localStorage.getItem(
+            "ftb_v5_highscore"
+        ) || 0
+    );
+
+let totalCoins =
+    Number(
+        localStorage.getItem(
+            "ftb_v5_coins"
+        ) || 0
+    );
+
+let unlockedLevel =
+    Number(
+        localStorage.getItem(
+            "ftb_v5_unlocked"
+        ) || 1
+    );
+
+let totalStars =
+    Number(
+        localStorage.getItem(
+            "ftb_v5_stars"
+        ) || 0
+    );
+
+let playerXP =
+    Number(
+        localStorage.getItem(
+            "ftb_v5_xp"
+        ) || 0
+    );
+
+let soundOn =
+    localStorage.getItem(
+        "ftb_v5_sound"
+    ) !== "off";
+
+let vibrationOn =
+    localStorage.getItem(
+        "ftb_v5_vibration"
+    ) !== "off";
+
+
+/* =====================================================
+   LEVEL DATA
+===================================================== */
+
+const levels = [];
+
+
+/*
+   Generate 30 increasingly difficult levels.
+*/
+
+for(let i=1;i<=30;i++){
+
+    let cups =
+        i <= 3 ? 3 :
+        i <= 8 ? 4 :
+        i <= 15 ? 5 :
+        i <= 22 ? 6 : 7;
+
+    let shuffles =
+        2 +
+        Math.floor(i * .75);
+
+    let speed =
+        Math.max(
+            190,
+            690 -
+            i * 15
+        );
+
+    let time =
+        Math.max(
+            6,
+            16 -
+            Math.floor(i / 3)
+        );
+
+    levels.push({
+
+        cups:cups,
+
+        shuffles:shuffles,
+
+        speed:speed,
+
+        time:time
+
+    });
+}
+
+
+/* =====================================================
    GAME VARIABLES
-========================================================= */
+===================================================== */
 
-let W = 0;
-let H = 0;
-let dpr = 1;
+let currentLevel = 1;
 
-let currentSet = 1;
 let currentRound = 1;
 
 let score = 0;
-let coins = 0;
+
+let runCoins = 0;
+
 let lives = 3;
+
 let timeLeft = 15;
 
-let highScore =
-    Number(localStorage.getItem("findBallHighScore") || 0);
-
-let savedCoins =
-    Number(localStorage.getItem("findBallCoins") || 0);
-
-let soundOn =
-    localStorage.getItem("findBallSound") !== "off";
-
 let cups = [];
+
 let ballCup = 0;
 
 let phase = "idle";
 
-let timerInterval = null;
-let animationFrame = null;
-
 let shuffleIndex = 0;
+
+let timer = null;
+
 let shuffleTimer = null;
+
+let W = 0;
+
+let H = 0;
+
+let DPR = 1;
+
+let animationFrame = null;
 
 let particles = [];
 
-let audioContext = null;
+let audio = null;
 
 
-/* =========================================================
+/* =====================================================
    AUDIO
-========================================================= */
+===================================================== */
 
 function getAudio(){
 
-    if(!audioContext){
+    if(!audio){
 
-        audioContext =
-            new (window.AudioContext ||
-                 window.webkitAudioContext)();
+        audio =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
     }
 
-    return audioContext;
+    return audio;
 }
 
 function beep(
     frequency=440,
-    duration=.08,
-    type="sine"
+    duration=.08
 ){
 
-    if(!soundOn) return;
+    if(!soundOn)
+        return;
 
     try{
 
-        const audio = getAudio();
+        const a =
+            getAudio();
 
-        const oscillator =
-            audio.createOscillator();
+        const osc =
+            a.createOscillator();
 
         const gain =
-            audio.createGain();
+            a.createGain();
 
-        oscillator.type = type;
-        oscillator.frequency.value = frequency;
+        osc.type =
+            "sine";
+
+        osc.frequency.value =
+            frequency;
 
         gain.gain.setValueAtTime(
             .0001,
-            audio.currentTime
+            a.currentTime
         );
 
         gain.gain.exponentialRampToValueAtTime(
-            .08,
-            audio.currentTime + .01
+            .07,
+            a.currentTime+.01
         );
 
         gain.gain.exponentialRampToValueAtTime(
             .0001,
-            audio.currentTime + duration
+            a.currentTime+duration
         );
 
-        oscillator.connect(gain);
-        gain.connect(audio.destination);
+        osc.connect(gain);
 
-        oscillator.start();
+        gain.connect(
+            a.destination
+        );
 
-        oscillator.stop(
-            audio.currentTime + duration + .02
+        osc.start();
+
+        osc.stop(
+            a.currentTime+
+            duration+
+            .02
         );
 
     }catch(e){}
 }
 
 
-/* =========================================================
-   SOUND BUTTON
-========================================================= */
+/* =====================================================
+   VIBRATION
+===================================================== */
 
-function updateSoundButton(){
+function vibrate(pattern=30){
 
-    soundButton.textContent =
-        soundOn ? "🔊" : "🔇";
+    if(
+        vibrationOn &&
+        navigator.vibrate
+    ){
+
+        navigator.vibrate(pattern);
+
+    }
 }
 
-soundButton.addEventListener("click",function(){
 
-    soundOn = !soundOn;
-
-    localStorage.setItem(
-        "findBallSound",
-        soundOn ? "on" : "off"
-    );
-
-    updateSoundButton();
-
-    if(soundOn){
-        beep(650,.08);
-    }
-});
-
-updateSoundButton();
-
-
-/* =========================================================
+/* =====================================================
    CANVAS RESIZE
-========================================================= */
+===================================================== */
 
 function resizeCanvas(){
 
-    if(gameUI.style.display === "none"){
+    if(
+        game.style.display === "none" ||
+        game.style.display === ""
+    ){
+
         return;
+
     }
 
     const rect =
         stage.getBoundingClientRect();
 
-    if(rect.width <= 0 || rect.height <= 0){
+    if(
+        rect.width <= 0 ||
+        rect.height <= 0
+    ){
+
         return;
+
     }
 
-    dpr =
-        Math.min(window.devicePixelRatio || 1,2);
+    W =
+        rect.width;
 
-    W = rect.width;
-    H = rect.height;
+    H =
+        rect.height;
+
+    DPR =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
     canvas.width =
-        Math.floor(W * dpr);
+        Math.floor(
+            W * DPR
+        );
 
     canvas.height =
-        Math.floor(H * dpr);
+        Math.floor(
+            H * DPR
+        );
 
     canvas.style.width =
         W + "px";
@@ -918,10 +2234,10 @@ function resizeCanvas(){
         H + "px";
 
     ctx.setTransform(
-        dpr,
+        DPR,
         0,
         0,
-        dpr,
+        DPR,
         0,
         0
     );
@@ -933,109 +2249,1010 @@ window.addEventListener(
 );
 
 
-/* =========================================================
+/* =====================================================
    CUP POSITION
-========================================================= */
-
-function slotX(index){
-
-    const count = cups.length;
-
-    const side =
-        Math.min(65,W * .10);
-
-    if(count <= 1){
-        return W / 2;
-    }
-
-    return side +
-        index *
-        ((W - side * 2) /
-        (count - 1));
-}
-
-
-/* =========================================================
-   CUP SIZE
-========================================================= */
+===================================================== */
 
 function cupWidth(){
 
-    const count = cups.length;
+    if(cups.length <= 1)
+        return 90;
 
-    let spacing =
-        count > 1
-        ? (W - 2 * Math.min(65,W*.10))
-          / (count - 1)
-        : W;
+    const side =
+        Math.min(
+            65,
+            W*.10
+        );
+
+    const spacing =
+        (W-side*2) /
+        (cups.length-1);
 
     return Math.max(
-        48,
+        44,
         Math.min(
-            105,
-            spacing * .56
+            94,
+            spacing*.55
+        )
+    );
+}
+
+function slotX(index){
+
+    if(cups.length <= 1)
+        return W/2;
+
+    const side =
+        Math.min(
+            65,
+            W*.10
+        );
+
+    return (
+        side +
+        index *
+        (
+            (W-side*2) /
+            (cups.length-1)
         )
     );
 }
 
 
-/* =========================================================
+/* =====================================================
    CREATE CUPS
-========================================================= */
+===================================================== */
 
 function createCups(){
 
-    const settings =
-        sets[currentSet - 1];
+    const data =
+        levels[currentLevel-1];
 
     cups = [];
 
-    for(let i=0;i<settings.cups;i++){
+    for(
+        let i=0;
+        i<data.cups;
+        i++
+    ){
 
         cups.push({
+
             x:slotX(i),
-            y:H*.57,
+
+            y:H*.60,
+
             targetX:slotX(i),
-            targetY:H*.57,
+
+            targetY:H*.60,
+
             lift:0,
-            scale:1
+
+            moving:false,
+
+            arc:0
+
         });
 
     }
 
     ballCup =
         Math.floor(
-            Math.random() * cups.length
+            Math.random() *
+            cups.length
         );
 }
 
 
-/* =========================================================
-   START GAME
-========================================================= */
+/* =====================================================
+   BEGIN LEVEL ROUND
+===================================================== */
 
-function startGame(){
+function beginRound(){
 
-    homeScreen.style.display = "none";
+    clearTimers();
 
-    gameUI.style.display = "block";
-
-    /*
-       IMPORTANT FIX:
-       The game UI was hidden when resizeCanvas()
-       originally ran. Therefore the canvas had 0 size.
-       We resize AFTER making gameUI visible.
-    */
     resizeCanvas();
 
-    gameOver.classList.add("hidden");
+    phase =
+        "reveal";
 
-    currentSet = 1;
-    currentRound = 1;
+    shuffleIndex = 0;
 
-    score = 0;
-    coins = 0;
-    lives = 3;
+    timeLeft =
+        levels[
+            currentLevel-1
+        ].time;
+
+    createCups();
+
+    particles = [];
+
+    updateUI();
+
+    hint.textContent =
+        "Watch the ball...";
+
+    /*
+       Ball cup rises.
+    */
+
+    cups.forEach(
+        (cup,index)=>{
+
+            cup.lift =
+                index === ballCup
+                ? 48
+                : 0;
+
+        }
+    );
+
+    beep(600,.06);
+
+    setTimeout(()=>{
+
+        cups.forEach(
+            cup=>{
+                cup.lift=0;
+            }
+        );
+
+        setTimeout(()=>{
+
+            phase =
+                "shuffle";
+
+            hint.textContent =
+                "Follow the cup!";
+
+            shuffleMove();
+
+        },450);
+
+    },1200);
+}
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffleMove(){
+
+    if(
+        phase !==
+        "shuffle"
+    ){
+
+        return;
+
+    }
+
+    const data =
+        levels[
+            currentLevel-1
+        ];
+
+    if(
+        shuffleIndex >=
+        data.shuffles
+    ){
+
+        phase =
+            "choose";
+
+        hint.textContent =
+            "Find the ball!";
+
+        startTimer();
+
+        beep(850,.08);
+
+        return;
+    }
+
+
+    /*
+       Multiple movement patterns.
+    */
+
+    let a;
+    let b;
+
+    const pattern =
+        shuffleIndex % 3;
+
+
+    if(pattern === 0){
+
+        a =
+            Math.floor(
+                Math.random() *
+                (cups.length-1)
+            );
+
+        b =
+            a+1;
+
+    }else if(pattern === 1){
+
+        b =
+            Math.floor(
+                Math.random() *
+                cups.length
+            );
+
+        a =
+            Math.max(
+                0,
+                b-1
+            );
+
+        if(a===b)
+            b =
+                Math.min(
+                    cups.length-1,
+                    a+1
+                );
+
+    }else{
+
+        a =
+            Math.floor(
+                Math.random() *
+                (cups.length-1)
+            );
+
+        b =
+            a+1;
+
+    }
+
+
+    const oldA =
+        cups[a].x;
+
+    const oldB =
+        cups[b].x;
+
+
+    /*
+       Swap cup objects.
+    */
+
+    const temp =
+        cups[a];
+
+    cups[a] =
+        cups[b];
+
+    cups[b] =
+        temp;
+
+
+    cups[a].startX =
+        oldB;
+
+    cups[b].startX =
+        oldA;
+
+    cups[a].targetX =
+        slotX(a);
+
+    cups[b].targetX =
+        slotX(b);
+
+    cups[a].startY =
+        H*.60;
+
+    cups[b].startY =
+        H*.60;
+
+    cups[a].targetY =
+        H*.60;
+
+    cups[b].targetY =
+        H*.60;
+
+
+    /*
+       Opposite arcs prevent cups merging.
+    */
+
+    const arc =
+        Math.min(
+            70,
+            H*.13
+        );
+
+    cups[a].arc =
+        arc;
+
+    cups[b].arc =
+        -arc;
+
+    const now =
+        performance.now();
+
+    cups[a].moveStart =
+        now;
+
+    cups[b].moveStart =
+        now;
+
+    cups[a].moving =
+        true;
+
+    cups[b].moving =
+        true;
+
+    shuffleIndex++;
+
+    beep(
+        240+
+        shuffleIndex*10,
+        .045
+    );
+
+    shuffleTimer =
+        setTimeout(
+            shuffleMove,
+            data.speed
+        );
+}
+
+
+/* =====================================================
+   UPDATE CUPS
+===================================================== */
+
+function updateCups(now){
+
+    cups.forEach(
+        cup=>{
+
+            if(
+                !cup.moving
+            ){
+
+                return;
+
+            }
+
+            const duration =
+                levels[
+                    currentLevel-1
+                ].speed;
+
+            let p =
+                (
+                    now -
+                    cup.moveStart
+                ) /
+                duration;
+
+            p =
+                Math.max(
+                    0,
+                    Math.min(
+                        1,
+                        p
+                    )
+                );
+
+            const ease =
+                p<.5
+                ?
+                2*p*p
+                :
+                1 -
+                Math.pow(
+                    -2*p+2,
+                    2
+                )/2;
+
+
+            cup.x =
+                cup.startX +
+                (
+                    cup.targetX -
+                    cup.startX
+                ) *
+                ease;
+
+
+            cup.y =
+                cup.startY +
+                Math.sin(
+                    p*Math.PI
+                ) *
+                cup.arc;
+
+
+            if(p>=1){
+
+                cup.x =
+                    cup.targetX;
+
+                cup.y =
+                    cup.targetY;
+
+                cup.moving =
+                    false;
+
+                cup.arc =
+                    0;
+            }
+
+        }
+    );
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer(){
+
+    clearInterval(timer);
+
+    timer =
+        setInterval(()=>{
+
+            if(
+                phase !==
+                "choose"
+            ){
+
+                return;
+
+            }
+
+            timeLeft--;
+
+            updateUI();
+
+            if(
+                timeLeft <= 0
+            ){
+
+                clearInterval(
+                    timer
+                );
+
+                beep(
+                    150,
+                    .18
+                );
+
+                vibrate(
+                    [50,40,50]
+                );
+
+                loseLife(
+                    "Time's up!"
+                );
+            }
+
+        },1000);
+}
+
+
+/* =====================================================
+   CHOOSE CUP
+===================================================== */
+
+canvas.addEventListener(
+    "pointerdown",
+    function(e){
+
+        if(
+            phase !==
+            "choose"
+        ){
+
+            return;
+
+        }
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        const x =
+            e.clientX -
+            rect.left;
+
+        let nearest = 0;
+
+        let distance =
+            Infinity;
+
+
+        cups.forEach(
+            (cup,index)=>{
+
+                const d =
+                    Math.abs(
+                        x-cup.x
+                    );
+
+                if(
+                    d < distance
+                ){
+
+                    distance = d;
+
+                    nearest =
+                        index;
+                }
+
+            }
+        );
+
+
+        chooseCup(
+            nearest
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CHOOSE RESULT
+===================================================== */
+
+function chooseCup(index){
+
+    if(
+        phase !==
+        "choose"
+    ){
+
+        return;
+
+    }
+
+    phase =
+        "result";
+
+    clearInterval(
+        timer
+    );
+
+    const cup =
+        cups[index];
+
+
+    if(
+        index ===
+        ballCup
+    ){
+
+        /*
+           Correct.
+        */
+
+        const bonus =
+            timeLeft *
+            10;
+
+        score +=
+            100 +
+            bonus;
+
+        runCoins += 5;
+
+        addXP(25);
+
+        createBurst(
+            cup.x,
+            cup.y-70
+        );
+
+        beep(
+            850,
+            .10
+        );
+
+        setTimeout(
+            ()=>beep(
+                1150,
+                .13
+            ),
+            100
+        );
+
+        vibrate(
+            [30,30,60]
+        );
+
+        cup.lift =
+            55;
+
+        hint.textContent =
+            "✓ CORRECT!";
+
+        updateUI();
+
+        setTimeout(
+            completeRound,
+            900
+        );
+
+    }else{
+
+        /*
+           Wrong.
+        */
+
+        lives--;
+
+        addXP(5);
+
+        createBurst(
+            cup.x,
+            cup.y-50
+        );
+
+        beep(
+            170,
+            .20
+        );
+
+        vibrate(
+            [80,50,80]
+        );
+
+        cup.lift =
+            25;
+
+        hint.textContent =
+            "✕ Wrong cup!";
+
+        updateUI();
+
+        if(
+            lives <= 0
+        ){
+
+            setTimeout(
+                ()=>gameOver(),
+                500
+            );
+
+        }else{
+
+            setTimeout(
+                beginRound,
+                650
+            );
+        }
+
+    }
+}
+
+
+/* =====================================================
+   COMPLETE ROUND
+===================================================== */
+
+function completeRound(){
+
+    if(
+        lives <= 0
+    ){
+
+        return;
+
+    }
+
+    currentRound++;
+
+    if(
+        currentRound > 3
+    ){
+
+        completeLevel();
+
+    }else{
+
+        beginRound();
+
+    }
+}
+
+
+/* =====================================================
+   COMPLETE LEVEL
+===================================================== */
+
+function completeLevel(){
+
+    phase =
+        "levelComplete";
+
+    clearTimers();
+
+    const stars =
+        calculateStars();
+
+    totalStars +=
+        stars;
+
+    runCoins +=
+        10 +
+        stars*5;
+
+    score +=
+        250;
+
+    addXP(
+        50
+    );
+
+    if(
+        currentLevel >=
+        unlockedLevel
+    ){
+
+        unlockedLevel =
+            Math.min(
+                30,
+                currentLevel+1
+            );
+
+    }
+
+    saveData();
+
+    updateUI();
+
+    showLevelComplete(
+        stars
+    );
+
+    beep(
+        850,
+        .12
+    );
+
+    setTimeout(
+        ()=>beep(
+            1100,
+            .12
+        ),
+        120
+    );
+
+    setTimeout(
+        ()=>beep(
+            1400,
+            .18
+        ),
+        240
+    );
+}
+
+
+/* =====================================================
+   STAR CALCULATION
+===================================================== */
+
+function calculateStars(){
+
+    if(
+        lives === 3 &&
+        timeLeft >= 7
+    ){
+
+        return 3;
+
+    }
+
+    if(
+        lives >= 2
+    ){
+
+        return 2;
+
+    }
+
+    return 1;
+}
+
+
+/* =====================================================
+   SHOW LEVEL COMPLETE
+===================================================== */
+
+function showLevelComplete(
+    stars
+){
+
+    modalIcon.textContent =
+        "🏆";
+
+    modalTitle.textContent =
+        currentLevel >= 30
+        ?
+        "YOU MASTERED THE GAME!"
+        :
+        "LEVEL COMPLETE!";
+
+    let starHTML = "";
+
+    for(
+        let i=1;
+        i<=3;
+        i++
+    ){
+
+        starHTML +=
+            i<=stars
+            ?
+            "★"
+            :
+            "<span class='star-off'>★</span>";
+
+    }
+
+    modalStars.innerHTML =
+        starHTML;
+
+    modalText.innerHTML =
+        "Score: <b>" +
+        score +
+        "</b><br>" +
+        "Coins earned: <b>" +
+        runCoins +
+        "</b><br>" +
+        "Stars: <b>" +
+        stars +
+        "/3</b>";
+
+    if(
+        currentLevel >= 30
+    ){
+
+        modalPrimary.textContent =
+            "PLAY AGAIN";
+
+    }else{
+
+        modalPrimary.textContent =
+            "NEXT LEVEL";
+
+    }
+
+    overlay.classList.remove(
+        "hidden"
+    );
+}
+
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function gameOver(){
+
+    phase =
+        "gameover";
+
+    clearTimers();
+
+    saveData();
+
+    modalIcon.textContent =
+        "💔";
+
+    modalTitle.textContent =
+        "GAME OVER";
+
+    modalStars.innerHTML =
+        "☆☆☆";
+
+    modalText.innerHTML =
+        "You reached level <b>" +
+        currentLevel +
+        "</b><br><br>" +
+        "Score: <b>" +
+        score +
+        "</b>";
+
+    modalPrimary.textContent =
+        "TRY AGAIN";
+
+    overlay.classList.remove(
+        "hidden"
+    );
+
+    beep(
+        160,
+        .22
+    );
+}
+
+
+/* =====================================================
+   RESTART LEVEL
+===================================================== */
+
+function restartLevel(){
+
+    clearTimers();
+
+    overlay.classList.add(
+        "hidden"
+    );
+
+    currentRound =
+        1;
+
+    score =
+        0;
+
+    runCoins =
+        0;
+
+    lives =
+        3;
+
+    beginRound();
+}
+
+
+/* =====================================================
+   START SELECTED LEVEL
+===================================================== */
+
+function startLevel(level){
+
+    if(
+        level >
+        unlockedLevel
+    ){
+
+        beep(
+            180,
+            .1
+        );
+
+        return;
+
+    }
+
+    levelScreen.style.display =
+        "none";
+
+    home.style.display =
+        "none";
+
+    game.style.display =
+        "flex";
+
+    resizeCanvas();
+
+    currentLevel =
+        level;
+
+    currentRound =
+        1;
+
+    score =
+        0;
+
+    runCoins =
+        0;
+
+    lives =
+        3;
+
+    phase =
+        "idle";
 
     updateUI();
 
@@ -1047,710 +3264,519 @@ function startGame(){
 }
 
 
-/* =========================================================
-   BEGIN ROUND
-========================================================= */
+/* =====================================================
+   START GAME
+===================================================== */
 
-function beginRound(){
+function startGame(){
 
-    clearTimers();
-
-    resizeCanvas();
-
-    if(W <= 0 || H <= 0){
-        resizeCanvas();
-    }
-
-    phase = "reveal";
-
-    shuffleIndex = 0;
-
-    createCups();
-
-    particles = [];
-
-    timeLeft =
-        sets[currentSet - 1].time;
-
-    updateUI();
-
-    animate();
-
-    /*
-       Lift the cup above the ball
-       so the red ball is clearly visible.
-    */
-
-    cups.forEach((cup,index)=>{
-
-        cup.lift =
-            index === ballCup
-            ? 38
-            : 0;
-
-    });
-
-    setTimeout(()=>{
-
-        cups.forEach(cup=>{
-            cup.lift = 0;
-        });
-
-        setTimeout(()=>{
-
-            phase = "shuffle";
-
-            doShuffleMove();
-
-        },500);
-
-    },1200);
+    startLevel(
+        unlockedLevel
+    );
 }
 
 
-/* =========================================================
-   SHUFFLE
-========================================================= */
+/* =====================================================
+   HOME
+===================================================== */
 
-function doShuffleMove(){
+function goHome(){
 
-    if(phase !== "shuffle"){
-        return;
+    clearTimers();
+
+    phase =
+        "idle";
+
+    overlay.classList.add(
+        "hidden"
+    );
+
+    pauseOverlay.classList.add(
+        "hidden"
+    );
+
+    game.style.display =
+        "none";
+
+    home.style.display =
+        "flex";
+
+    saveData();
+
+    updateHome();
+
+}
+
+
+/* =====================================================
+   PAUSE
+===================================================== */
+
+function pauseGame(){
+
+    if(
+        phase === "choose"
+    ){
+
+        clearInterval(
+            timer
+        );
+
+        phase =
+            "paused";
+
+        pauseOverlay.classList.remove(
+            "hidden"
+        );
     }
+}
 
-    const settings =
-        sets[currentSet - 1];
+function resumeGame(){
 
-    if(shuffleIndex >= settings.shuffles){
+    if(
+        phase === "paused"
+    ){
 
-        phase = "choose";
+        phase =
+            "choose";
+
+        pauseOverlay.classList.add(
+            "hidden"
+        );
 
         startTimer();
-
-        beep(520,.10);
-
-        return;
-    }
-
-    /*
-       Swap two adjacent cups.
-       The two cups move on opposite arcs,
-       preventing them from visually merging.
-    */
-
-    let a =
-        Math.floor(
-            Math.random() * (cups.length - 1)
-        );
-
-    let b = a + 1;
-
-    const oldA = cups[a].x;
-    const oldB = cups[b].x;
-
-    const tempCup = cups[a];
-
-    cups[a] = cups[b];
-    cups[b] = tempCup;
-
-    cups[a].startX = oldB;
-    cups[b].startX = oldA;
-
-    cups[a].targetX = slotX(a);
-    cups[b].targetX = slotX(b);
-
-    cups[a].startY = H*.57;
-    cups[b].startY = H*.57;
-
-    cups[a].targetY = H*.57;
-    cups[b].targetY = H*.57;
-
-    cups[a].arc =
-        Math.min(70,H*.12);
-
-    cups[b].arc =
-        -Math.min(70,H*.12);
-
-    cups[a].moveStart =
-        performance.now();
-
-    cups[b].moveStart =
-        performance.now();
-
-    cups[a].moving = true;
-    cups[b].moving = true;
-
-    shuffleIndex++;
-
-    beep(
-        250 + shuffleIndex * 12,
-        .045,
-        "triangle"
-    );
-
-    const duration =
-        settings.speed;
-
-    shuffleTimer =
-        setTimeout(
-            doShuffleMove,
-            duration
-        );
-}
-
-
-/* =========================================================
-   UPDATE CUP MOVEMENT
-========================================================= */
-
-function updateCups(now){
-
-    cups.forEach(cup=>{
-
-        if(!cup.moving){
-            return;
-        }
-
-        const duration =
-            sets[currentSet - 1].speed;
-
-        let p =
-            (now - cup.moveStart)
-            / duration;
-
-        p =
-            Math.max(0,Math.min(1,p));
-
-        const ease =
-            p < .5
-            ? 2*p*p
-            : 1-Math.pow(-2*p+2,2)/2;
-
-        const startX =
-            cup.startX ??
-            cup.x;
-
-        const startY =
-            cup.startY ??
-            H*.57;
-
-        cup.x =
-            startX +
-            (cup.targetX-startX)*ease;
-
-        cup.y =
-            startY +
-            Math.sin(p*Math.PI) *
-            (cup.arc || 0);
-
-        if(p >= 1){
-
-            cup.x =
-                cup.targetX;
-
-            cup.y =
-                cup.targetY;
-
-            cup.moving = false;
-
-            cup.arc = 0;
-        }
-
-    });
-}
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-function startTimer(){
-
-    clearInterval(timerInterval);
-
-    timerInterval =
-        setInterval(()=>{
-
-            if(phase !== "choose"){
-                return;
-            }
-
-            timeLeft--;
-
-            updateUI();
-
-            if(timeLeft <= 0){
-
-                clearInterval(timerInterval);
-
-                beep(150,.18,"sawtooth");
-
-                loseLife(
-                    "Time's up!"
-                );
-            }
-
-        },1000);
-}
-
-
-/* =========================================================
-   HANDLE PLAYER CHOICE
-========================================================= */
-
-function chooseCup(clientX){
-
-    if(phase !== "choose"){
-        return;
-    }
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    const x =
-        clientX - rect.left;
-
-    let nearest = 0;
-    let distance = Infinity;
-
-    cups.forEach((cup,index)=>{
-
-        const d =
-            Math.abs(x-cup.x);
-
-        if(d < distance){
-
-            distance = d;
-            nearest = index;
-
-        }
-
-    });
-
-    handleChoice(nearest);
-}
-
-
-/* =========================================================
-   HANDLE CHOICE RESULT
-========================================================= */
-
-function handleChoice(index){
-
-    if(phase !== "choose"){
-        return;
-    }
-
-    phase = "result";
-
-    clearInterval(timerInterval);
-
-    const chosenCup =
-        cups[index];
-
-    if(index === ballCup){
-
-        score += 100;
-        coins += 5;
-
-        createBurst(
-            chosenCup.x,
-            chosenCup.y - 65
-        );
-
-        beep(880,.10);
-        setTimeout(
-            ()=>beep(1180,.14),
-            80
-        );
-
-        chosenCup.lift = 45;
-
-        updateUI();
-
-        setTimeout(
-            roundComplete,
-            900
-        );
-
-    }else{
-
-        beep(170,.20,"sawtooth");
-
-        createBurst(
-            chosenCup.x,
-            chosenCup.y - 40
-        );
-
-        chosenCup.lift = 28;
-
-        setTimeout(()=>{
-
-            loseLife("Wrong cup!");
-
-        },500);
-
     }
 }
 
 
-/* =========================================================
-   ROUND COMPLETE
-========================================================= */
+/* =====================================================
+   XP
+===================================================== */
 
-function roundComplete(){
+function addXP(amount){
 
-    if(lives <= 0){
-        return;
-    }
+    playerXP +=
+        amount;
 
-    currentRound++;
-
-    if(currentRound > 3){
-
-        score += 250;
-        coins += 10;
-
-        if(currentSet >= 8){
-
-            winGame();
-
-            return;
-        }
-
-        currentSet++;
-        currentRound = 1;
-
-        updateUI();
-
-        setTimeout(
-            beginRound,
-            500
-        );
-
-    }else{
-
-        updateUI();
-
-        setTimeout(
-            beginRound,
-            500
-        );
-    }
-}
-
-
-/* =========================================================
-   LOSE LIFE
-========================================================= */
-
-function loseLife(message){
-
-    lives--;
-
-    updateUI();
-
-    if(lives <= 0){
-
-        endGame(
-            "GAME OVER",
-            message + " You ran out of lives."
-        );
-
-        return;
-    }
-
-    setTimeout(
-        beginRound,
-        650
+    localStorage.setItem(
+        "ftb_v5_xp",
+        playerXP
     );
 }
 
 
-/* =========================================================
-   WIN GAME
-========================================================= */
+/* =====================================================
+   SAVE DATA
+===================================================== */
 
-function winGame(){
+function saveData(){
 
-    score += 1000;
-    coins += 50;
+    if(
+        score >
+        highScore
+    ){
 
-    saveProgress();
-
-    updateUI();
-
-    gameOverTitle.textContent =
-        "🏆 YOU WIN!";
-
-    gameMessage.innerHTML =
-        "Amazing! You completed all 8 sets.<br><br>" +
-        "Final Score: <b>" + score + "</b><br>" +
-        "Coins Earned: <b>" + coins + "</b>";
-
-    gameOver.classList.remove("hidden");
-
-    phase = "over";
-
-    beep(880,.12);
-
-    setTimeout(
-        ()=>beep(1100,.12),
-        130
-    );
-
-    setTimeout(
-        ()=>beep(1400,.20),
-        260
-    );
-}
-
-
-/* =========================================================
-   END GAME
-========================================================= */
-
-function endGame(title,message){
-
-    phase = "over";
-
-    clearTimers();
-
-    saveProgress();
-
-    gameOverTitle.textContent =
-        title;
-
-    gameMessage.innerHTML =
-        message +
-        "<br><br>Score: <b>" +
-        score +
-        "</b>";
-
-    gameOver.classList.remove("hidden");
-}
-
-
-/* =========================================================
-   SAVE PROGRESS
-========================================================= */
-
-function saveProgress(){
-
-    if(score > highScore){
-
-        highScore = score;
+        highScore =
+            score;
 
         localStorage.setItem(
-            "findBallHighScore",
+            "ftb_v5_highscore",
             highScore
         );
     }
 
-    /*
-       Add only the coins earned in this game
-       to the persistent total.
-    */
 
-    savedCoins += coins;
+    totalCoins +=
+        runCoins;
+
+    runCoins =
+        0;
 
     localStorage.setItem(
-        "findBallCoins",
-        savedCoins
+        "ftb_v5_coins",
+        totalCoins
     );
 
-    homeCoins.textContent =
-        savedCoins;
+    localStorage.setItem(
+        "ftb_v5_unlocked",
+        unlockedLevel
+    );
 
-    homeBest.textContent =
-        highScore;
+    localStorage.setItem(
+        "ftb_v5_stars",
+        totalStars
+    );
+
+    localStorage.setItem(
+        "ftb_v5_xp",
+        playerXP
+    );
 }
 
 
-/* =========================================================
-   UI UPDATE
-========================================================= */
+/* =====================================================
+   IMPORTANT:
+   SAVE COINS WITHOUT DUPLICATION
+===================================================== */
+
+/*
+   The game calls saveData() only at
+   game/level completion.
+
+   runCoins is reset after saving,
+   preventing repeated addition.
+*/
+
+
+/* =====================================================
+   UI
+===================================================== */
 
 function updateUI(){
 
-    setText.textContent =
-        currentSet + "/8";
+    levelNumber.textContent =
+        currentLevel;
 
-    scoreText.textContent =
+    scoreEl.textContent =
         score;
 
-    coinText.textContent =
-        coins;
+    coinsEl.textContent =
+        runCoins;
 
-    timeText.textContent =
-        Math.max(0,timeLeft);
+    timeEl.textContent =
+        Math.max(
+            0,
+            timeLeft
+        );
 
-    let hearts = "";
+    roundEl.textContent =
+        currentRound +
+        "/3";
 
-    for(let i=0;i<lives;i++){
-        hearts += "❤️";
+    let heartText = "";
+
+    for(
+        let i=0;
+        i<lives;
+        i++
+    ){
+
+        heartText +=
+            "❤️";
+
     }
 
-    if(hearts === ""){
-        hearts = "💔";
+    if(
+        heartText === ""
+    ){
+
+        heartText =
+            "💔";
+
     }
 
-    lifeText.textContent =
-        hearts;
+    livesEl.textContent =
+        heartText;
+
+    levelProgress.style.width =
+        (
+            currentLevel /
+            30 *
+            100
+        ) +
+        "%";
+}
+
+
+/* =====================================================
+   HOME UI
+===================================================== */
+
+function updateHome(){
 
     homeCoins.textContent =
-        savedCoins;
+        totalCoins;
 
-    homeBest.textContent =
+    bestScore.textContent =
         highScore;
+
+    completedLevels.textContent =
+        unlockedLevel-1;
+
+    totalStarsEl.textContent =
+        totalStars;
+
+    const playerLevel =
+        Math.floor(
+            playerXP /
+            100
+        ) + 1;
+
+    const xp =
+        playerXP %
+        100;
+
+    playerLevelEl.textContent =
+        playerLevel;
+
+    playerXPEl.textContent =
+        playerXP;
+
+    xpText.textContent =
+        xp +
+        " / 100";
+
+    xpFill.style.width =
+        xp +
+        "%";
 }
 
 
-/* =========================================================
-   CLEAR TIMERS
-========================================================= */
+/* =====================================================
+   DOM SHORTCUTS
+===================================================== */
 
-function clearTimers(){
+const scoreEl =
+    document.getElementById(
+        "score"
+    );
 
-    clearInterval(timerInterval);
+const coinsEl =
+    document.getElementById(
+        "coins"
+    );
 
-    clearTimeout(shuffleTimer);
+const livesEl =
+    document.getElementById(
+        "lives"
+    );
 
-    timerInterval = null;
-    shuffleTimer = null;
-}
+const timeEl =
+    document.getElementById(
+        "time"
+    );
+
+const roundEl =
+    document.getElementById(
+        "round"
+    );
+
+const levelNumber =
+    document.getElementById(
+        "levelNumber"
+    );
+
+const levelProgress =
+    document.getElementById(
+        "levelProgress"
+    );
+
+const hint =
+    document.getElementById(
+        "hint"
+    );
+
+const homeCoins =
+    document.getElementById(
+        "homeCoins"
+    );
+
+const bestScore =
+    document.getElementById(
+        "bestScore"
+    );
+
+const completedLevels =
+    document.getElementById(
+        "completedLevels"
+    );
+
+const totalStarsEl =
+    document.getElementById(
+        "totalStars"
+    );
+
+const playerLevelEl =
+    document.getElementById(
+        "playerLevel"
+    );
+
+const playerXPEl =
+    document.getElementById(
+        "playerXP"
+    );
+
+const xpText =
+    document.getElementById(
+        "xpText"
+    );
+
+const xpFill =
+    document.getElementById(
+        "xpFill"
+    );
 
 
-/* =========================================================
+/* =====================================================
    PARTICLES
-========================================================= */
+===================================================== */
 
-function createBurst(x,y){
+function createBurst(
+    x,
+    y
+){
 
-    for(let i=0;i<22;i++){
+    for(
+        let i=0;
+        i<30;
+        i++
+    ){
 
         particles.push({
 
             x:x,
+
             y:y,
 
             vx:
-                (Math.random()-.5)*5,
+                (
+                    Math.random() -
+                    .5
+                ) * 6,
 
             vy:
-                (Math.random()-.7)*5,
+                (
+                    Math.random() -
+                    .7
+                ) * 6,
 
             life:1,
 
             size:
-                2+Math.random()*4
+                2 +
+                Math.random()*4
 
         });
+
     }
 }
 
 function updateParticles(){
 
-    particles.forEach(p=>{
+    particles.forEach(
+        p=>{
 
-        p.x += p.vx;
-        p.y += p.vy;
+            p.x +=
+                p.vx;
 
-        p.vy += .08;
+            p.y +=
+                p.vy;
 
-        p.life -= .025;
+            p.vy +=
+                .08;
 
-    });
+            p.life -=
+                .025;
+
+        }
+    );
 
     particles =
         particles.filter(
-            p=>p.life > 0
+            p=>
+                p.life > 0
         );
 }
 
 function drawParticles(){
 
-    particles.forEach(p=>{
+    particles.forEach(
+        p=>{
 
-        ctx.globalAlpha =
-            Math.max(0,p.life);
+            ctx.globalAlpha =
+                Math.max(
+                    0,
+                    p.life
+                );
 
-        ctx.beginPath();
+            ctx.fillStyle =
+                "#ffd84d";
 
-        ctx.arc(
-            p.x,
-            p.y,
-            p.size,
-            0,
-            Math.PI*2
-        );
+            ctx.beginPath();
 
-        ctx.fillStyle =
-            "#ffd84d";
+            ctx.arc(
+                p.x,
+                p.y,
+                p.size,
+                0,
+                Math.PI*2
+            );
 
-        ctx.fill();
+            ctx.fill();
 
-    });
+        }
+    );
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha =
+        1;
 }
 
 
-/* =========================================================
+/* =====================================================
    DRAW BALL
-========================================================= */
+===================================================== */
 
-function drawBall(x,y,r){
+function drawBall(
+    x,
+    y,
+    r
+){
 
     ctx.save();
 
-    /*
-       Glow
-    */
-
     ctx.shadowColor =
-        "rgba(255,30,30,.9)";
+        "rgba(255,20,20,.95)";
 
     ctx.shadowBlur =
-        24;
+        25;
 
-    const gradient =
+    const g =
         ctx.createRadialGradient(
             x-r*.35,
             y-r*.4,
-            r*.08,
+            r*.05,
             x,
             y,
             r
         );
 
-    gradient.addColorStop(
+    g.addColorStop(
         0,
         "#ffffff"
     );
 
-    gradient.addColorStop(
+    g.addColorStop(
         .12,
-        "#ff8c8c"
+        "#ff9999"
     );
 
-    gradient.addColorStop(
-        .38,
+    g.addColorStop(
+        .4,
         "#ff2525"
     );
 
-    gradient.addColorStop(
-        .72,
-        "#c40000"
+    g.addColorStop(
+        .75,
+        "#c00000"
     );
 
-    gradient.addColorStop(
+    g.addColorStop(
         1,
         "#4a0000"
     );
 
     ctx.fillStyle =
-        gradient;
+        g;
 
     ctx.beginPath();
 
@@ -1764,11 +3790,8 @@ function drawBall(x,y,r){
 
     ctx.fill();
 
-    ctx.shadowBlur = 0;
-
-    /*
-       Highlight
-    */
+    ctx.shadowBlur =
+        0;
 
     ctx.fillStyle =
         "rgba(255,255,255,.8)";
@@ -1787,94 +3810,51 @@ function drawBall(x,y,r){
 
     ctx.fill();
 
-    /*
-       Small sparkles
-    */
-
-    ctx.fillStyle =
-        "rgba(255,255,255,.75)";
-
-    for(let i=0;i<3;i++){
-
-        const angle =
-            performance.now()/500 +
-            i*2;
-
-        const sx =
-            x + Math.cos(angle)*r*1.25;
-
-        const sy =
-            y + Math.sin(angle)*r*1.25;
-
-        ctx.beginPath();
-
-        ctx.arc(
-            sx,
-            sy,
-            1.4,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
-    }
-
     ctx.restore();
 }
 
 
-/* =========================================================
+/* =====================================================
    DRAW CUP
-========================================================= */
+===================================================== */
 
-function drawCup(cup,index){
+function drawCup(
+    cup,
+    index
+){
 
     const w =
         cupWidth();
 
     const h =
-        Math.min(
-            115,
-            Math.max(
-                75,
-                H*.19
+        Math.max(
+            75,
+            Math.min(
+                115,
+                H*.20
             )
         );
 
     const x =
         cup.x;
 
-    const baseY =
-        cup.y;
+    const bottom =
+        cup.y -
+        cup.lift;
 
-    const lift =
-        cup.lift || 0;
+    const top =
+        bottom -
+        h;
 
-    /*
-       Ball position:
-       Always keep it clearly visible during reveal/result.
-    */
-
-    const ballRadius =
-        Math.max(
-            10,
-            Math.min(
-                18,
-                w*.16
-            )
-        );
-
-    const ballY =
-        baseY - h*.78 - lift;
 
     /*
-       Shadow
+       Ground shadow
     */
 
     ctx.save();
 
     ctx.globalAlpha =
-        .28;
+        .30;
 
     ctx.fillStyle =
         "#000";
@@ -1883,8 +3863,8 @@ function drawCup(cup,index){
 
     ctx.ellipse(
         x,
-        baseY+7,
-        w*.45,
+        cup.y+8,
+        w*.46,
         9,
         0,
         0,
@@ -1897,138 +3877,146 @@ function drawCup(cup,index){
 
 
     /*
-       Draw ball first.
-       The cup is then drawn above it.
+       Ball is shown before cup
+       during reveal.
     */
 
+    const radius =
+        Math.max(
+            10,
+            Math.min(
+                17,
+                w*.17
+            )
+        );
+
+    const ballY =
+        bottom -
+        h*.78;
+
+
     if(
-        phase === "reveal" ||
-        phase === "result" && index === ballCup
+        phase === "reveal" &&
+        index === ballCup
     ){
 
         drawBall(
             x,
             ballY,
-            ballRadius
+            radius
         );
+
     }
 
 
     /*
-       Cup body
+       CUP BODY
     */
 
     ctx.save();
 
-    const topY =
-        baseY - h - lift;
-
-    const bottomY =
-        baseY - lift;
-
-    /*
-       Cup glow
-    */
-
     ctx.shadowColor =
-        "rgba(83,105,255,.55)";
+        "rgba(80,100,255,.65)";
 
     ctx.shadowBlur =
-        15;
+        16;
 
-    const cupGradient =
+
+    const g =
         ctx.createLinearGradient(
             x-w*.45,
-            topY,
+            top,
             x+w*.45,
-            bottomY
+            bottom
         );
 
-    cupGradient.addColorStop(
+    g.addColorStop(
         0,
-        "#2735a8"
+        "#19257f"
     );
 
-    cupGradient.addColorStop(
-        .35,
-        "#6174ff"
+    g.addColorStop(
+        .28,
+        "#687aff"
     );
 
-    cupGradient.addColorStop(
-        .6,
-        "#303db9"
+    g.addColorStop(
+        .52,
+        "#3549ca"
     );
 
-    cupGradient.addColorStop(
+    g.addColorStop(
         1,
-        "#11185c"
+        "#0d124d"
     );
 
     ctx.fillStyle =
-        cupGradient;
+        g;
 
     ctx.beginPath();
 
     ctx.moveTo(
-        x-w*.42,
-        topY+10
+        x-w*.43,
+        top+9
     );
 
     ctx.quadraticCurveTo(
-        x-w*.34,
-        bottomY,
+        x-w*.35,
+        bottom,
         x,
-        bottomY+7
+        bottom+7
     );
 
     ctx.quadraticCurveTo(
-        x+w*.34,
-        bottomY,
-        x+w*.42,
-        topY+10
+        x+w*.35,
+        bottom,
+        x+w*.43,
+        top+9
     );
 
     ctx.closePath();
 
     ctx.fill();
 
-    ctx.shadowBlur = 0;
+    ctx.shadowBlur =
+        0;
+
 
     /*
-       Top rim
+       RIM
     */
 
-    const rimGradient =
+    const rim =
         ctx.createLinearGradient(
-            x-w*.48,
-            topY,
-            x+w*.48,
-            topY+14
+            x-w*.5,
+            top,
+            x+w*.5,
+            top+14
         );
 
-    rimGradient.addColorStop(
+    rim.addColorStop(
         0,
-        "#172071"
+        "#151d6b"
     );
 
-    rimGradient.addColorStop(
+    rim.addColorStop(
         .5,
-        "#93a0ff"
+        "#aab5ff"
     );
 
-    rimGradient.addColorStop(
+    rim.addColorStop(
         1,
-        "#172071"
+        "#151d6b"
     );
 
     ctx.fillStyle =
-        rimGradient;
+        rim;
 
     ctx.beginPath();
 
     ctx.ellipse(
         x,
-        topY+7,
+        top+7,
         w*.48,
         9,
         0,
@@ -2040,17 +4028,17 @@ function drawCup(cup,index){
 
 
     /*
-       Inner dark opening
+       Opening
     */
 
     ctx.fillStyle =
-        "#080d3c";
+        "#070b35";
 
     ctx.beginPath();
 
     ctx.ellipse(
         x,
-        topY+7,
+        top+7,
         w*.39,
         6,
         0,
@@ -2068,39 +4056,40 @@ function drawCup(cup,index){
     ctx.strokeStyle =
         "rgba(255,255,255,.30)";
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth =
+        2;
 
     ctx.beginPath();
 
     ctx.moveTo(
-        x-w*.27,
-        topY+23
+        x-w*.26,
+        top+23
     );
 
     ctx.quadraticCurveTo(
-        x-w*.17,
-        bottomY-10,
-        x-w*.05,
-        bottomY-5
+        x-w*.18,
+        bottom-12,
+        x-w*.04,
+        bottom-5
     );
 
     ctx.stroke();
 
 
     /*
-       Decorative star
+       Decoration
     */
 
     ctx.fillStyle =
-        "rgba(255,255,255,.35)";
-
-    const starY =
-        topY + h*.48;
+        "rgba(255,255,255,.32)";
 
     drawStar(
         x,
-        starY,
-        Math.max(5,w*.07),
+        top+h*.48,
+        Math.max(
+            5,
+            w*.065
+        ),
         5
     );
 
@@ -2108,8 +4097,7 @@ function drawCup(cup,index){
 
 
     /*
-       If the cup is lifted after
-       correct answer, show ball underneath.
+       Show ball when lifted.
     */
 
     if(
@@ -2120,15 +4108,15 @@ function drawCup(cup,index){
         drawBall(
             x,
             ballY,
-            ballRadius
+            radius
         );
     }
 }
 
 
-/* =========================================================
-   DRAW STAR
-========================================================= */
+/* =====================================================
+   STAR
+===================================================== */
 
 function drawStar(
     x,
@@ -2139,28 +4127,49 @@ function drawStar(
 
     ctx.beginPath();
 
-    for(let i=0;i<points*2;i++){
+    for(
+        let i=0;
+        i<points*2;
+        i++
+    ){
 
         const r =
             i%2 === 0
-            ? radius
-            : radius*.42;
+            ?
+            radius
+            :
+            radius*.42;
 
         const angle =
             -Math.PI/2 +
             i*Math.PI/points;
 
         const px =
-            x + Math.cos(angle)*r;
+            x +
+            Math.cos(angle)*r;
 
         const py =
-            y + Math.sin(angle)*r;
+            y +
+            Math.sin(angle)*r;
 
-        if(i===0){
-            ctx.moveTo(px,py);
+        if(
+            i===0
+        ){
+
+            ctx.moveTo(
+                px,
+                py
+            );
+
         }else{
-            ctx.lineTo(px,py);
+
+            ctx.lineTo(
+                px,
+                py
+            );
+
         }
+
     }
 
     ctx.closePath();
@@ -2169,71 +4178,9 @@ function drawStar(
 }
 
 
-/* =========================================================
-   DRAW FLOOR
-========================================================= */
-
-function drawFloor(){
-
-    const floorY =
-        H*.72;
-
-    const gradient =
-        ctx.createLinearGradient(
-            0,
-            floorY,
-            0,
-            H
-        );
-
-    gradient.addColorStop(
-        0,
-        "rgba(80,100,220,.16)"
-    );
-
-    gradient.addColorStop(
-        1,
-        "rgba(0,0,0,.15)"
-    );
-
-    ctx.fillStyle =
-        gradient;
-
-    ctx.fillRect(
-        0,
-        floorY,
-        W,
-        H-floorY
-    );
-
-    /*
-       glowing floor line
-    */
-
-    ctx.strokeStyle =
-        "rgba(100,130,255,.20)";
-
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        0,
-        floorY
-    );
-
-    ctx.lineTo(
-        W,
-        floorY
-    );
-
-    ctx.stroke();
-}
-
-
-/* =========================================================
-   DRAW GAME
-========================================================= */
+/* =====================================================
+   DRAW
+===================================================== */
 
 function draw(){
 
@@ -2243,6 +4190,7 @@ function draw(){
         W,
         H
     );
+
 
     /*
        Background
@@ -2258,17 +4206,17 @@ function draw(){
 
     bg.addColorStop(
         0,
-        "#151d5e"
+        "#172263"
     );
 
     bg.addColorStop(
         .55,
-        "#0d1447"
+        "#0c1447"
     );
 
     bg.addColorStop(
         1,
-        "#070b2b"
+        "#060a29"
     );
 
     ctx.fillStyle =
@@ -2281,8 +4229,9 @@ function draw(){
         H
     );
 
+
     /*
-       Decorative lights
+       Central glow
     */
 
     const glow =
@@ -2297,7 +4246,7 @@ function draw(){
 
     glow.addColorStop(
         0,
-        "rgba(90,110,255,.14)"
+        "rgba(100,120,255,.13)"
     );
 
     glow.addColorStop(
@@ -2315,226 +4264,584 @@ function draw(){
         H
     );
 
-    drawFloor();
+
+    /*
+       Floor
+    */
+
+    const floorY =
+        H*.73;
+
+    const floor =
+        ctx.createLinearGradient(
+            0,
+            floorY,
+            0,
+            H
+        );
+
+    floor.addColorStop(
+        0,
+        "rgba(80,100,230,.14)"
+    );
+
+    floor.addColorStop(
+        1,
+        "rgba(0,0,0,.20)"
+    );
+
+    ctx.fillStyle =
+        floor;
+
+    ctx.fillRect(
+        0,
+        floorY,
+        W,
+        H-floorY
+    );
+
+
+    /*
+       Cups
+    */
 
     cups.forEach(
         (cup,index)=>{
-            drawCup(cup,index);
+
+            drawCup(
+                cup,
+                index
+            );
+
         }
     );
+
 
     drawParticles();
 }
 
 
-/* =========================================================
+/* =====================================================
    ANIMATION LOOP
-========================================================= */
+===================================================== */
 
 function animate(now){
 
-    if(!now){
-        now = performance.now();
-    }
+    if(
+        game.style.display !==
+        "none"
+    ){
 
-    if(gameUI.style.display !== "none"){
-
-        updateCups(now);
+        updateCups(
+            now
+        );
 
         updateParticles();
 
         draw();
+
     }
 
     animationFrame =
-        requestAnimationFrame(animate);
+        requestAnimationFrame(
+            animate
+        );
 }
 
-animate();
-
-
-/* =========================================================
-   TOUCH / POINTER
-========================================================= */
-
-canvas.addEventListener(
-    "pointerdown",
-    function(e){
-
-        if(phase !== "choose"){
-            return;
-        }
-
-        e.preventDefault();
-
-        chooseCup(e.clientX);
-    }
+animate(
+    performance.now()
 );
 
 
-/* =========================================================
-   BUTTONS
-========================================================= */
+/* =====================================================
+   LEVEL SELECTOR
+===================================================== */
 
-playButton.addEventListener(
+function buildLevelGrid(){
+
+    levelGrid.innerHTML =
+        "";
+
+    for(
+        let i=1;
+        i<=30;
+        i++
+    ){
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+        button.className =
+            "level-button";
+
+        if(
+            i >
+            unlockedLevel
+        ){
+
+            button.classList.add(
+                "locked"
+            );
+
+            button.innerHTML =
+                "🔒";
+
+        }else{
+
+            button.innerHTML =
+                i;
+
+            if(
+                i <
+                unlockedLevel
+            ){
+
+                button.classList.add(
+                    "completed"
+                );
+
+                button.innerHTML =
+                    i +
+                    "<span class='level-stars'>✓</span>";
+
+            }
+
+            button.onclick =
+                ()=>startLevel(i);
+
+        }
+
+        levelGrid.appendChild(
+            button
+        );
+
+    }
+}
+
+
+/* =====================================================
+   BUTTON EVENTS
+===================================================== */
+
+document
+.getElementById("playBtn")
+.addEventListener(
     "click",
     startGame
 );
 
-restartButton.addEventListener(
+
+document
+.getElementById("levelsBtn")
+.addEventListener(
     "click",
-    restartGame
+    function(){
+
+        buildLevelGrid();
+
+        levelScreen.style.display =
+            "block";
+
+    }
 );
 
-restartSmall.addEventListener(
+
+document
+.getElementById("closeLevels")
+.addEventListener(
     "click",
-    restartGame
+    function(){
+
+        levelScreen.style.display =
+            "none";
+
+    }
 );
 
-homeButton.addEventListener(
+
+document
+.getElementById("settingsBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        updateSettingsUI();
+
+        settingsOverlay.classList.remove(
+            "hidden"
+        );
+
+    }
+);
+
+
+document
+.getElementById("closeSettings")
+.addEventListener(
+    "click",
+    function(){
+
+        settingsOverlay.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* GAME BUTTONS */
+
+document
+.getElementById("restartBtn")
+.addEventListener(
+    "click",
+    restartLevel
+);
+
+
+document
+.getElementById("gameHomeBtn")
+.addEventListener(
     "click",
     goHome
 );
 
 
-/* =========================================================
-   RESTART
-========================================================= */
-
-function restartGame(){
-
-    clearTimers();
-
-    gameOver.classList.add("hidden");
-
-    /*
-       IMPORTANT FIX:
-       Make the game visible before resizing.
-    */
-
-    homeScreen.style.display = "none";
-
-    gameUI.style.display = "block";
-
-    resizeCanvas();
-
-    currentSet = 1;
-    currentRound = 1;
-
-    score = 0;
-    coins = 0;
-    lives = 3;
-
-    updateUI();
-
-    beginRound();
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function goHome(){
-
-    clearTimers();
-
-    phase = "idle";
-
-    gameOver.classList.add("hidden");
-
-    gameUI.style.display = "none";
-
-    homeScreen.style.display = "flex";
-
-    updateUI();
-
-    /*
-       Stop unnecessary game animation resize issues.
-    */
-
-    resizeCanvas();
-}
-
-
-/* =========================================================
-   LOAD SAVED DATA
-========================================================= */
-
-function loadSavedData(){
-
-    highScore =
-        Number(
-            localStorage.getItem(
-                "findBallHighScore"
-            ) || 0
-        );
-
-    savedCoins =
-        Number(
-            localStorage.getItem(
-                "findBallCoins"
-            ) || 0
-        );
-
-    homeBest.textContent =
-        highScore;
-
-    homeCoins.textContent =
-        savedCoins;
-}
-
-loadSavedData();
-
-
-/* =========================================================
-   PREVENT DOUBLE TAP ZOOM
-========================================================= */
-
-document.addEventListener(
-    "dblclick",
-    function(e){
-        e.preventDefault();
-    },
-    {passive:false}
+document
+.getElementById("pauseBtn")
+.addEventListener(
+    "click",
+    pauseGame
 );
 
 
-/* =========================================================
-   VISIBILITY FIX
-========================================================= */
+document
+.getElementById("resumeBtn")
+.addEventListener(
+    "click",
+    resumeGame
+);
 
-document.addEventListener(
-    "visibilitychange",
+
+document
+.getElementById("pauseHomeBtn")
+.addEventListener(
+    "click",
+    goHome
+);
+
+
+/* =====================================================
+   MODAL BUTTONS
+===================================================== */
+
+document
+.getElementById("modalPrimary")
+.addEventListener(
+    "click",
     function(){
 
-        if(document.hidden){
+        overlay.classList.add(
+            "hidden"
+        );
 
-            if(phase === "choose"){
-                clearInterval(timerInterval);
-            }
+        if(
+            phase ===
+            "gameover"
+        ){
+
+            currentRound =
+                1;
+
+            score =
+                0;
+
+            runCoins =
+                0;
+
+            lives =
+                3;
+
+            beginRound();
+
+            return;
+        }
+
+
+        if(
+            currentLevel >=
+            30
+        ){
+
+            currentLevel =
+                1;
 
         }else{
 
-            if(phase === "choose"){
-                startTimer();
-            }
+            currentLevel++;
 
-            resizeCanvas();
+        }
+
+        currentRound =
+            1;
+
+        score =
+            0;
+
+        runCoins =
+            0;
+
+        lives =
+            3;
+
+        beginRound();
+
+    }
+);
+
+
+document
+.getElementById("modalSecondary")
+.addEventListener(
+    "click",
+    goHome
+);
+
+
+/* =====================================================
+   SOUND BUTTON
+===================================================== */
+
+document
+.getElementById("soundBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        soundOn =
+            !soundOn;
+
+        localStorage.setItem(
+            "ftb_v5_sound",
+            soundOn
+            ? "on"
+            : "off"
+        );
+
+        updateSoundButton();
+
+        if(
+            soundOn
+        ){
+
+            beep(
+                650,
+                .07
+            );
+
+        }
+
+        updateSettingsUI();
+
+    }
+);
+
+
+function updateSoundButton(){
+
+    document
+    .getElementById(
+        "soundBtn"
+    )
+    .textContent =
+        soundOn
+        ?
+        "🔊 Sound"
+        :
+        "🔇 Sound";
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+document
+.getElementById("soundToggle")
+.addEventListener(
+    "click",
+    function(){
+
+        soundOn =
+            !soundOn;
+
+        localStorage.setItem(
+            "ftb_v5_sound",
+            soundOn
+            ?
+            "on"
+            :
+            "off"
+        );
+
+        updateSettingsUI();
+
+        updateSoundButton();
+
+    }
+);
+
+
+document
+.getElementById("vibrationToggle")
+.addEventListener(
+    "click",
+    function(){
+
+        vibrationOn =
+            !vibrationOn;
+
+        localStorage.setItem(
+            "ftb_v5_vibration",
+            vibrationOn
+            ?
+            "on"
+            :
+            "off"
+        );
+
+        updateSettingsUI();
+
+        if(
+            vibrationOn
+        ){
+
+            vibrate(30);
+
         }
 
     }
 );
 
 
-/* =========================================================
-   INITIAL UI
-========================================================= */
+function updateSettingsUI(){
+
+    document
+    .getElementById(
+        "soundToggle"
+    )
+    .classList.toggle(
+        "active",
+        soundOn
+    );
+
+    document
+    .getElementById(
+        "vibrationToggle"
+    )
+    .classList.toggle(
+        "active",
+        vibrationOn
+    );
+}
+
+
+/* =====================================================
+   CLEAR TIMERS
+===================================================== */
+
+function clearTimers(){
+
+    clearInterval(
+        timer
+    );
+
+    clearTimeout(
+        shuffleTimer
+    );
+
+    timer =
+        null;
+
+    shuffleTimer =
+        null;
+}
+
+
+/* =====================================================
+   VISIBILITY
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.hidden
+        ){
+
+            if(
+                phase ===
+                "choose"
+            ){
+
+                clearInterval(
+                    timer
+                );
+
+            }
+
+        }else{
+
+            resizeCanvas();
+
+            if(
+                phase ===
+                "choose"
+            ){
+
+                startTimer();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PREVENT DOUBLE TAP ZOOM
+===================================================== */
+
+document.addEventListener(
+    "dblclick",
+    function(e){
+
+        e.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+updateHome();
 
 updateSoundButton();
-updateUI();
+
+updateSettingsUI();
 
 </script>
 
+</div>
+
 </body>
-</html>
+      </html>

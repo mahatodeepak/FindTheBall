@@ -2,46 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find the Ball</title>
+<title>Find the Ball 🎯</title>
 
 <style>
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
     -webkit-tap-highlight-color:transparent;
 }
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
     min-height:100vh;
-    background:linear-gradient(135deg,#0f172a,#1e3a8a,#312e81);
+    font-family:Arial,sans-serif;
     color:white;
-    text-align:center;
     overflow-x:hidden;
+
+    background:
+        radial-gradient(circle at 20% 20%,rgba(59,130,246,.35),transparent 30%),
+        radial-gradient(circle at 80% 70%,rgba(168,85,247,.35),transparent 30%),
+        linear-gradient(135deg,#020617,#0f172a,#1e1b4b,#111827);
+
+    position:relative;
+}
+
+/* BACKGROUND STARS */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background-image:
+        radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1px),
+        radial-gradient(circle,rgba(255,255,255,.4) 1px,transparent 1px);
+
+    background-size:70px 70px,110px 110px;
+    background-position:10px 20px,40px 60px;
+
+    opacity:.35;
+    pointer-events:none;
+    animation:stars 15s linear infinite;
+}
+
+@keyframes stars{
+    from{transform:translateY(0);}
+    to{transform:translateY(70px);}
 }
 
 .screen{
     min-height:100vh;
     padding:20px 12px;
+    position:relative;
+    z-index:1;
 }
 
 .hidden{
-    display:none !important;
+    display:none!important;
 }
 
-/* START SCREEN */
+/* ================= START SCREEN ================= */
 
-.start-box{
-    max-width:500px;
-    margin:0 auto;
-    padding-top:12vh;
+.start-screen{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.start-card{
+    width:100%;
+    max-width:520px;
+    padding:35px 25px;
+    text-align:center;
+
+    background:rgba(15,23,42,.78);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:30px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.5),
+        inset 0 1px rgba(255,255,255,.15);
+
+    backdrop-filter:blur(12px);
 }
 
 .logo{
-    font-size:70px;
-    animation:float 2s infinite ease-in-out;
+    font-size:85px;
+    animation:float 2s ease-in-out infinite;
 }
 
 @keyframes float{
@@ -49,67 +98,85 @@ body{
     50%{transform:translateY(-12px);}
 }
 
-h1{
-    font-size:42px;
+.start-card h1{
+    font-size:44px;
     margin:10px 0;
 }
 
-.subtitle{
-    color:#dbeafe;
-    font-size:18px;
-    line-height:1.5;
+.start-card p{
+    color:#cbd5e1;
+    line-height:1.6;
+    font-size:17px;
 }
 
-.big-button{
+.start-button{
+    margin-top:25px;
+    width:90%;
+    max-width:330px;
+
     border:0;
     border-radius:18px;
-    padding:16px 45px;
-    margin-top:25px;
-    font-size:20px;
+    padding:17px;
+
+    font-size:21px;
     font-weight:bold;
     color:white;
-    background:#22c55e;
-    box-shadow:0 7px 0 #15803d;
+
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+
+    box-shadow:
+        0 7px 0 #166534,
+        0 15px 30px rgba(34,197,94,.25);
+
     cursor:pointer;
 }
 
-.big-button:active{
-    transform:translateY(5px);
-    box-shadow:0 2px 0 #15803d;
+.start-button:active{
+    transform:translateY(6px);
+    box-shadow:0 2px 0 #166534;
 }
 
-.high-score-start{
+.high-score{
     margin-top:25px;
     font-size:18px;
+    color:#fde68a;
 }
 
-/* GAME */
+/* ================= GAME HEADER ================= */
 
 .game-header{
-    max-width:700px;
+    width:100%;
+    max-width:850px;
     margin:auto;
 }
 
 .game-title{
-    font-size:30px;
-    margin:5px 0 15px;
+    text-align:center;
+    font-size:32px;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:7px;
+    gap:8px;
 }
 
 .stat{
-    background:rgba(255,255,255,.13);
-    border-radius:12px;
-    padding:8px 3px;
+    text-align:center;
+    padding:9px 4px;
+
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:14px;
+
+    backdrop-filter:blur(8px);
 }
 
 .stat-label{
     font-size:12px;
-    color:#bfdbfe;
+    color:#cbd5e1;
 }
 
 .stat-value{
@@ -118,216 +185,388 @@ h1{
     margin-top:3px;
 }
 
-.timer-bar{
-    height:10px;
-    background:rgba(255,255,255,.2);
+.timer-container{
+    margin-top:15px;
+}
+
+.timer-background{
+    width:100%;
+    height:12px;
+    background:rgba(255,255,255,.15);
     border-radius:20px;
-    margin:15px 0;
     overflow:hidden;
 }
 
-#timerFill{
-    height:100%;
+#timerBar{
     width:100%;
-    background:#22c55e;
-    transition:width .2s linear;
+    height:100%;
+    background:linear-gradient(90deg,#22c55e,#84cc16);
+    transition:width .1s linear;
 }
 
-.set-text{
+.set-label{
+    text-align:center;
     font-size:20px;
     font-weight:bold;
-    margin:10px;
+    margin-top:12px;
 }
 
 #message{
+    text-align:center;
     min-height:42px;
+    padding:7px;
     font-size:20px;
     font-weight:bold;
-    padding:5px;
 }
 
-/* PLAY AREA */
+/* ================= GAME TABLE ================= */
 
-#gameArea{
+.table{
     width:100%;
-    max-width:700px;
-    min-height:390px;
+    max-width:900px;
+    height:430px;
+
     margin:0 auto;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:15px;
-    padding:50px 5px 70px;
+
+    position:relative;
+
+    border-radius:35px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(34,197,94,.30),
+            rgba(6,78,59,.25) 45%,
+            rgba(2,44,34,.5)
+        );
+
+    border:2px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        inset 0 0 50px rgba(0,0,0,.45),
+        0 25px 60px rgba(0,0,0,.35);
+
+    overflow:hidden;
 }
+
+/* TABLE LIGHT */
+
+.table::before{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:150px;
+    left:50%;
+    top:20px;
+    transform:translateX(-50%);
+
+    background:rgba(255,255,255,.07);
+    filter:blur(35px);
+    border-radius:50%;
+}
+
+/* CUP AREA */
+
+#cupsArea{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:65px;
+    height:180px;
+}
+
+/* CUP */
 
 .cup{
-    width:92px;
-    height:125px;
-    position:relative;
+    position:absolute;
+
+    width:100px;
+    height:135px;
+
+    bottom:0;
+
     cursor:pointer;
+
+    transition:
+        left .32s cubic-bezier(.4,.1,.2,1),
+        transform .25s ease;
+
     touch-action:manipulation;
-    transition:transform .35s ease;
+}
+
+.cup:hover{
+    transform:scale(1.04);
 }
 
 .cup:active{
-    transform:scale(.94);
+    transform:scale(.95);
+}
+
+/* CUP SHUFFLE ANIMATION */
+
+.cup.shuffling{
+    transform:translateY(-25px) rotate(3deg);
 }
 
 .cup-body{
     position:absolute;
-    bottom:0;
+
     left:5px;
-    width:82px;
+    bottom:0;
+
+    width:90px;
     height:105px;
-    background:linear-gradient(#ef4444,#991b1b);
-    border-radius:12px 12px 38px 38px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7f1d1d,
+            #ef4444 30%,
+            #dc2626 70%,
+            #7f1d1d
+        );
+
+    border-radius:12px 12px 42px 42px;
+
     border:3px solid #fecaca;
-    box-shadow:0 10px 14px rgba(0,0,0,.35);
+
+    box-shadow:
+        0 12px 18px rgba(0,0,0,.45);
+
     z-index:3;
 }
 
 .cup-top{
     position:absolute;
-    top:5px;
+
     left:0;
-    width:92px;
-    height:25px;
+    top:7px;
+
+    width:100px;
+    height:28px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            #f87171,
+            #991b1b
+        );
+
     border-radius:50%;
-    background:#dc2626;
+
     border:3px solid #fecaca;
-    z-index:4;
+
+    z-index:5;
 }
+
+/* BALL */
 
 .ball{
     position:absolute;
-    width:40px;
-    height:40px;
-    left:26px;
-    bottom:5px;
+
+    width:42px;
+    height:42px;
+
+    left:29px;
+    bottom:3px;
+
     border-radius:50%;
-    background:radial-gradient(circle at 30% 25%,#fff 0%,#fde047 35%,#f97316 75%);
-    box-shadow:0 4px 10px rgba(0,0,0,.45);
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            white 0%,
+            #fde047 28%,
+            #f97316 70%,
+            #c2410c
+        );
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.5);
+
     z-index:2;
 }
 
-.cup.lift .cup-body,
-.cup.lift .cup-top{
+/* CUP LIFT */
+
+.cup.reveal .cup-body,
+.cup.reveal .cup-top{
     transform:translateY(-75px);
 }
 
+/* CORRECT */
+
 .cup.correct{
-    animation:correct .6s ease;
+    animation:correctCup .7s ease;
 }
 
-@keyframes correct{
+@keyframes correctCup{
     0%{transform:scale(1);}
-    40%{transform:scale(1.15) translateY(-10px);}
-    70%{transform:scale(.95);}
+    35%{transform:scale(1.2) translateY(-15px);}
+    65%{transform:scale(.95);}
     100%{transform:scale(1);}
 }
 
+/* WRONG */
+
 .cup.wrong{
-    animation:shake .45s ease;
+    animation:wrongCup .5s ease;
 }
 
-@keyframes shake{
+@keyframes wrongCup{
     0%,100%{transform:translateX(0);}
-    20%{transform:translateX(-12px);}
-    40%{transform:translateX(12px);}
-    60%{transform:translateX(-8px);}
-    80%{transform:translateX(8px);}
+    20%{transform:translateX(-14px);}
+    40%{transform:translateX(14px);}
+    60%{transform:translateX(-10px);}
+    80%{transform:translateX(10px);}
 }
 
-/* BUTTONS */
+/* TABLE FOOT */
 
-.game-buttons{
-    margin-top:5px;
+.table-foot{
+    position:absolute;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:75%;
+    height:12px;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.3);
+    filter:blur(5px);
 }
 
-.action-button{
+/* ================= BUTTONS ================= */
+
+.buttons{
+    text-align:center;
+    margin-top:15px;
+}
+
+.small-button{
     border:0;
     border-radius:12px;
-    padding:12px 22px;
-    margin:5px;
+    padding:12px 20px;
+    margin:4px;
+
+    color:white;
     font-size:16px;
     font-weight:bold;
-    color:white;
+
     cursor:pointer;
+
+    background:#4f46e5;
 }
 
-#soundButton{
-    background:#6366f1;
-}
-
-#nextButton{
-    background:#f59e0b;
+#nextSetButton{
     display:none;
+    background:#f59e0b;
 }
 
-#restartButton{
-    background:#22c55e;
+/* ================= COIN EFFECT ================= */
+
+.coin{
+    position:fixed;
+
+    font-size:38px;
+
+    pointer-events:none;
+
+    z-index:100;
+
+    animation:coinUp 1s ease forwards;
 }
 
-/* GAME OVER */
+@keyframes coinUp{
+    0%{
+        opacity:1;
+        transform:translateY(0) scale(.7) rotate(0);
+    }
 
-.over-box{
+    100%{
+        opacity:0;
+        transform:translateY(-140px) scale(1.5) rotate(360deg);
+    }
+}
+
+/* ================= GAME OVER ================= */
+
+.over-screen{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.over-card{
+    width:100%;
     max-width:500px;
-    margin:0 auto;
-    padding-top:12vh;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    background:rgba(15,23,42,.82);
+
+    border-radius:30px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:0 25px 70px rgba(0,0,0,.5);
+
+    backdrop-filter:blur(12px);
 }
 
 .over-icon{
-    font-size:75px;
+    font-size:80px;
+}
+
+.over-card h1{
+    font-size:38px;
+    margin:10px;
 }
 
 .final-score{
     font-size:30px;
+    margin:18px;
     font-weight:bold;
-    margin:20px;
+}
+
+.result-line{
+    margin:8px;
+    font-size:19px;
 }
 
 .new-record{
-    font-size:20px;
     color:#fde047;
+    font-size:21px;
     font-weight:bold;
+    margin:15px;
 }
 
-/* COIN ANIMATION */
-
-.coin-animation{
-    position:fixed;
-    font-size:35px;
-    pointer-events:none;
-    animation:coinFly 1s forwards;
-    z-index:100;
-}
-
-@keyframes coinFly{
-    0%{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-    100%{
-        opacity:0;
-        transform:translateY(-120px) scale(1.5);
-    }
-}
-
-/* MOBILE */
+/* ================= MOBILE ================= */
 
 @media(max-width:600px){
 
     .screen{
-        padding:12px 8px;
+        padding:12px 7px;
     }
 
-    h1{
-        font-size:34px;
+    .start-card{
+        padding:28px 18px;
     }
 
     .logo{
-        font-size:60px;
+        font-size:65px;
+    }
+
+    .start-card h1{
+        font-size:34px;
+    }
+
+    .game-title{
+        font-size:27px;
     }
 
     .stats{
@@ -338,314 +577,487 @@ h1{
         padding:7px 2px;
     }
 
+    .stat-label{
+        font-size:10px;
+    }
+
     .stat-value{
-        font-size:17px;
-    }
-
-    #gameArea{
-        min-height:330px;
-        gap:8px;
-        padding-top:35px;
-    }
-
-    .cup{
-        width:75px;
-        height:110px;
-    }
-
-    .cup-body{
-        width:68px;
-        height:90px;
-        left:4px;
-    }
-
-    .cup-top{
-        width:76px;
-        height:21px;
-    }
-
-    .ball{
-        width:34px;
-        height:34px;
-        left:21px;
-    }
-
-    .cup.lift .cup-body,
-    .cup.lift .cup-top{
-        transform:translateY(-65px);
+        font-size:16px;
     }
 
     #message{
         font-size:18px;
     }
+
+    .table{
+        height:370px;
+        border-radius:25px;
+    }
+
+    #cupsArea{
+        bottom:55px;
+        height:170px;
+    }
+
+    .cup{
+        width:72px;
+        height:110px;
+    }
+
+    .cup-body{
+        width:66px;
+        height:85px;
+        left:3px;
+    }
+
+    .cup-top{
+        width:72px;
+        height:22px;
+    }
+
+    .ball{
+        width:34px;
+        height:34px;
+        left:19px;
+    }
+
+    .cup.reveal .cup-body,
+    .cup.reveal .cup-top{
+        transform:translateY(-60px);
+    }
+
+}
+
+/* VERY SMALL PHONES */
+
+@media(max-width:380px){
+
+    .cup{
+        width:62px;
+    }
+
+    .cup-body{
+        width:58px;
+    }
+
+    .cup-top{
+        width:64px;
+    }
+
+    .ball{
+        left:16px;
+    }
+
+    #cupsArea{
+        bottom:50px;
+    }
+
 }
 </style>
 </head>
 
+
 <body>
 
-<!-- ================= START SCREEN ================= -->
 
-<div id="startScreen" class="screen">
+<!-- =====================================================
+     START SCREEN
+===================================================== -->
 
-    <div class="start-box">
+<section id="startScreen" class="screen start-screen">
 
-        <div class="logo">🎯</div>
+    <div class="start-card">
 
-        <h1>Find the Ball</h1>
-
-        <p class="subtitle">
-            Watch the cups carefully and<br>
-            find where the ball is hiding!
-        </p>
-
-        <button class="big-button" onclick="startGame()">
-            ▶ START GAME
-        </button>
-
-        <div class="high-score-start">
-            🏆 High Score:
-            <strong id="startHighScore">0</strong>
+        <div class="logo">
+            🎯
         </div>
 
-        <p class="subtitle">
-            8 Sets • Coins • Lives • Timer
+        <h1>
+            Find the Ball
+        </h1>
+
+        <p>
+            Watch the ball carefully!<br>
+            The cups will shuffle faster and faster.
         </p>
+
+        <button
+            class="start-button"
+            onclick="startGame()">
+
+            ▶ START GAME
+
+        </button>
+
+        <div class="high-score">
+
+            🏆 High Score:
+            <strong id="startHighScore">
+                0
+            </strong>
+
+        </div>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- ================= GAME SCREEN ================= -->
+<!-- =====================================================
+     GAME SCREEN
+===================================================== -->
 
-<div id="gameScreen" class="screen hidden">
+<section id="gameScreen" class="screen hidden">
 
     <div class="game-header">
 
         <div class="game-title">
-            🎯 Find the Ball
+            🎯 FIND THE BALL
         </div>
+
 
         <div class="stats">
 
             <div class="stat">
-                <div class="stat-label">SET</div>
-                <div class="stat-value" id="setValue">1/8</div>
+
+                <div class="stat-label">
+                    SET
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="setValue">
+                    1/8
+                </div>
+
             </div>
 
-            <div class="stat">
-                <div class="stat-label">⭐ SCORE</div>
-                <div class="stat-value" id="scoreValue">0</div>
-            </div>
 
             <div class="stat">
-                <div class="stat-label">🪙 COINS</div>
-                <div class="stat-value" id="coinValue">0</div>
+
+                <div class="stat-label">
+                    ⭐ SCORE
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="scoreValue">
+                    0
+                </div>
+
             </div>
 
+
             <div class="stat">
-                <div class="stat-label">❤️ LIVES</div>
-                <div class="stat-value" id="lifeValue">❤️❤️❤️</div>
+
+                <div class="stat-label">
+                    🪙 COINS
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="coinValue">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    ❤️ LIVES
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="lifeValue">
+                    ❤️❤️❤️
+                </div>
+
             </div>
 
         </div>
 
-        <div class="timer-bar">
-            <div id="timerFill"></div>
+
+        <div class="timer-container">
+
+            <div class="timer-background">
+
+                <div id="timerBar"></div>
+
+            </div>
+
         </div>
 
-        <div class="set-text" id="roundText">
-            Round 1
+
+        <div
+            class="set-label"
+            id="roundLabel">
+
+            Set 1 • Round 1
+
         </div>
+
 
         <div id="message">
-            Watch carefully!
+
+            Watch the ball! 👀
+
         </div>
 
     </div>
 
-    <div id="gameArea"></div>
 
-    <div class="game-buttons">
+    <!-- GAME TABLE -->
+
+    <div class="table">
+
+        <div id="cupsArea"></div>
+
+        <div class="table-foot"></div>
+
+    </div>
+
+
+    <div class="buttons">
 
         <button
-            class="action-button"
+            class="small-button"
             id="soundButton"
             onclick="toggleSound()">
+
             🔊 Sound ON
+
         </button>
 
+
         <button
-            class="action-button"
-            id="nextButton"
+            class="small-button"
+            id="nextSetButton"
             onclick="nextSet()">
+
             NEXT SET ➜
+
         </button>
 
     </div>
 
-</div>
+</section>
 
 
-<!-- ================= GAME OVER SCREEN ================= -->
+<!-- =====================================================
+     GAME OVER
+===================================================== -->
 
-<div id="gameOverScreen" class="screen hidden">
+<section
+    id="gameOverScreen"
+    class="screen over-screen hidden">
 
-    <div class="over-box">
+    <div class="over-card">
 
-        <div class="over-icon" id="overIcon">
+        <div
+            class="over-icon"
+            id="overIcon">
+
             🏆
+
         </div>
 
         <h1 id="overTitle">
             Game Over
         </h1>
 
+
         <div class="final-score">
-            Score: <span id="finalScore">0</span>
+
+            ⭐
+            <span id="finalScore">
+                0
+            </span>
+
         </div>
 
-        <div>
+
+        <div class="result-line">
+
             🪙 Coins:
-            <strong id="finalCoins">0</strong>
+            <strong id="finalCoins">
+                0
+            </strong>
+
         </div>
 
-        <div>
+
+        <div class="result-line">
+
             🏆 High Score:
-            <strong id="finalHighScore">0</strong>
+            <strong id="finalHighScore">
+                0
+            </strong>
+
         </div>
+
 
         <div
-            class="new-record hidden"
-            id="newRecord">
+            id="newRecord"
+            class="new-record hidden">
+
             🎉 NEW HIGH SCORE!
+
         </div>
 
-        <button
-            class="big-button"
-            onclick="playAgain()">
-            🔄 PLAY AGAIN
-        </button>
 
         <button
-            class="action-button"
-            id="backButton"
-            onclick="backToStart()">
+            class="start-button"
+            onclick="playAgain()">
+
+            🔄 PLAY AGAIN
+
+        </button>
+
+
+        <br>
+
+
+        <button
+            class="small-button"
+            onclick="goHome()">
+
             🏠 HOME
+
         </button>
 
     </div>
 
-</div>
+</section>
 
 
 <script>
 
 /* =====================================================
    FIND THE BALL
-   COMPLETE 8 SET GAME
-   ===================================================== */
+   GAME ENGINE
+===================================================== */
 
 
-/* ---------- GAME SETTINGS ---------- */
+/* ================= SETTINGS ================= */
 
-const sets = [
+const SETS = [
 
     {
         cups:3,
         shuffles:3,
-        shuffleSpeed:650,
-        time:10
+        speed:700,
+        time:10,
+        rounds:3
     },
 
     {
         cups:3,
         shuffles:5,
-        shuffleSpeed:550,
-        time:10
+        speed:600,
+        time:10,
+        rounds:3
     },
 
     {
         cups:4,
-        shuffles:5,
-        shuffleSpeed:500,
-        time:9
+        shuffles:6,
+        speed:520,
+        time:9,
+        rounds:3
     },
 
     {
         cups:4,
-        shuffles:7,
-        shuffleSpeed:430,
-        time:9
-    },
-
-    {
-        cups:5,
-        shuffles:7,
-        shuffleSpeed:390,
-        time:8
+        shuffles:8,
+        speed:450,
+        time:9,
+        rounds:3
     },
 
     {
         cups:5,
         shuffles:9,
-        shuffleSpeed:340,
-        time:8
+        speed:400,
+        time:8,
+        rounds:3
     },
 
     {
-        cups:6,
-        shuffles:10,
-        shuffleSpeed:290,
-        time:7
+        cups:5,
+        shuffles:11,
+        speed:340,
+        time:8,
+        rounds:3
     },
 
     {
         cups:6,
         shuffles:12,
-        shuffleSpeed:240,
-        time:7
+        speed:290,
+        time:7,
+        rounds:3
+    },
+
+    {
+        cups:6,
+        shuffles:15,
+        speed:230,
+        time:7,
+        rounds:3
     }
 
 ];
 
 
-/* ---------- GAME VARIABLES ---------- */
+/* ================= VARIABLES ================= */
 
 let currentSet = 0;
+
+let currentRound = 0;
+
 let score = 0;
+
 let coins = 0;
+
 let lives = 3;
 
-let ballPosition = 0;
+let ballCup = 0;
 
 let acceptingAnswer = false;
+
 let gameRunning = false;
 
 let timerInterval = null;
+
 let shuffleInterval = null;
 
 let timeLeft = 0;
 
 let soundOn = true;
 
-
-/* ---------- HIGH SCORE ---------- */
-
-let highScore =
-    Number(localStorage.getItem("findBallHighScore")) || 0;
-
-document.getElementById("startHighScore").textContent =
-    highScore;
-
-
-/* ---------- AUDIO ---------- */
-
 let audioContext = null;
 
 
-function playSound(type){
+/* ================= HIGH SCORE ================= */
+
+let highScore =
+    Number(
+        localStorage.getItem(
+            "findBallHighScore"
+        )
+    ) || 0;
+
+document.getElementById(
+    "startHighScore"
+).textContent = highScore;
+
+
+/* ================= AUDIO ================= */
+
+function sound(type){
 
     if(!soundOn) return;
 
@@ -654,467 +1066,684 @@ function playSound(type){
         if(!audioContext){
 
             audioContext =
-                new (window.AudioContext ||
-                window.webkitAudioContext)();
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
 
         }
 
-        const oscillator =
+        const osc =
             audioContext.createOscillator();
 
         const gain =
             audioContext.createGain();
 
-        oscillator.connect(gain);
-        gain.connect(audioContext.destination);
+        osc.connect(gain);
+
+        gain.connect(
+            audioContext.destination
+        );
 
 
         if(type === "correct"){
 
-            oscillator.frequency.value = 700;
-            gain.gain.value = 0.12;
+            osc.frequency.value = 750;
+            gain.gain.value = .12;
 
         }
 
         else if(type === "wrong"){
 
-            oscillator.frequency.value = 180;
-            gain.gain.value = 0.15;
+            osc.frequency.value = 180;
+            gain.gain.value = .15;
+
+        }
+
+        else if(type === "shuffle"){
+
+            osc.frequency.value = 350;
+            gain.gain.value = .025;
 
         }
 
         else if(type === "coin"){
 
-            oscillator.frequency.value = 1000;
-            gain.gain.value = 0.08;
+            osc.frequency.value = 1000;
+            gain.gain.value = .08;
 
         }
 
-        else if(type === "click"){
-
-            oscillator.frequency.value = 450;
-            gain.gain.value = 0.06;
-
-        }
-
-        oscillator.start();
+        osc.start();
 
         gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            audioContext.currentTime + 0.18
+            .001,
+            audioContext.currentTime + .15
         );
 
-        oscillator.stop(
-            audioContext.currentTime + 0.18
+        osc.stop(
+            audioContext.currentTime + .15
         );
 
-    }catch(e){
+    }catch(e){}
 
-        // Audio is optional.
-    }
 }
 
 
-/* ---------- SOUND BUTTON ---------- */
+/* ================= SOUND TOGGLE ================= */
 
 function toggleSound(){
 
     soundOn = !soundOn;
 
-    const button =
-        document.getElementById("soundButton");
+    document.getElementById(
+        "soundButton"
+    ).textContent =
+        soundOn
+        ? "🔊 Sound ON"
+        : "🔇 Sound OFF";
 
-    if(soundOn){
-
-        button.textContent = "🔊 Sound ON";
-
-    }else{
-
-        button.textContent = "🔇 Sound OFF";
-
-    }
 }
 
 
-/* ---------- START GAME ---------- */
+/* ================= START ================= */
 
 function startGame(){
 
-    playSound("click");
+    sound("correct");
 
-    document.getElementById("startScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "startScreen"
+    ).classList.add("hidden");
 
-    document.getElementById("gameOverScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "gameOverScreen"
+    ).classList.add("hidden");
 
-    document.getElementById("gameScreen")
-        .classList.remove("hidden");
+    document.getElementById(
+        "gameScreen"
+    ).classList.remove("hidden");
+
 
     currentSet = 0;
+
+    currentRound = 0;
+
     score = 0;
+
     coins = 0;
+
     lives = 3;
 
     gameRunning = true;
 
+
+    document.getElementById(
+        "nextSetButton"
+    ).style.display = "none";
+
+
     updateStats();
 
     startSet();
+
 }
 
 
-/* ---------- START SET ---------- */
+/* ================= START SET ================= */
 
 function startSet(){
 
     if(!gameRunning) return;
 
-    acceptingAnswer = false;
+    currentRound = 0;
 
     updateStats();
 
-    createCups();
+    nextRound();
 
-    document.getElementById("message").textContent =
-        "Get ready! 👀";
-
-    setTimeout(function(){
-
-        if(gameRunning){
-
-            startRound();
-
-        }
-
-    },800);
 }
 
 
-/* ---------- CREATE CUPS ---------- */
+/* ================= CREATE CUPS ================= */
 
 function createCups(){
 
     const area =
-        document.getElementById("gameArea");
+        document.getElementById(
+            "cupsArea"
+        );
 
     area.innerHTML = "";
 
-    const number =
-        sets[currentSet].cups;
 
-    for(let i=0;i<number;i++){
+    const config =
+        SETS[currentSet];
+
+
+    const totalWidth =
+        area.clientWidth;
+
+
+    const cupWidth =
+        window.innerWidth <= 600
+        ? 72
+        : 100;
+
+
+    const gap =
+        window.innerWidth <= 600
+        ? 6
+        : 15;
+
+
+    const positions = [];
+
+
+    const total =
+        config.cups * cupWidth +
+        (config.cups - 1) * gap;
+
+
+    let start =
+        Math.max(
+            0,
+            (totalWidth - total) / 2
+        );
+
+
+    for(let i=0;i<config.cups;i++){
+
+        positions.push(
+            start +
+            i * (cupWidth + gap)
+        );
+
+    }
+
+
+    for(let i=0;i<config.cups;i++){
 
         const cup =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         cup.className = "cup";
 
+        cup.style.left =
+            positions[i] + "px";
+
+
         cup.innerHTML = `
+
             <div class="ball"></div>
+
             <div class="cup-body"></div>
+
             <div class="cup-top"></div>
+
         `;
 
-        cup.addEventListener(
-            "click",
-            function(){
 
-                chooseCup(i);
+        cup.dataset.position = i;
 
-            }
-        );
+
+        cup.onclick = function(){
+
+            chooseCup(
+                Number(
+                    this.dataset.position
+                )
+            );
+
+        };
+
 
         area.appendChild(cup);
+
     }
+
+
+    return positions;
+
 }
 
 
-/* ---------- START ROUND ---------- */
+/* ================= NEXT ROUND ================= */
 
-function startRound(){
+function nextRound(){
 
     if(!gameRunning) return;
 
-    acceptingAnswer = false;
 
-    clearInterval(timerInterval);
-    clearInterval(shuffleInterval);
-
-    createCups();
-
-    const cups =
-        document.querySelectorAll(".cup");
-
-    ballPosition =
-        Math.floor(Math.random() * cups.length);
-
-    document.getElementById("roundText").textContent =
-        "Round • Set " + (currentSet + 1);
-
-    document.getElementById("message").textContent =
-        "Watch the ball! 🟡";
+    currentRound++;
 
 
-    setTimeout(function(){
-
-        if(!gameRunning) return;
-
-        revealAndHideBall();
-
-    },900);
-}
+    const config =
+        SETS[currentSet];
 
 
-/* ---------- REVEAL / HIDE BALL ---------- */
+    if(currentRound > config.rounds){
 
-function revealAndHideBall(){
+        completeSet();
 
-    const cups =
-        document.querySelectorAll(".cup");
-
-    if(cups[ballPosition]){
-
-        cups[ballPosition]
-            .classList.add("lift");
+        return;
 
     }
 
+
+    acceptingAnswer = false;
+
+
+    clearInterval(timerInterval);
+
+    clearInterval(shuffleInterval);
+
+
+    const positions =
+        createCups();
+
+
+    ballCup =
+        Math.floor(
+            Math.random() *
+            config.cups
+        );
+
+
+    document.getElementById(
+        "roundLabel"
+    ).textContent =
+        "Set " +
+        (currentSet + 1) +
+        " • Round " +
+        currentRound;
+
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        "Watch the ball! 👀";
+
+
+    const cups =
+        document.querySelectorAll(
+            ".cup"
+        );
+
+
     setTimeout(function(){
 
         if(!gameRunning) return;
 
-        if(cups[ballPosition]){
 
-            cups[ballPosition]
-                .classList.remove("lift");
+        cups[ballCup]
+            .classList.add(
+                "reveal"
+            );
 
-        }
 
-        document.getElementById("message").textContent =
-            "Shuffling... 👀";
+        setTimeout(function(){
 
-        shuffleCups();
+            if(!gameRunning) return;
 
-    },700);
+
+            cups[ballCup]
+                .classList.remove(
+                    "reveal"
+                );
+
+
+            document.getElementById(
+                "message"
+            ).textContent =
+                "Shuffling! 🔥";
+
+
+            shuffleCups(
+                positions
+            );
+
+
+        },700);
+
+
+    },900);
+
 }
 
 
-/* ---------- SHUFFLE ---------- */
+/* ================= SHUFFLE CUPS ================= */
 
-function shuffleCups(){
+function shuffleCups(positions){
 
     const config =
-        sets[currentSet];
+        SETS[currentSet];
+
 
     let count = 0;
+
+
+    const cupsArea =
+        document.getElementById(
+            "cupsArea"
+        );
+
 
     shuffleInterval =
         setInterval(function(){
 
             if(!gameRunning){
 
-                clearInterval(shuffleInterval);
+                clearInterval(
+                    shuffleInterval
+                );
+
                 return;
+
             }
+
 
             const cups =
                 Array.from(
-                    document.querySelectorAll(".cup")
+                    cupsArea.children
                 );
+
 
             if(cups.length < 2){
 
-                clearInterval(shuffleInterval);
+                clearInterval(
+                    shuffleInterval
+                );
+
                 return;
 
             }
 
+
             let a =
-                Math.floor(Math.random()*cups.length);
+                Math.floor(
+                    Math.random() *
+                    cups.length
+                );
+
 
             let b =
-                Math.floor(Math.random()*cups.length);
+                Math.floor(
+                    Math.random() *
+                    cups.length
+                );
+
 
             while(a === b){
 
                 b =
-                    Math.floor(Math.random()*cups.length);
+                    Math.floor(
+                        Math.random() *
+                        cups.length
+                    );
 
             }
 
 
-            /* Move the actual elements */
+            /* VISUAL SHUFFLE */
 
-            if(a < b){
+            const leftA =
+                positions[a];
 
-                gameArea.insertBefore(
-                    cups[b],
-                    cups[a]
+            const leftB =
+                positions[b];
+
+
+            cups[a].style.left =
+                leftB + "px";
+
+
+            cups[b].style.left =
+                leftA + "px";
+
+
+            cups[a].classList.add(
+                "shuffling"
+            );
+
+
+            cups[b].classList.add(
+                "shuffling"
+            );
+
+
+            setTimeout(function(){
+
+                cups[a].classList.remove(
+                    "shuffling"
                 );
 
-            }else{
-
-                gameArea.insertBefore(
-                    cups[a],
-                    cups[b]
+                cups[b].classList.remove(
+                    "shuffling"
                 );
 
+            },280);
+
+
+            /* BALL TRACKING */
+
+            if(ballCup === a){
+
+                ballCup = b;
+
+            }
+
+            else if(ballCup === b){
+
+                ballCup = a;
+
             }
 
 
-            /* Keep track of ball */
+            /* UPDATE DATA POSITION */
 
-            if(ballPosition === a){
+            const oldPositionA =
+                cups[a].dataset.position;
 
-                ballPosition = b;
+            const oldPositionB =
+                cups[b].dataset.position;
 
-            }
 
-            else if(ballPosition === b){
+            cups[a].dataset.position =
+                oldPositionB;
 
-                ballPosition = a;
+            cups[b].dataset.position =
+                oldPositionA;
 
-            }
+
+            sound("shuffle");
 
 
             count++;
 
+
             if(count >= config.shuffles){
 
-                clearInterval(shuffleInterval);
+                clearInterval(
+                    shuffleInterval
+                );
+
 
                 setTimeout(function(){
 
                     if(!gameRunning) return;
 
+
                     acceptingAnswer = true;
 
-                    document.getElementById("message")
-                        .textContent =
-                        "Find the ball! 🎯";
+
+                    document.getElementById(
+                        "message"
+                    ).textContent =
+                        "🎯 Find the Ball!";
+
 
                     startTimer();
 
-                },300);
+
+                },350);
 
             }
 
-        },config.shuffleSpeed);
+
+        },config.speed);
 
 }
 
 
-/* ---------- TIMER ---------- */
+/* ================= TIMER ================= */
 
 function startTimer(){
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
+
 
     const total =
-        sets[currentSet].time;
+        SETS[currentSet].time;
+
 
     timeLeft = total;
 
+
     updateTimer();
+
 
     timerInterval =
         setInterval(function(){
 
-            timeLeft -= 0.1;
+            timeLeft -= .1;
+
 
             updateTimer();
 
+
             if(timeLeft <= 0){
 
-                clearInterval(timerInterval);
+                clearInterval(
+                    timerInterval
+                );
+
 
                 timeOut();
 
             }
+
 
         },100);
 
 }
 
 
-/* ---------- UPDATE TIMER ---------- */
+/* ================= UPDATE TIMER ================= */
 
 function updateTimer(){
 
     const total =
-        sets[currentSet].time;
+        SETS[currentSet].time;
+
 
     let percent =
         (timeLeft / total) * 100;
 
-    if(percent < 0) percent = 0;
 
-    document.getElementById("timerFill")
-        .style.width =
+    if(percent < 0)
+        percent = 0;
+
+
+    document.getElementById(
+        "timerBar"
+    ).style.width =
         percent + "%";
 
 }
 
 
-/* ---------- TIME OUT ---------- */
+/* ================= CHOOSE CUP ================= */
 
-function timeOut(){
-
-    if(!acceptingAnswer) return;
-
-    acceptingAnswer = false;
-
-    loseLife(
-        "⏰ Time's up!"
-    );
-}
-
-
-/* ---------- CHOOSE CUP ---------- */
-
-function chooseCup(index){
+function chooseCup(position){
 
     if(!gameRunning) return;
 
     if(!acceptingAnswer) return;
 
+
     acceptingAnswer = false;
 
-    clearInterval(timerInterval);
+
+    clearInterval(
+        timerInterval
+    );
+
 
     const cups =
-        document.querySelectorAll(".cup");
+        document.querySelectorAll(
+            ".cup"
+        );
 
 
-    if(index === ballPosition){
+    let selected = null;
+
+
+    for(let cup of cups){
+
+        if(
+            Number(
+                cup.dataset.position
+            ) === position
+        ){
+
+            selected = cup;
+            break;
+
+        }
+
+    }
+
+
+    if(position === ballCup){
 
         /* CORRECT */
 
-        cups[index].classList.add("correct");
+        selected.classList.add(
+            "correct"
+        );
+
 
         score += 100;
 
         coins += 5;
 
-        playSound("correct");
-        playSound("coin");
 
-        showCoinAnimation();
+        sound("correct");
+        sound("coin");
 
-        document.getElementById("message")
-            .textContent =
-            "🎉 Correct! +100 ⭐ +5 🪙";
+
+        showCoin();
+
+
+        document.getElementById(
+            "message"
+        ).textContent =
+            "🎉 CORRECT! +100 ⭐ +5 🪙";
+
 
         updateStats();
 
-        setTimeout(function(){
 
-            if(!gameRunning) return;
+        setTimeout(function(){
 
             nextRound();
 
-        },1100);
+        },1000);
 
     }
 
@@ -1122,77 +1751,134 @@ function chooseCup(index){
 
         /* WRONG */
 
-        cups[index].classList.add("wrong");
+        if(selected){
 
-        const correctCup =
-            cups[ballPosition];
-
-        if(correctCup){
-
-            correctCup.classList.add("lift");
+            selected.classList.add(
+                "wrong"
+            );
 
         }
 
-        playSound("wrong");
 
-        loseLife(
-            "❌ Wrong! The ball was under another cup!"
-        );
+        const correctCup =
+            Array.from(cups).find(
+                cup =>
+                Number(
+                    cup.dataset.position
+                ) === ballCup
+            );
+
+
+        if(correctCup){
+
+            correctCup.classList.add(
+                "reveal"
+            );
+
+        }
+
+
+        sound("wrong");
+
+
+        lives--;
+
+
+        updateStats();
+
+
+        document.getElementById(
+            "message"
+        ).textContent =
+            "❌ Wrong!";
+
+
+        if(lives <= 0){
+
+            setTimeout(
+                gameOver,
+                1200
+            );
+
+        }
+
+        else{
+
+            setTimeout(
+                nextRound,
+                1300
+            );
+
+        }
 
     }
+
 }
 
 
-/* ---------- LOSE LIFE ---------- */
+/* ================= TIME OUT ================= */
 
-function loseLife(reason){
+function timeOut(){
+
+    if(!acceptingAnswer)
+        return;
+
+
+    acceptingAnswer = false;
+
 
     lives--;
 
+
     updateStats();
 
-    document.getElementById("message")
-        .textContent =
-        reason;
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        "⏰ Time's Up!";
+
+
+    sound("wrong");
+
 
     if(lives <= 0){
 
-        setTimeout(function(){
-
-            gameOver();
-
-        },1300);
+        setTimeout(
+            gameOver,
+            1200
+        );
 
     }
 
     else{
 
-        setTimeout(function(){
-
-            startRound();
-
-        },1400);
+        setTimeout(
+            nextRound,
+            1300
+        );
 
     }
-}
-
-
-/* ---------- NEXT ROUND ---------- */
-
-function nextRound(){
-
-    startRound();
 
 }
 
 
-/* ---------- SET COMPLETED ---------- */
+/* ================= COMPLETE SET ================= */
 
 function completeSet(){
 
     acceptingAnswer = false;
 
-    clearInterval(timerInterval);
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    clearInterval(
+        shuffleInterval
+    );
+
 
     if(currentSet >= 7){
 
@@ -1202,28 +1888,43 @@ function completeSet(){
 
     }
 
-    document.getElementById("message")
-        .textContent =
-        "🎉 Set " +
-        (currentSet + 1) +
-        " Complete!";
 
-    document.getElementById("nextButton")
-        .style.display =
+    score += 250;
+
+    coins += 10;
+
+
+    updateStats();
+
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        "🏆 SET " +
+        (currentSet + 1) +
+        " COMPLETE!";
+
+
+    document.getElementById(
+        "nextSetButton"
+    ).style.display =
         "inline-block";
 
 }
 
 
-/* ---------- NEXT SET BUTTON ---------- */
+/* ================= NEXT SET ================= */
 
 function nextSet(){
 
-    document.getElementById("nextButton")
-        .style.display =
+    document.getElementById(
+        "nextSetButton"
+    ).style.display =
         "none";
 
+
     currentSet++;
+
 
     if(currentSet >= 8){
 
@@ -1233,93 +1934,119 @@ function nextSet(){
 
     }
 
-    score += 250;
 
-    coins += 10;
+    document.getElementById(
+        "message"
+    ).textContent =
+        "🚀 SET " +
+        (currentSet + 1) +
+        " STARTING!";
+
 
     updateStats();
 
-    document.getElementById("message")
-        .textContent =
-        "🚀 Starting Set " +
-        (currentSet + 1);
 
-    setTimeout(function(){
-
-        startSet();
-
-    },1000);
+    setTimeout(
+        startSet,
+        900
+    );
 
 }
 
 
-/* ---------- COIN ANIMATION ---------- */
+/* ================= COIN ================= */
 
-function showCoinAnimation(){
+function showCoin(){
 
     const coin =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     coin.className =
-        "coin-animation";
+        "coin";
+
 
     coin.textContent =
         "🪙";
 
+
     coin.style.left =
-        (window.innerWidth/2 - 20) + "px";
+        (
+            window.innerWidth / 2
+        ) + "px";
+
 
     coin.style.top =
-        (window.innerHeight/2) + "px";
+        (
+            window.innerHeight / 2
+        ) + "px";
 
-    document.body.appendChild(coin);
+
+    document.body.appendChild(
+        coin
+    );
+
 
     setTimeout(function(){
 
         coin.remove();
 
     },1000);
+
 }
 
 
-/* ---------- UPDATE STATS ---------- */
+/* ================= STATS ================= */
 
 function updateStats(){
 
-    document.getElementById("setValue")
-        .textContent =
+    document.getElementById(
+        "setValue"
+    ).textContent =
         (currentSet + 1) + "/8";
 
-    document.getElementById("scoreValue")
-        .textContent =
+
+    document.getElementById(
+        "scoreValue"
+    ).textContent =
         score;
 
-    document.getElementById("coinValue")
-        .textContent =
+
+    document.getElementById(
+        "coinValue"
+    ).textContent =
         coins;
+
 
     let hearts = "";
 
-    for(let i=0;i<lives;i++){
 
-        hearts += "❤️";
+    for(let i=0;i<3;i++){
+
+        if(i < lives){
+
+            hearts += "❤️";
+
+        }else{
+
+            hearts += "🖤";
+
+        }
 
     }
 
-    for(let i=lives;i<3;i++){
 
-        hearts += "🖤";
-
-    }
-
-    document.getElementById("lifeValue")
-        .textContent =
+    document.getElementById(
+        "lifeValue"
+    ).textContent =
         hearts;
 
 }
 
 
-/* ---------- GAME OVER ---------- */
+/* ================= GAME OVER ================= */
 
 function gameOver(){
 
@@ -1327,10 +2054,18 @@ function gameOver(){
 
     acceptingAnswer = false;
 
-    clearInterval(timerInterval);
-    clearInterval(shuffleInterval);
 
-    let isNewRecord = false;
+    clearInterval(
+        timerInterval
+    );
+
+    clearInterval(
+        shuffleInterval
+    );
+
+
+    let newRecord = false;
+
 
     if(score > highScore){
 
@@ -1341,88 +2076,117 @@ function gameOver(){
             highScore
         );
 
-        isNewRecord = true;
+        newRecord = true;
 
     }
 
 
-    document.getElementById("gameScreen")
-        .classList.add("hidden");
-
-    document.getElementById("gameOverScreen")
-        .classList.remove("hidden");
+    document.getElementById(
+        "gameScreen"
+    ).classList.add("hidden");
 
 
-    document.getElementById("finalScore")
-        .textContent =
+    document.getElementById(
+        "gameOverScreen"
+    ).classList.remove("hidden");
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
         score;
 
-    document.getElementById("finalCoins")
-        .textContent =
+
+    document.getElementById(
+        "finalCoins"
+    ).textContent =
         coins;
 
-    document.getElementById("finalHighScore")
-        .textContent =
+
+    document.getElementById(
+        "finalHighScore"
+    ).textContent =
         highScore;
 
 
-    const record =
-        document.getElementById("newRecord");
+    if(newRecord){
 
-    if(isNewRecord){
+        document.getElementById(
+            "newRecord"
+        ).classList.remove(
+            "hidden"
+        );
 
-        record.classList.remove("hidden");
+    }
 
-    }else{
+    else{
 
-        record.classList.add("hidden");
+        document.getElementById(
+            "newRecord"
+        ).classList.add(
+            "hidden"
+        );
 
     }
 
 
     if(lives <= 0){
 
-        document.getElementById("overIcon")
-            .textContent =
+        document.getElementById(
+            "overIcon"
+        ).textContent =
             "💥";
 
-        document.getElementById("overTitle")
-            .textContent =
+        document.getElementById(
+            "overTitle"
+        ).textContent =
             "Game Over";
 
     }
 
     else{
 
-        document.getElementById("overIcon")
-            .textContent =
+        document.getElementById(
+            "overIcon"
+        ).textContent =
             "🏆";
 
-        document.getElementById("overTitle")
-            .textContent =
-            "You Finished!";
+        document.getElementById(
+            "overTitle"
+        ).textContent =
+            "Amazing!";
 
     }
 
 }
 
 
-/* ---------- PLAY AGAIN ---------- */
+/* ================= PLAY AGAIN ================= */
 
 function playAgain(){
 
-    document.getElementById("gameOverScreen")
-        .classList.add("hidden");
+    document.getElementById(
+        "gameOverScreen"
+    ).classList.add("hidden");
 
-    document.getElementById("gameScreen")
-        .classList.remove("hidden");
+
+    document.getElementById(
+        "gameScreen"
+    ).classList.remove("hidden");
+
 
     currentSet = 0;
+
+    currentRound = 0;
+
     score = 0;
+
     coins = 0;
+
     lives = 3;
 
     gameRunning = true;
+
 
     updateStats();
 
@@ -1431,48 +2195,61 @@ function playAgain(){
 }
 
 
-/* ---------- BACK HOME ---------- */
+/* ================= HOME ================= */
 
-function backToStart(){
+function goHome(){
 
     gameRunning = false;
 
-    clearInterval(timerInterval);
-    clearInterval(shuffleInterval);
 
-    document.getElementById("gameOverScreen")
-        .classList.add("hidden");
+    clearInterval(
+        timerInterval
+    );
 
-    document.getElementById("gameScreen")
-        .classList.add("hidden");
+    clearInterval(
+        shuffleInterval
+    );
 
-    document.getElementById("startScreen")
-        .classList.remove("hidden");
 
-    document.getElementById("startHighScore")
-        .textContent =
+    document.getElementById(
+        "gameOverScreen"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "gameScreen"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "startScreen"
+    ).classList.remove("hidden");
+
+
+    document.getElementById(
+        "startHighScore"
+    ).textContent =
         highScore;
 
 }
 
 
-/* ---------- PREVENT ACCIDENTAL PAGE SCROLL ---------- */
+/* ================= RESIZE ================= */
 
-document.addEventListener(
-    "touchmove",
-    function(e){
+window.addEventListener(
+    "resize",
+    function(){
 
-        if(e.target.closest(".cup")){
+        if(gameRunning){
 
-            e.preventDefault();
+            createCups();
 
         }
 
-    },
-    {passive:false}
+    }
 );
 
 </script>
 
 </body>
-</html>
+    </html>

@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Find The Ball - Premium Game</title>
+<title>Find The Ball</title>
 
 <style>
 *{
@@ -15,24 +14,24 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-body{
-    min-height:100vh;
-    overflow-x:hidden;
-    font-family:Arial,Helvetica,sans-serif;
-    color:white;
-
-    background:
-        radial-gradient(circle at 20% 10%,rgba(88,80,255,.35),transparent 30%),
-        radial-gradient(circle at 80% 20%,rgba(0,220,255,.25),transparent 30%),
-        radial-gradient(circle at 50% 100%,rgba(170,0,255,.3),transparent 35%),
-        linear-gradient(135deg,#05051b,#0a1035,#05051b);
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
+html,body{
+    width:100%;
+    min-height:100%;
 }
 
-body:before{
+body{
+    overflow-x:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+
+    background:
+        radial-gradient(circle at 15% 10%,rgba(100,70,255,.35),transparent 30%),
+        radial-gradient(circle at 85% 20%,rgba(0,220,255,.22),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(180,0,255,.28),transparent 35%),
+        linear-gradient(135deg,#030417,#0b1035,#020311);
+}
+
+body::before{
     content:"";
     position:fixed;
     inset:0;
@@ -42,26 +41,32 @@ body:before{
         radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1px),
         radial-gradient(circle,rgba(120,200,255,.5) 1px,transparent 1px);
 
-    background-size:70px 70px,110px 110px;
-    animation:stars 25s linear infinite;
+    background-size:75px 75px,125px 125px;
+
+    animation:stars 30s linear infinite;
+
     opacity:.35;
 }
 
 @keyframes stars{
-    from{background-position:0 0,0 0}
-    to{background-position:700px 500px,-500px 400px}
+    from{
+        background-position:0 0,0 0;
+    }
+    to{
+        background-position:750px 500px,-500px 400px;
+    }
 }
 
 .game{
     width:min(1100px,96%);
-    margin:20px auto;
+    margin:15px auto 25px;
     position:relative;
     z-index:2;
 }
 
 .header{
     text-align:center;
-    margin-bottom:15px;
+    margin-bottom:12px;
 }
 
 .title{
@@ -69,138 +74,178 @@ body:before{
     font-weight:900;
     letter-spacing:3px;
 
-    background:linear-gradient(90deg,#fff,#70eaff,#c97cff,#fff);
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #65eaff,
+            #c477ff,
+            #fff
+        );
+
     background-size:300%;
+
     -webkit-background-clip:text;
+    background-clip:text;
+
     color:transparent;
 
-    animation:titleGlow 5s linear infinite;
+    animation:titleMove 5s linear infinite;
+
+    filter:
+        drop-shadow(0 0 15px rgba(90,220,255,.25));
 }
 
-@keyframes titleGlow{
-    from{background-position:0%}
-    to{background-position:300%}
+@keyframes titleMove{
+    from{
+        background-position:0%;
+    }
+    to{
+        background-position:300%;
+    }
 }
 
 .subtitle{
-    color:#aeb8df;
-    margin-top:5px;
-    font-size:14px;
+    color:#aeb8dc;
+    font-size:13px;
+    margin-top:4px;
 }
 
 .stats{
     display:grid;
     grid-template-columns:repeat(5,1fr);
-    gap:8px;
-    margin-bottom:12px;
+    gap:7px;
+    margin-bottom:10px;
 }
 
 .stat{
-    padding:10px 5px;
+    min-width:0;
+    padding:9px 4px;
+
     text-align:center;
 
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:15px;
+    border-radius:14px;
 
-    background:rgba(255,255,255,.07);
-    backdrop-filter:blur(15px);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.035)
+        );
+
+    border:1px solid rgba(255,255,255,.13);
+
+    backdrop-filter:blur(14px);
 
     box-shadow:
-        inset 0 1px rgba(255,255,255,.1),
-        0 8px 30px rgba(0,0,0,.25);
+        inset 0 1px rgba(255,255,255,.12),
+        0 8px 25px rgba(0,0,0,.25);
 }
 
 .stat-label{
     display:block;
-    font-size:10px;
-    color:#aeb8df;
-    text-transform:uppercase;
+    color:#8996c2;
+    font-size:9px;
     letter-spacing:1px;
+    text-transform:uppercase;
 }
 
 .stat-value{
     display:block;
     margin-top:3px;
-    font-size:20px;
-    font-weight:bold;
+    font-size:18px;
+    font-weight:800;
 }
 
 #timer{
-    color:#72f5ff;
+    color:#6ff4ff;
 }
 
 #lives{
-    color:#ff6b9d;
+    color:#ff709d;
+    letter-spacing:1px;
 }
 
 .stage-wrap{
-    padding:7px;
+    padding:6px;
     border-radius:27px;
 
     background:
-        linear-gradient(135deg,
-        rgba(255,255,255,.25),
-        rgba(255,255,255,.03));
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.22),
+            rgba(255,255,255,.025)
+        );
 
     box-shadow:
-        0 25px 70px rgba(0,0,0,.5),
-        0 0 50px rgba(70,160,255,.15);
+        0 25px 70px rgba(0,0,0,.55),
+        0 0 50px rgba(70,150,255,.12);
 }
 
 .stage{
     position:relative;
     overflow:hidden;
+
     border-radius:21px;
 
-    background:
-        radial-gradient(circle at 50% 35%,rgba(70,120,255,.28),transparent 40%),
-        linear-gradient(180deg,#101a48,#080c25 70%,#040518);
-
-    min-height:420px;
+    background:#05071c;
 }
 
 canvas{
     display:block;
+
     width:100%;
-    height:420px;
+    height:430px;
+
     touch-action:none;
 }
 
 .message{
+    min-height:28px;
+
+    margin:8px 0;
+
     text-align:center;
-    min-height:30px;
-    margin:10px 0;
 
-    font-weight:bold;
     font-size:17px;
+    font-weight:bold;
 
-    color:#dbe8ff;
-    text-shadow:0 0 15px rgba(100,200,255,.5);
+    color:#e2ebff;
+
+    text-shadow:
+        0 0 15px rgba(100,210,255,.55);
 }
 
 .controls{
     display:flex;
     justify-content:center;
-    gap:10px;
+    gap:9px;
     flex-wrap:wrap;
 }
 
 button{
     border:0;
-    border-radius:14px;
-    padding:12px 22px;
 
-    color:white;
-    font-weight:bold;
+    border-radius:14px;
+
+    padding:11px 20px;
+
+    color:#fff;
+
     font-size:14px;
+    font-weight:800;
 
     cursor:pointer;
 
     background:
-        linear-gradient(135deg,#5865ff,#9a55ff);
+        linear-gradient(
+            135deg,
+            #5365ff,
+            #a64cff
+        );
 
     box-shadow:
-        0 7px 25px rgba(90,80,255,.35),
+        0 7px 25px rgba(90,70,255,.35),
         inset 0 1px rgba(255,255,255,.3);
 
     transition:.2s;
@@ -208,50 +253,59 @@ button{
 
 button:hover{
     transform:translateY(-2px);
-    box-shadow:0 10px 30px rgba(100,100,255,.5);
 }
 
 button:active{
-    transform:scale(.96);
+    transform:scale(.95);
 }
 
 .secondary{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.15);
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.14);
 }
 
 .overlay{
     position:absolute;
     inset:0;
 
+    z-index:20;
+
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
 
-    padding:25px;
+    padding:20px;
 
-    background:rgba(3,5,20,.78);
-    backdrop-filter:blur(12px);
+    background:
+        rgba(2,4,20,.76);
 
-    z-index:10;
+    backdrop-filter:blur(13px);
 }
 
 .panel{
     width:min(520px,100%);
+
+    padding:32px 24px;
+
     text-align:center;
 
-    padding:35px 25px;
-    border-radius:25px;
+    border-radius:26px;
 
     background:
-        linear-gradient(145deg,
-        rgba(255,255,255,.15),
-        rgba(255,255,255,.04));
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.15),
+            rgba(255,255,255,.035)
+        );
 
-    border:1px solid rgba(255,255,255,.18);
+    border:
+        1px solid rgba(255,255,255,.18);
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,.6),
+        0 30px 80px rgba(0,0,0,.65),
         inset 0 1px rgba(255,255,255,.15);
 }
 
@@ -261,7 +315,7 @@ button:active{
 }
 
 .panel p{
-    color:#bdc8e9;
+    color:#bcc8e8;
     line-height:1.6;
     margin-bottom:20px;
 }
@@ -269,62 +323,81 @@ button:active{
 .big-ball{
     width:65px;
     height:65px;
+
     margin:0 auto 20px;
 
     border-radius:50%;
 
     background:
-        radial-gradient(circle at 30% 25%,#fff 0 7%,#ffd6d6 8%,#ff3d5f 35%,#b90027 75%,#45000d);
+        radial-gradient(
+            circle at 30% 25%,
+            #fff 0 7%,
+            #ffd9df 8%,
+            #ff4162 35%,
+            #b8002a 75%,
+            #40000d
+        );
 
     box-shadow:
-        0 0 20px #ff375f,
-        0 0 60px rgba(255,40,80,.6);
+        0 0 20px #ff365b,
+        0 0 60px rgba(255,30,70,.55);
 
-    animation:ballPulse 1.5s infinite alternate;
+    animation:ballPulse 1.4s infinite alternate;
 }
 
 @keyframes ballPulse{
-    from{transform:scale(.95)}
-    to{transform:scale(1.08)}
+    from{
+        transform:scale(.94);
+    }
+    to{
+        transform:scale(1.08);
+    }
 }
 
 .hidden{
-    display:none!important;
+    display:none !important;
 }
 
 .instructions{
-    margin-top:15px;
-    color:#8290bb;
-    font-size:12px;
-    text-align:center;
+    margin-top:14px;
+    font-size:11px;
+    color:#7e8ab1;
 }
 
 @media(max-width:600px){
 
     .game{
         width:98%;
-        margin:10px auto;
+        margin-top:8px;
+    }
+
+    .title{
+        font-size:32px;
+    }
+
+    .subtitle{
+        font-size:11px;
     }
 
     .stats{
-        gap:4px;
+        gap:3px;
     }
 
     .stat{
-        padding:8px 2px;
-        border-radius:11px;
+        padding:7px 2px;
+        border-radius:10px;
+    }
+
+    .stat-label{
+        font-size:7px;
     }
 
     .stat-value{
-        font-size:16px;
+        font-size:14px;
     }
 
     canvas{
         height:360px;
-    }
-
-    .stage{
-        min-height:360px;
     }
 
     .message{
@@ -332,7 +405,12 @@ button:active{
     }
 
     button{
-        padding:11px 17px;
+        padding:10px 15px;
+        font-size:13px;
+    }
+
+    .panel{
+        padding:27px 18px;
     }
 }
 </style>
@@ -343,11 +421,17 @@ button:active{
 <div class="game">
 
     <div class="header">
-        <div class="title">FIND THE BALL</div>
-        <div class="subtitle">
-            Watch carefully • Follow the cup • Find the hidden ball
+
+        <div class="title">
+            FIND THE BALL
         </div>
+
+        <div class="subtitle">
+            Watch carefully • Follow the hidden ball • Beat all 8 sets
+        </div>
+
     </div>
+
 
     <div class="stats">
 
@@ -363,7 +447,7 @@ button:active{
 
         <div class="stat">
             <span class="stat-label">Coins</span>
-            <span class="stat-value" id="coins">0</span>
+            <span class="stat-value" id="coins">🪙 0</span>
         </div>
 
         <div class="stat">
@@ -378,35 +462,44 @@ button:active{
 
     </div>
 
+
     <div class="stage-wrap">
 
         <div class="stage">
 
             <canvas id="gameCanvas"></canvas>
 
-            <!-- START SCREEN -->
 
-            <div class="overlay" id="startScreen">
+            <!-- START -->
+
+            <div
+                class="overlay"
+                id="startScreen"
+            >
 
                 <div class="panel">
 
                     <div class="big-ball"></div>
 
-                    <h2>Ready?</h2>
+                    <h2>
+                        FIND THE BALL
+                    </h2>
 
                     <p>
-                        Watch the ball carefully.<br>
-                        The cups will start moving.<br>
-                        Choose the cup hiding the ball.
+                        First watch where the red ball goes.
+                        <br>
+                        The cups will then shuffle.
+                        <br>
+                        Choose the correct cup!
                     </p>
 
                     <button onclick="startGame()">
                         ▶ START GAME
                     </button>
 
-                    <p class="instructions">
-                        8 Sets • Increasing Difficulty • 3 Rounds Each
-                    </p>
+                    <div class="instructions">
+                        8 Sets • 3 Rounds Each • Increasing Difficulty
+                    </div>
 
                 </div>
 
@@ -415,13 +508,18 @@ button:active{
 
             <!-- GAME OVER -->
 
-            <div class="overlay hidden" id="gameOver">
+            <div
+                class="overlay hidden"
+                id="gameOver"
+            >
 
                 <div class="panel">
 
                     <div class="big-ball"></div>
 
-                    <h2 id="gameOverTitle">Game Over</h2>
+                    <h2 id="gameOverTitle">
+                        Game Over
+                    </h2>
 
                     <p id="gameOverText">
                         Better luck next time!
@@ -439,17 +537,29 @@ button:active{
 
     </div>
 
-    <div class="message" id="message">
+
+    <div
+        class="message"
+        id="message"
+    >
         Press START GAME
     </div>
 
+
     <div class="controls">
 
-        <button class="secondary" onclick="toggleSound()">
+        <button
+            class="secondary"
+            onclick="toggleSound()"
+            id="soundButton"
+        >
             🔊 Sound
         </button>
 
-        <button class="secondary" onclick="restartGame()">
+        <button
+            class="secondary"
+            onclick="restartGame()"
+        >
             ↻ Restart
         </button>
 
@@ -460,14 +570,29 @@ button:active{
 
 <script>
 
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+/* =====================================================
+   FIND THE BALL
+   PREMIUM CANVAS GAME
+===================================================== */
+
+
+/* =========================
+   CANVAS
+========================= */
+
+const canvas =
+    document.getElementById("gameCanvas");
+
+const ctx =
+    canvas.getContext("2d");
 
 let W = 0;
 let H = 0;
 
-let running = false;
-let acceptingAnswer = false;
+
+/* =========================
+   GAME VARIABLES
+========================= */
 
 let currentSet = 1;
 let currentRound = 1;
@@ -476,29 +601,36 @@ let score = 0;
 let coins = 0;
 let lives = 3;
 
-let highScore =
-    Number(localStorage.getItem("findBallHighScore") || 0);
-
-let soundOn = true;
-
 let timeLeft = 15;
-let timerInterval = null;
 
-let cups = [];
+let acceptingAnswer = false;
+
+let gamePhase = "idle";
 
 let ballCup = null;
 
-let shuffleMoves = [];
-let activeMove = null;
+let cups = [];
 
 let particles = [];
+
 let stars = [];
+
+let timerInterval = null;
 
 let roundTimeout = null;
 
+let soundOn = true;
+
+let highScore =
+    Number(
+        localStorage.getItem(
+            "findBallHighScore"
+        ) || 0
+    );
+
 
 /* =========================
-   SET CONFIGURATION
+   SETS
 ========================= */
 
 const sets = [
@@ -506,56 +638,56 @@ const sets = [
     {
         cups:3,
         shuffles:3,
-        speed:550,
+        speed:650,
         time:15
     },
 
     {
         cups:3,
         shuffles:5,
-        speed:470,
+        speed:560,
         time:14
     },
 
     {
         cups:4,
         shuffles:6,
-        speed:430,
+        speed:500,
         time:13
     },
 
     {
         cups:4,
         shuffles:8,
-        speed:390,
+        speed:440,
         time:12
     },
 
     {
         cups:5,
         shuffles:9,
-        speed:350,
+        speed:390,
         time:11
     },
 
     {
         cups:5,
         shuffles:11,
-        speed:310,
+        speed:340,
         time:10
     },
 
     {
         cups:6,
         shuffles:13,
-        speed:280,
+        speed:300,
         time:9
     },
 
     {
         cups:6,
         shuffles:16,
-        speed:250,
+        speed:260,
         time:8
     }
 
@@ -563,29 +695,46 @@ const sets = [
 
 
 /* =========================
-   CANVAS
+   RESIZE
 ========================= */
 
 function resizeCanvas(){
 
-    const rect = canvas.getBoundingClientRect();
+    const rect =
+        canvas.getBoundingClientRect();
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr =
+        window.devicePixelRatio || 1;
 
     W = rect.width;
     H = rect.height;
 
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
+    canvas.width =
+        W * dpr;
 
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    canvas.height =
+        H * dpr;
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
 
     createStars();
+
+    if(cups.length){
+        repositionCups();
+    }
 }
 
-window.addEventListener("resize",resizeCanvas);
-
-resizeCanvas();
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
 
 
 /* =========================
@@ -596,19 +745,28 @@ function createStars(){
 
     stars = [];
 
-    const count = Math.max(35,Math.floor(W/8));
+    const amount =
+        Math.max(
+            35,
+            Math.floor(W / 8)
+        );
 
-    for(let i=0;i<count;i++){
+    for(let i=0;i<amount;i++){
 
         stars.push({
 
             x:Math.random()*W,
+
             y:Math.random()*H,
-            r:Math.random()*1.5+.3,
+
+            r:Math.random()*1.4+.3,
+
             alpha:Math.random()*.8+.2,
-            speed:Math.random()*.3+.1
+
+            speed:Math.random()*.25+.05
 
         });
+
     }
 }
 
@@ -619,87 +777,166 @@ function createStars(){
 
 function addParticles(x,y){
 
-    for(let i=0;i<18;i++){
+    for(let i=0;i<25;i++){
 
         particles.push({
 
             x:x,
             y:y,
 
-            vx:(Math.random()-.5)*5,
-            vy:(Math.random()-.5)*5,
+            vx:
+                (Math.random()-.5)*6,
+
+            vy:
+                (Math.random()-.5)*6,
 
             life:1,
 
-            size:Math.random()*4+2
+            size:
+                Math.random()*4+1
 
         });
 
     }
 }
 
+
 function updateParticles(){
 
-    particles.forEach(p=>{
+    for(const p of particles){
 
         p.x += p.vx;
         p.y += p.vy;
 
-        p.vy += .04;
+        p.vy += .05;
 
         p.life -= .025;
 
-    });
+    }
 
     particles =
-        particles.filter(p=>p.life>0);
+        particles.filter(
+            p=>p.life>0
+        );
+}
+
+
+function drawParticles(){
+
+    for(const p of particles){
+
+        ctx.globalAlpha =
+            p.life;
+
+        ctx.fillStyle =
+            "#8deaff";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+    ctx.globalAlpha=1;
 }
 
 
 /* =========================
-   DRAW BACKGROUND
+   BACKGROUND
 ========================= */
 
 function drawBackground(){
 
-    const g =
-        ctx.createLinearGradient(0,0,0,H);
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            H
+        );
 
-    g.addColorStop(0,"#111b4d");
-    g.addColorStop(.55,"#080d2b");
-    g.addColorStop(1,"#030416");
+    gradient.addColorStop(
+        0,
+        "#111b4d"
+    );
 
-    ctx.fillStyle=g;
-    ctx.fillRect(0,0,W,H);
+    gradient.addColorStop(
+        .55,
+        "#080d2c"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#030416"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
 
 
-    /* glow */
+    /* CENTER GLOW */
 
     const glow =
         ctx.createRadialGradient(
-            W/2,H*.35,20,
-            W/2,H*.35,H*.7
+            W/2,
+            H*.35,
+            20,
+            W/2,
+            H*.35,
+            H*.7
         );
 
-    glow.addColorStop(0,"rgba(60,120,255,.22)");
-    glow.addColorStop(1,"rgba(0,0,0,0)");
+    glow.addColorStop(
+        0,
+        "rgba(60,120,255,.25)"
+    );
 
-    ctx.fillStyle=glow;
-    ctx.fillRect(0,0,W,H);
+    glow.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    ctx.fillStyle =
+        glow;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
 
 
-    /* stars */
+    /* STARS */
 
-    stars.forEach(s=>{
+    for(const s of stars){
 
         s.y += s.speed;
 
-        if(s.y>H)
+        if(s.y>H){
             s.y=0;
+        }
 
-        ctx.globalAlpha=s.alpha;
+        ctx.globalAlpha =
+            s.alpha;
 
-        ctx.fillStyle="#fff";
+        ctx.fillStyle =
+            "#fff";
 
         ctx.beginPath();
 
@@ -713,24 +950,36 @@ function drawBackground(){
 
         ctx.fill();
 
-    });
+    }
 
     ctx.globalAlpha=1;
 
 
-    /* table */
+    /* TABLE */
 
-    const tableY=H*.72;
+    const tableY =
+        H*.72;
 
     const table =
         ctx.createLinearGradient(
-            0,tableY,0,H
+            0,
+            tableY,
+            0,
+            H
         );
 
-    table.addColorStop(0,"#151c42");
-    table.addColorStop(1,"#050719");
+    table.addColorStop(
+        0,
+        "#171d43"
+    );
 
-    ctx.fillStyle=table;
+    table.addColorStop(
+        1,
+        "#050619"
+    );
+
+    ctx.fillStyle =
+        table;
 
     ctx.fillRect(
         0,
@@ -740,7 +989,8 @@ function drawBackground(){
     );
 
 
-    ctx.fillStyle="rgba(80,130,255,.12)";
+    ctx.fillStyle =
+        "rgba(70,150,255,.16)";
 
     ctx.fillRect(
         0,
@@ -753,25 +1003,34 @@ function drawBackground(){
 
 
 /* =========================
-   SLOT POSITIONS
+   CUP POSITION
 ========================= */
 
 function slotX(slot,count){
 
     const margin =
-        Math.max(30,W*.08);
+        Math.max(
+            30,
+            W*.09
+        );
 
-    if(count===1)
+    if(count===1){
         return W/2;
+    }
 
-    return margin +
+    return (
+        margin +
         slot *
-        ((W-margin*2)/(count-1));
+        (
+            (W-margin*2) /
+            (count-1)
+        )
+    );
 }
 
 
 /* =========================
-   CUP SIZE
+   CUP WIDTH
 ========================= */
 
 function cupWidth(){
@@ -780,16 +1039,27 @@ function cupWidth(){
         sets[currentSet-1].cups;
 
     const margin =
-        Math.max(30,W*.08);
+        Math.max(
+            30,
+            W*.09
+        );
 
     const spacing =
-        (W-margin*2)/(count-1);
+        (W-margin*2) /
+        (count-1);
+
+    /*
+       Important:
+       cup width is always smaller
+       than the distance between slots.
+       This prevents cups merging.
+    */
 
     return Math.min(
         105,
         Math.max(
-            48,
-            spacing*.68
+            42,
+            spacing*.58
         )
     );
 }
@@ -811,45 +1081,89 @@ function createCups(){
         cups.push({
 
             id:i,
+
             slot:i,
 
             x:slotX(i,count),
+
             y:H*.58,
 
             offsetY:0,
 
-            scale:1,
+            lift:0,
 
-            lift:0
+            scale:1
 
         });
 
     }
 
     ballCup =
-        cups[Math.floor(Math.random()*cups.length)];
+        cups[
+            Math.floor(
+                Math.random()*cups.length
+            )
+        ];
 }
 
 
 /* =========================
-   DRAW BALL
+   REPOSITION
 ========================= */
 
-function drawBall(x,y,scale=1){
+function repositionCups(){
+
+    const count =
+        sets[currentSet-1].cups;
+
+    for(const cup of cups){
+
+        cup.x =
+            slotX(
+                cup.slot,
+                count
+            );
+
+        cup.y =
+            H*.58;
+
+    }
+}
+
+
+/* =========================
+   BALL
+========================= */
+
+function drawBall(x,y){
 
     const r =
-        Math.min(18,cupWidth()*.19)
-        *scale;
+        Math.max(
+            15,
+            cupWidth()*.21
+        );
+
+
+    /* OUTER GLOW */
 
     const glow =
         ctx.createRadialGradient(
-            x,y,r*.3,
-            x,y,r*3
+            x,
+            y,
+            r*.2,
+            x,
+            y,
+            r*3
         );
 
     glow.addColorStop(
         0,
-        "rgba(255,40,80,.6)"
+        "rgba(255,50,90,.85)"
+    );
+
+    glow.addColorStop(
+        .35,
+        "rgba(255,40,80,.35)"
     );
 
     glow.addColorStop(
@@ -857,7 +1171,8 @@ function drawBall(x,y,scale=1){
         "rgba(255,40,80,0)"
     );
 
-    ctx.fillStyle=glow;
+    ctx.fillStyle =
+        glow;
 
     ctx.beginPath();
 
@@ -872,23 +1187,53 @@ function drawBall(x,y,scale=1){
     ctx.fill();
 
 
+    /* BALL BODY */
+
     const ball =
         ctx.createRadialGradient(
             x-r*.35,
-            y-r*.4,
-            r*.1,
+            y-r*.45,
+            r*.05,
             x,
             y,
             r
         );
 
-    ball.addColorStop(0,"#fff");
-    ball.addColorStop(.12,"#ffb5bd");
-    ball.addColorStop(.4,"#ff3658");
-    ball.addColorStop(.8,"#c3002e");
-    ball.addColorStop(1,"#570012");
+    ball.addColorStop(
+        0,
+        "#ffffff"
+    );
 
-    ctx.fillStyle=ball;
+    ball.addColorStop(
+        .12,
+        "#ffdce1"
+    );
+
+    ball.addColorStop(
+        .38,
+        "#ff4565"
+    );
+
+    ball.addColorStop(
+        .72,
+        "#dc0037"
+    );
+
+    ball.addColorStop(
+        1,
+        "#620016"
+    );
+
+    ctx.save();
+
+    ctx.shadowColor =
+        "#ff3159";
+
+    ctx.shadowBlur =
+        25;
+
+    ctx.fillStyle =
+        ball;
 
     ctx.beginPath();
 
@@ -902,14 +1247,19 @@ function drawBall(x,y,scale=1){
 
     ctx.fill();
 
+    ctx.restore();
 
-    ctx.fillStyle="rgba(255,255,255,.8)";
+
+    /* REFLECTION */
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.9)";
 
     ctx.beginPath();
 
     ctx.arc(
-        x-r*.35,
-        y-r*.4,
+        x-r*.32,
+        y-r*.38,
         r*.18,
         0,
         Math.PI*2
@@ -917,11 +1267,44 @@ function drawBall(x,y,scale=1){
 
     ctx.fill();
 
+
+    /* SPARKLES */
+
+    for(let i=0;i<4;i++){
+
+        const angle =
+            Date.now()/600 +
+            i*Math.PI/2;
+
+        const sx =
+            x+
+            Math.cos(angle)*r*1.8;
+
+        const sy =
+            y+
+            Math.sin(angle)*r*1.8;
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.8)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            sx,
+            sy,
+            2,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
 }
 
 
 /* =========================
-   DRAW CUP
+   CUP
 ========================= */
 
 function drawCup(cup){
@@ -932,31 +1315,36 @@ function drawCup(cup){
     const h =
         w*1.15;
 
-    const x=cup.x;
+    const x =
+        cup.x;
 
     const baseY =
-        cup.y+cup.offsetY;
+        cup.y+
+        cup.offsetY;
 
     const lift =
-        cup.lift*h*.65;
+        cup.lift*h*.75;
 
-    const y=baseY-lift;
+    const y =
+        baseY-lift;
 
 
-    /* shadow */
+    /* SHADOW */
 
     ctx.save();
 
-    ctx.globalAlpha=.35;
+    ctx.globalAlpha =
+        .38*(1-cup.lift);
 
-    ctx.fillStyle="#000";
+    ctx.fillStyle =
+        "#000";
 
     ctx.beginPath();
 
     ctx.ellipse(
         x,
-        baseY+h*.42,
-        w*.48*(1-cup.lift*.5),
+        baseY+h*.43,
+        w*.47,
         h*.11,
         0,
         0,
@@ -968,28 +1356,53 @@ function drawCup(cup){
     ctx.restore();
 
 
-    /* ball behind cup */
+    /*
+       BALL IS DRAWN BEFORE CUP
+       SO IT IS HIDDEN WHEN THE CUP
+       IS DOWN.
+    */
 
     if(cup===ballCup){
 
-        drawBall(
-            x,
-            baseY+h*.16-lift,
-            1
-        );
+        if(
+            gamePhase==="reveal" ||
+            cup.lift>.05
+        ){
+
+            const float =
+                Math.sin(
+                    Date.now()/180
+                )*4;
+
+            drawBall(
+                x,
+                baseY-
+                h*.58-
+                lift+
+                float
+            );
+
+        }
 
     }
 
 
-    /* cup body */
+    /* CUP BODY */
 
-    const topW=w;
-    const bottomW=w*.68;
+    const topW =
+        w;
 
-    const topY=y-h*.48;
-    const bottomY=y+h*.48;
+    const bottomW =
+        w*.68;
 
-    const gradient =
+    const topY =
+        y-h*.48;
+
+    const bottomY =
+        y+h*.48;
+
+
+    const body =
         ctx.createLinearGradient(
             x-w/2,
             0,
@@ -997,13 +1410,43 @@ function drawCup(cup){
             0
         );
 
-    gradient.addColorStop(0,"#27004d");
-    gradient.addColorStop(.18,"#7133d8");
-    gradient.addColorStop(.45,"#c76cff");
-    gradient.addColorStop(.65,"#6320bd");
-    gradient.addColorStop(1,"#190039");
+    body.addColorStop(
+        0,
+        "#17002f"
+    );
 
-    ctx.fillStyle=gradient;
+    body.addColorStop(
+        .17,
+        "#5220a4"
+    );
+
+    body.addColorStop(
+        .38,
+        "#a34fff"
+    );
+
+    body.addColorStop(
+        .5,
+        "#e2a0ff"
+    );
+
+    body.addColorStop(
+        .64,
+        "#7729d3"
+    );
+
+    body.addColorStop(
+        .84,
+        "#3b087d"
+    );
+
+    body.addColorStop(
+        1,
+        "#100020"
+    );
+
+    ctx.fillStyle =
+        body;
 
     ctx.beginPath();
 
@@ -1032,38 +1475,64 @@ function drawCup(cup){
     ctx.fill();
 
 
-    /* side highlight */
+    /* CUP OUTLINE */
 
-    const highlight =
+    ctx.save();
+
+    ctx.shadowColor =
+        "rgba(180,80,255,.65)";
+
+    ctx.shadowBlur =
+        18;
+
+    ctx.strokeStyle =
+        "rgba(220,160,255,.55)";
+
+    ctx.lineWidth=2;
+
+    ctx.stroke();
+
+    ctx.restore();
+
+
+    /* LIGHT */
+
+    const light =
         ctx.createLinearGradient(
-            x-w*.3,
+            x-w*.35,
             0,
-            x+w*.1,
+            x+w*.05,
             0
         );
 
-    highlight.addColorStop(
+    light.addColorStop(
         0,
-        "rgba(255,255,255,.35)"
+        "rgba(255,255,255,.4)"
     );
 
-    highlight.addColorStop(
+    light.addColorStop(
+        .5,
+        "rgba(255,255,255,.08)"
+    );
+
+    light.addColorStop(
         1,
         "rgba(255,255,255,0)"
     );
 
-    ctx.fillStyle=highlight;
+    ctx.fillStyle =
+        light;
 
     ctx.beginPath();
 
     ctx.moveTo(
-        x-w*.32,
-        topY+4
+        x-w*.34,
+        topY+5
     );
 
     ctx.lineTo(
         x-w*.12,
-        topY+4
+        topY+5
     );
 
     ctx.lineTo(
@@ -1072,7 +1541,7 @@ function drawCup(cup){
     );
 
     ctx.lineTo(
-        x-w*.17,
+        x-w*.18,
         bottomY-5
     );
 
@@ -1081,7 +1550,7 @@ function drawCup(cup){
     ctx.fill();
 
 
-    /* rim */
+    /* RIM */
 
     const rim =
         ctx.createLinearGradient(
@@ -1091,13 +1560,33 @@ function drawCup(cup){
             0
         );
 
-    rim.addColorStop(0,"#3d0870");
-    rim.addColorStop(.3,"#d98cff");
-    rim.addColorStop(.55,"#ffffff");
-    rim.addColorStop(.7,"#9c43e9");
-    rim.addColorStop(1,"#2b0055");
+    rim.addColorStop(
+        0,
+        "#35066a"
+    );
 
-    ctx.fillStyle=rim;
+    rim.addColorStop(
+        .25,
+        "#b75cff"
+    );
+
+    rim.addColorStop(
+        .48,
+        "#ffffff"
+    );
+
+    rim.addColorStop(
+        .65,
+        "#b45cff"
+    );
+
+    rim.addColorStop(
+        1,
+        "#25004a"
+    );
+
+    ctx.fillStyle =
+        rim;
 
     ctx.beginPath();
 
@@ -1114,15 +1603,16 @@ function drawCup(cup){
     ctx.fill();
 
 
-    /* inside */
+    /* INSIDE */
 
-    ctx.fillStyle="#140025";
+    ctx.fillStyle =
+        "#12001f";
 
     ctx.beginPath();
 
     ctx.ellipse(
         x,
-        topY+1,
+        topY,
         w*.38,
         h*.065,
         0,
@@ -1133,72 +1623,64 @@ function drawCup(cup){
     ctx.fill();
 
 
-    /* logo */
+    /* STAR LOGO */
 
-    ctx.fillStyle="rgba(255,255,255,.75)";
+    ctx.fillStyle =
+        "rgba(255,255,255,.8)";
 
-    ctx.font=
-        "bold "+Math.max(10,w*.13)+"px Arial";
+    ctx.font =
+        "bold "+
+        Math.max(10,w*.14)+
+        "px Arial";
 
-    ctx.textAlign="center";
+    ctx.textAlign =
+        "center";
 
     ctx.fillText(
         "★",
         x,
         y+h*.18
     );
-
 }
 
 
 /* =========================
-   DRAW PARTICLES
-========================= */
-
-function drawParticles(){
-
-    particles.forEach(p=>{
-
-        ctx.globalAlpha=p.life;
-
-        ctx.fillStyle="#8eeaff";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            p.x,
-            p.y,
-            p.size,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
-
-    });
-
-    ctx.globalAlpha=1;
-}
-
-
-/* =========================
-   MAIN DRAW
+   DRAW LOOP
 ========================= */
 
 function draw(){
 
-    ctx.clearRect(0,0,W,H);
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
 
     drawBackground();
 
-    cups.forEach(drawCup);
+    /*
+       During shuffle, sort by vertical
+       position to create a natural
+       3D effect.
+    */
+
+    const sorted =
+        [...cups].sort(
+            (a,b)=>
+                a.offsetY-b.offsetY
+        );
+
+    for(const cup of sorted){
+        drawCup(cup);
+    }
 
     drawParticles();
 
+    updateParticles();
+
     requestAnimationFrame(draw);
 }
-
-draw();
 
 
 /* =========================
@@ -1225,7 +1707,6 @@ function startGame(){
     updateUI();
 
     beginRound();
-
 }
 
 
@@ -1241,28 +1722,92 @@ function beginRound(){
 
     acceptingAnswer=false;
 
+    gamePhase="reveal";
+
     const config =
         sets[currentSet-1];
 
-    timeLeft=config.time;
+    timeLeft =
+        config.time;
 
     updateUI();
 
     createCups();
 
-    document.getElementById("message").textContent =
-        "Watch the ball...";
+    cups.forEach(
+        cup=>{
+            cup.lift=0;
+        }
+    );
+
+    document
+        .getElementById("message")
+        .textContent =
+        "🔴 WATCH THE BALL!";
 
 
-    /* show ball */
+    /*
+       BALL REVEAL
+    */
 
-    roundTimeout =
-        setTimeout(()=>{
+    let start =
+        performance.now();
 
-            shuffleCups();
+    function reveal(now){
 
-        },1500);
+        const t =
+            Math.min(
+                1,
+                (now-start)/600
+            );
 
+        const ease =
+            1-
+            Math.pow(
+                1-t,
+                3
+            );
+
+        cups.forEach(
+            cup=>{
+                cup.lift=
+                    .60*ease;
+            }
+        );
+
+        if(t<1){
+
+            requestAnimationFrame(
+                reveal
+            );
+
+        }else{
+
+            roundTimeout =
+                setTimeout(()=>{
+
+                    cups.forEach(
+                        cup=>{
+                            cup.lift=0;
+                        }
+                    );
+
+                    gamePhase="shuffle";
+
+                    document
+                        .getElementById("message")
+                        .textContent =
+                        "👀 FOLLOW THE BALL!";
+
+                    shuffleCups();
+
+                },1200);
+        }
+    }
+
+    requestAnimationFrame(
+        reveal
+    );
 }
 
 
@@ -1275,64 +1820,88 @@ function shuffleCups(){
     const config =
         sets[currentSet-1];
 
-    document.getElementById("message").textContent =
-        "👀 Follow the cups!";
+    let moves=[];
 
+    /*
+       Only adjacent cups swap.
+       This means cups never collide.
+    */
 
-    shuffleMoves=[];
+    for(
+        let i=0;
+        i<config.shuffles;
+        i++
+    ){
 
-    for(let i=0;i<config.shuffles;i++){
-
-        let a =
+        moves.push(
             Math.floor(
-                Math.random()*(config.cups-1)
-            );
-
-        shuffleMoves.push(a);
-
+                Math.random()*
+                (config.cups-1)
+            )
+        );
     }
 
-    doNextShuffle();
-
+    doShuffleMove(moves);
 }
 
 
 /* =========================
-   NEXT SHUFFLE
+   SHUFFLE MOVE
 ========================= */
 
-function doNextShuffle(){
+function doShuffleMove(moves){
 
-    if(shuffleMoves.length===0){
+    if(moves.length===0){
+
+        gamePhase="answer";
 
         acceptingAnswer=true;
 
         startTimer();
 
-        document.getElementById("message").textContent =
-            "🎯 Where is the ball?";
+        document
+            .getElementById("message")
+            .textContent =
+            "🎯 FIND THE BALL!";
 
         return;
     }
 
     const leftSlot =
-        shuffleMoves.shift();
+        moves.shift();
 
     const rightSlot =
         leftSlot+1;
 
     const leftCup =
-        cups.find(c=>c.slot===leftSlot);
+        cups.find(
+            c=>c.slot===leftSlot
+        );
 
     const rightCup =
-        cups.find(c=>c.slot===rightSlot);
+        cups.find(
+            c=>c.slot===rightSlot
+        );
 
     if(!leftCup || !rightCup){
 
-        doNextShuffle();
+        doShuffleMove(moves);
 
         return;
     }
+
+
+    const leftX =
+        slotX(
+            leftSlot,
+            sets[currentSet-1].cups
+        );
+
+    const rightX =
+        slotX(
+            rightSlot,
+            sets[currentSet-1].cups
+        );
 
 
     const start =
@@ -1342,86 +1911,86 @@ function doNextShuffle(){
         sets[currentSet-1].speed;
 
 
-    activeMove={
-        leftCup,
-        rightCup,
-        start,
-        duration
-    };
+    function animate(now){
 
-
-    function animateSwap(now){
-
-        if(!activeMove)
-            return;
-
-        let t =
+        const raw =
             Math.min(
                 1,
                 (now-start)/duration
             );
 
-        const ease =
-            t<.5
-            ?2*t*t
-            :-1+(4-2*t)*t;
+        const t =
+            raw<.5
+            ?2*raw*raw
+            :-1+(4-2*raw)*raw;
 
 
-        const leftStart =
-            slotX(leftSlot,sets[currentSet-1].cups);
-
-        const rightStart =
-            slotX(rightSlot,sets[currentSet-1].cups);
-
+        /*
+           Move horizontally.
+        */
 
         leftCup.x =
-            leftStart+
-            (rightStart-leftStart)*ease;
+            leftX+
+            (rightX-leftX)*t;
 
         rightCup.x =
-            rightStart+
-            (leftStart-rightStart)*ease;
+            rightX+
+            (leftX-rightX)*t;
 
 
-        /* opposite vertical movement */
+        /*
+           Move vertically in opposite
+           directions.
+
+           This prevents visual merging.
+        */
 
         const arc =
-            Math.sin(t*Math.PI)*55;
+            Math.sin(
+                raw*Math.PI
+            )*48;
 
-        leftCup.offsetY=-arc;
-        rightCup.offsetY=arc;
+        leftCup.offsetY =
+            -arc;
+
+        rightCup.offsetY =
+            arc;
 
 
-        if(t<1){
+        if(raw<1){
 
             requestAnimationFrame(
-                animateSwap
+                animate
             );
 
         }else{
 
-            leftCup.slot=rightSlot;
-            rightCup.slot=leftSlot;
+            leftCup.slot=
+                rightSlot;
 
-            leftCup.x=rightStart;
-            rightCup.x=leftStart;
+            rightCup.slot=
+                leftSlot;
+
+            leftCup.x=
+                rightX;
+
+            rightCup.x=
+                leftX;
 
             leftCup.offsetY=0;
             rightCup.offsetY=0;
 
-            activeMove=null;
-
             setTimeout(
-                doNextShuffle,
-                60
+                ()=>{
+                    doShuffleMove(moves);
+                },
+                70
             );
-
         }
-
     }
 
     requestAnimationFrame(
-        animateSwap
+        animate
     );
 }
 
@@ -1432,7 +2001,9 @@ function doNextShuffle(){
 
 function startTimer(){
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
     timerInterval =
         setInterval(()=>{
@@ -1443,27 +2014,29 @@ function startTimer(){
 
             if(timeLeft<=0){
 
-                clearInterval(timerInterval);
+                clearInterval(
+                    timerInterval
+                );
 
                 loseRound(
-                    "⏰ Time's up!"
+                    "⏰ TIME'S UP!"
                 );
 
             }
 
         },1000);
-
 }
 
 
 /* =========================
-   CANVAS CLICK / TOUCH
+   CLICK / TOUCH
 ========================= */
 
 canvas.addEventListener(
     "pointerdown",
     handleChoice
 );
+
 
 function handleChoice(e){
 
@@ -1473,45 +2046,60 @@ function handleChoice(e){
     const rect =
         canvas.getBoundingClientRect();
 
+    const scaleX =
+        W/rect.width;
+
+    const scaleY =
+        H/rect.height;
+
     const x =
-        e.clientX-rect.left;
+        (e.clientX-rect.left)*
+        scaleX;
 
     const y =
-        e.clientY-rect.top;
+        (e.clientY-rect.top)*
+        scaleY;
 
 
     let selected=null;
 
-    let bestDistance=Infinity;
+    let closest=
+        Infinity;
 
-    cups.forEach(cup=>{
+
+    for(const cup of cups){
 
         const distance =
-            Math.abs(x-cup.x);
+            Math.abs(
+                x-cup.x
+            );
 
         if(
-            distance<cupWidth()*.65 &&
-            distance<bestDistance
+            distance<
+            cupWidth()*.65 &&
+            distance<
+            closest
         ){
 
-            bestDistance=distance;
-            selected=cup;
+            closest=
+                distance;
 
+            selected=
+                cup;
         }
-
-    });
+    }
 
 
     if(!selected)
         return;
 
-
     acceptingAnswer=false;
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
     checkAnswer(selected);
-
 }
 
 
@@ -1524,22 +2112,25 @@ function checkAnswer(selected){
     if(selected===ballCup){
 
         score+=100;
+
         coins+=5;
 
-        updateUI();
+        selected.lift=.8;
 
         addParticles(
             selected.x,
             selected.y-70
         );
 
-        selected.lift=1;
-
         playSound("win");
 
-        document.getElementById("message").textContent =
+        document
+            .getElementById("message")
+            .textContent =
             "🎉 CORRECT! +100";
 
+
+        updateUI();
 
         roundTimeout =
             setTimeout(
@@ -1551,16 +2142,18 @@ function checkAnswer(selected){
 
         lives--;
 
-        updateUI();
+        selected.lift=.7;
 
-        selected.lift=1;
-
-        ballCup.lift=1;
+        ballCup.lift=.7;
 
         playSound("lose");
 
-        document.getElementById("message").textContent =
-            "❌ Wrong cup!";
+        document
+            .getElementById("message")
+            .textContent =
+            "❌ WRONG CUP!";
+
+        updateUI();
 
 
         if(lives<=0){
@@ -1578,11 +2171,8 @@ function checkAnswer(selected){
                     nextRound,
                     1300
                 );
-
         }
-
     }
-
 }
 
 
@@ -1596,14 +2186,16 @@ function loseRound(text){
 
     lives--;
 
-    updateUI();
-
-    ballCup.lift=1;
+    ballCup.lift=.7;
 
     playSound("lose");
 
-    document.getElementById("message").textContent =
+    document
+        .getElementById("message")
+        .textContent =
         text;
+
+    updateUI();
 
 
     if(lives<=0){
@@ -1619,9 +2211,7 @@ function loseRound(text){
             nextRound,
             1200
         );
-
     }
-
 }
 
 
@@ -1637,6 +2227,10 @@ function nextRound(){
 
         currentRound=1;
 
+        /*
+           SET COMPLETE
+        */
+
         if(currentSet>=8){
 
             winGame();
@@ -1647,12 +2241,17 @@ function nextRound(){
         currentSet++;
 
         score+=250;
+
         coins+=10;
 
         updateUI();
 
-        document.getElementById("message").textContent =
-            "🔥 SET "+currentSet+" UNLOCKED!";
+        document
+            .getElementById("message")
+            .textContent =
+            "🔥 SET "+
+            currentSet+
+            " UNLOCKED!";
 
         setTimeout(
             beginRound,
@@ -1663,7 +2262,6 @@ function nextRound(){
     }
 
     beginRound();
-
 }
 
 
@@ -1673,9 +2271,9 @@ function nextRound(){
 
 function gameOver(){
 
-    running=false;
-
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
     acceptingAnswer=false;
 
@@ -1687,32 +2285,45 @@ function gameOver(){
             "findBallHighScore",
             highScore
         );
-
     }
 
 
-    document.getElementById("gameOverTitle").textContent =
-        "Game Over 😢";
+    document
+        .getElementById("gameOverTitle")
+        .textContent =
+        "GAME OVER 😢";
 
-    document.getElementById("gameOverText").innerHTML =
-        "Your Score: <b>"+score+"</b><br>"+
-        "High Score: <b>"+highScore+"</b><br>"+
-        "You reached Set "+currentSet+".";
+
+    document
+        .getElementById("gameOverText")
+        .innerHTML =
+        "Your Score: <b>"+
+        score+
+        "</b><br><br>"+
+        "High Score: <b>"+
+        highScore+
+        "</b><br>"+
+        "Reached Set: <b>"+
+        currentSet+
+        "</b>";
+
 
     document
         .getElementById("gameOver")
-        .classList.remove("hidden");
-
+        .classList
+        .remove("hidden");
 }
 
 
 /* =========================
-   WIN GAME
+   WIN
 ========================= */
 
 function winGame(){
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
     acceptingAnswer=false;
 
@@ -1728,24 +2339,37 @@ function winGame(){
             "findBallHighScore",
             highScore
         );
-
     }
 
     playSound("win");
 
-    document.getElementById("gameOverTitle").textContent =
+
+    document
+        .getElementById("gameOverTitle")
+        .textContent =
         "🏆 YOU WON!";
 
-    document.getElementById("gameOverText").innerHTML =
-        "Amazing! You completed all <b>8 Sets</b>!<br><br>"+
-        "Final Score: <b>"+score+"</b><br>"+
-        "Coins Earned: <b>"+coins+"</b><br>"+
-        "High Score: <b>"+highScore+"</b>";
+
+    document
+        .getElementById("gameOverText")
+        .innerHTML =
+        "AMAZING!<br><br>"+
+        "You completed all <b>8 SETS</b>!<br><br>"+
+        "Final Score: <b>"+
+        score+
+        "</b><br>"+
+        "Coins: <b>"+
+        coins+
+        "</b><br>"+
+        "High Score: <b>"+
+        highScore+
+        "</b>";
+
 
     document
         .getElementById("gameOver")
-        .classList.remove("hidden");
-
+        .classList
+        .remove("hidden");
 }
 
 
@@ -1755,21 +2379,46 @@ function winGame(){
 
 function restartGame(){
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
-    clearTimeout(roundTimeout);
+    clearTimeout(
+        roundTimeout
+    );
+
+    acceptingAnswer=false;
+
+    currentSet=1;
+
+    currentRound=1;
+
+    score=0;
+
+    coins=0;
+
+    lives=3;
+
+    timeLeft=15;
+
+    cups=[];
 
     document
         .getElementById("gameOver")
-        .classList.add("hidden");
+        .classList
+        .add("hidden");
 
     document
         .getElementById("startScreen")
-        .classList.remove("hidden");
+        .classList
+        .remove("hidden");
 
-    document.getElementById("message").textContent =
+    document
+        .getElementById("message")
+        .textContent =
         "Press START GAME";
 
+    updateUI();
 }
 
 
@@ -1779,21 +2428,41 @@ function restartGame(){
 
 function updateUI(){
 
-    document.getElementById("set").textContent =
-        currentSet+" / 8";
+    document
+        .getElementById("set")
+        .textContent =
+        currentSet+
+        " / 8";
 
-    document.getElementById("score").textContent =
+
+    document
+        .getElementById("score")
+        .textContent =
         score;
 
-    document.getElementById("coins").textContent =
-        "🪙 "+coins;
 
-    document.getElementById("lives").textContent =
-        "❤️".repeat(Math.max(0,lives));
+    document
+        .getElementById("coins")
+        .textContent =
+        "🪙 "+
+        coins;
 
-    document.getElementById("timer").textContent =
+
+    document
+        .getElementById("lives")
+        .textContent =
+        "❤️".repeat(
+            Math.max(
+                0,
+                lives
+            )
+        );
+
+
+    document
+        .getElementById("timer")
+        .textContent =
         timeLeft;
-
 }
 
 
@@ -1803,16 +2472,16 @@ function updateUI(){
 
 let audioContext=null;
 
+
 function getAudio(){
 
     if(!audioContext){
 
         audioContext =
-            new (
+            new(
                 window.AudioContext ||
                 window.webkitAudioContext
             )();
-
     }
 
     return audioContext;
@@ -1830,7 +2499,8 @@ function playTone(
 
     try{
 
-        const audio=getAudio();
+        const audio =
+            getAudio();
 
         const oscillator =
             audio.createOscillator();
@@ -1838,7 +2508,8 @@ function playTone(
         const gain =
             audio.createGain();
 
-        oscillator.type=type;
+        oscillator.type=
+            type;
 
         oscillator.frequency.value=
             frequency;
@@ -1849,26 +2520,33 @@ function playTone(
         );
 
         gain.gain.exponentialRampToValueAtTime(
-            .15,
+            .14,
             audio.currentTime+.02
         );
 
         gain.gain.exponentialRampToValueAtTime(
             .001,
-            audio.currentTime+duration
+            audio.currentTime+
+            duration
         );
 
         oscillator.connect(gain);
-        gain.connect(audio.destination);
+
+        gain.connect(
+            audio.destination
+        );
 
         oscillator.start();
 
         oscillator.stop(
-            audio.currentTime+duration
+            audio.currentTime+
+            duration
         );
 
-    }catch(e){}
+    }catch(error){
 
+        /* Sound is optional */
+    }
 }
 
 
@@ -1879,22 +2557,39 @@ function playSound(type){
 
     if(type==="win"){
 
-        playTone(523,.12);
+        playTone(
+            523,
+            .12
+        );
+
         setTimeout(
-            ()=>playTone(659,.12),
+            ()=>{
+                playTone(
+                    659,
+                    .12
+                );
+            },
             100
         );
+
         setTimeout(
-            ()=>playTone(784,.2),
+            ()=>{
+                playTone(
+                    784,
+                    .2
+                );
+            },
             200
         );
 
     }else{
 
-        playTone(180,.2,"sawtooth");
-
+        playTone(
+            180,
+            .22,
+            "sawtooth"
+        );
     }
-
 }
 
 
@@ -1902,13 +2597,12 @@ function toggleSound(){
 
     soundOn=!soundOn;
 
-    document.querySelector(
-        ".controls button"
-    ).textContent =
+    document
+        .getElementById("soundButton")
+        .textContent =
         soundOn
         ? "🔊 Sound"
         : "🔇 Sound";
-
 }
 
 
@@ -1916,9 +2610,13 @@ function toggleSound(){
    INITIALIZE
 ========================= */
 
+resizeCanvas();
+
 updateUI();
+
+draw();
 
 </script>
 
 </body>
-</html>
+      </html>

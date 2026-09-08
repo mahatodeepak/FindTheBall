@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find the Ball - Set 1 to Set 8</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #111827, #1e3a8a);
+    color: white;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #dbeafe;
+    margin-bottom: 15px;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 15px auto;
+}
+
+.box {
+    background: rgba(255,255,255,0.12);
+    padding: 10px 18px;
+    border-radius: 12px;
+    min-width: 100px;
+}
+
+.box strong {
+    display: block;
+    font-size: 20px;
+    margin-top: 3px;
+}
+
+#gameArea {
+    max-width: 900px;
+    margin: 25px auto;
+    min-height: 360px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 30px 10px 50px;
+}
+
+.cup {
+    width: 90px;
+    height: 105px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.35s ease;
+    user-select: none;
+}
+
+.cup-body {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(to bottom, #ef4444, #991b1b);
+    border-radius: 12px 12px 35px 35px;
+    position: absolute;
+    bottom: 0;
+    box-shadow: 0 8px 12px rgba(0,0,0,0.35);
+    border: 3px solid #fecaca;
+}
+
+.cup-top {
+    width: 100px;
+    height: 22px;
+    background: #dc2626;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: -5px;
+    z-index: 3;
+    border: 3px solid #fecaca;
+}
+
+.ball {
+    width: 34px;
+    height: 34px;
+    background: radial-gradient(circle at 30% 30%, white, #facc15 35%, #f97316 70%);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    left: 28px;
+    z-index: 1;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+.cup.lifted .cup-body {
+    transform: translateY(-70px);
+}
+
+.cup.lifted .cup-top {
+    transform: translateY(-70px);
+}
+
+.cup.correct {
+    transform: translateY(-75px) scale(1.08);
+}
+
+.cup.wrong {
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+button {
+    border: none;
+    padding: 13px 25px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#startBtn {
+    background: #22c55e;
+    color: white;
+}
+
+#nextBtn {
+    background: #f59e0b;
+    color: white;
+    display: none;
+}
+
+#restartBtn {
+    background: #3b82f6;
+    color: white;
+    display: none;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+#message {
+    min-height: 40px;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+#instructions {
+    max-width: 650px;
+    margin: 20px auto;
+    line-height: 1.6;
+    color: #dbeafe;
+}
+
+.progress {
+    max-width: 500px;
+    height: 12px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    margin: 15px auto;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 12.5%;
+    background: #22c55e;
+    transition: width 0.4s;
+}
+
+@media(max-width:600px) {
+    h1 {
+        font-size: 26px;
+    }
+
+    #gameArea {
+        gap: 10px;
+        min-height: 300px;
+    }
+
+    .cup {
+        width: 70px;
+        height: 90px;
+    }
+
+    .cup-body {
+        width: 70px;
+        height: 75px;
+    }
+
+    .cup-top {
+        width: 78px;
+        left: -4px;
+    }
+
+    .ball {
+        left: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎯 Find the Ball</h1>
+<div class="subtitle">Can you find the hidden ball?</div>
+
+<div class="info">
+
+    <div class="box">
+        Set
+        <strong id="setNumber">1 / 8</strong>
+    </div>
+
+    <div class="box">
+        Score
+        <strong id="score">0</strong>
+    </div>
+
+    <div class="box">
+        Round
+        <strong id="round">0</strong>
+    </div>
+
+</div>
+
+<div class="progress">
+    <div id="progressBar"></div>
+</div>
+
+<div id="message">
+    Press START to begin!
+</div>
+
+<div id="gameArea"></div>
+
+<div>
+    <button id="startBtn" onclick="startGame()">START GAME</button>
+    <button id="nextBtn" onclick="nextSet()">NEXT SET ➜</button>
+    <button id="restartBtn" onclick="restartGame()">RESTART 🔄</button>
+</div>
+
+<div id="instructions">
+    <p>
+        Watch carefully! 👀<br>
+        The ball will be hidden under one cup.
+        After the cups shuffle, tap the cup containing the ball.
+    </p>
+</div>
+
+<script>
+
+const sets = [
+
+    // SET 1
+    {
+        cups: 3,
+        shuffleCount: 3,
+        speed: 650
+    },
+
+    // SET 2
+    {
+        cups: 3,
+        shuffleCount: 5,
+        speed: 520
+    },
+
+    // SET 3
+    {
+        cups: 4,
+        shuffleCount: 5,
+        speed: 500
+    },
+
+    // SET 4
+    {
+        cups: 4,
+        shuffleCount: 7,
+        speed: 420
+    },
+
+    // SET 5
+    {
+        cups: 5,
+        shuffleCount: 7,
+        speed: 400
+    },
+
+    // SET 6
+    {
+        cups: 5,
+        shuffleCount: 9,
+        speed: 340
+    },
+
+    // SET 7
+    {
+        cups: 6,
+        shuffleCount: 9,
+        speed: 300
+    },
+
+    // SET 8
+    {
+        cups: 6,
+        shuffleCount: 12,
+        speed: 240
+    }
+
+];
+
+let currentSet = 0;
+let score = 0;
+let round = 0;
+let ballPosition = 0;
+let gameStarted = false;
+let acceptingAnswer = false;
+
+const gameArea = document.getElementById("gameArea");
+const message = document.getElementById("message");
+const scoreText = document.getElementById("score");
+const roundText = document.getElementById("round");
+const setText = document.getElementById("setNumber");
+const progressBar = document.getElementById("progressBar");
+
+
+// ------------------------------------
+// CREATE CUPS
+// ------------------------------------
+
+function createCups() {
+
+    gameArea.innerHTML = "";
+
+    const numberOfCups = sets[currentSet].cups;
+
+    for(let i = 0; i < numberOfCups; i++) {
+
+        const cup = document.createElement("div");
+
+        cup.className = "cup";
+
+        cup.dataset.index = i;
+
+        cup.innerHTML = `
+            <div class="ball"></div>
+            <div class="cup-body"></div>
+            <div class="cup-top"></div>
+        `;
+
+        cup.addEventListener("click", function() {
+            chooseCup(i);
+        });
+
+        gameArea.appendChild(cup);
+    }
+}
+
+
+// ------------------------------------
+// START GAME
+// ------------------------------------
+
+function startGame() {
+
+    gameStarted = true;
+
+    score = 0;
+    round = 0;
+
+    currentSet = 0;
+
+    scoreText.textContent = score;
+    roundText.textContent = round;
+
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("restartBtn").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+
+    updateSet();
+
+    createCups();
+
+    setTimeout(startRound, 700);
+}
+
+
+// ------------------------------------
+// UPDATE SET
+// ------------------------------------
+
+function updateSet() {
+
+    setText.textContent = (currentSet + 1) + " / 8";
+
+    let percentage = ((currentSet + 1) / 8) * 100;
+
+    progressBar.style.width = percentage + "%";
+}
+
+
+// ------------------------------------
+// START ROUND
+// ------------------------------------
+
+function startRound() {
+
+    if(!gameStarted) return;
+
+    acceptingAnswer = false;
+
+    round++;
+
+    roundText.textContent = round;
+
+    message.textContent = "Watch the ball! 👀";
+
+    createCups();
+
+    const cups = document.querySelectorAll(".cup");
+
+    ballPosition = Math.floor(
+        Math.random() * cups.length
+    );
+
+    setTimeout(function() {
+
+        message.textContent = "Remember the ball! 🟡";
+
+        setTimeout(function() {
+
+            hideBall();
+
+        }, 900);
+
+    }, 400);
+}
+
+
+// ------------------------------------
+// HIDE BALL
+// ------------------------------------
+
+function hideBall() {
+
+    const cups = document.querySelectorAll(".cup");
+
+    if(cups[ballPosition]) {
+        cups[ballPosition].classList.add("lifted");
+
+        setTimeout(function() {
+
+            cups[ballPosition].classList.remove("lifted");
+
+            message.textContent = "Find the ball! 🎯";
+
+            shuffleCups();
+
+        }, 600);
+    }
+}
+
+
+// ------------------------------------
+// SHUFFLE CUPS
+// ------------------------------------
+
+function shuffleCups() {
+
+    let count = 0;
+
+    const config = sets[currentSet];
+
+    const interval = setInterval(function() {
+
+        const cups = Array.from(
+            document.querySelectorAll(".cup")
+        );
+
+        if(cups.length < 2) {
+            clearInterval(interval);
+            return;
+        }
+
+        let a = Math.floor(Math.random() * cups.length);
+
+        let b = Math.floor(Math.random() * cups.length);
+
+        while(a === b) {
+            b = Math.floor(Math.random() * cups.length);
+        }
+
+        swapCups(a, b);
+
+        // IMPORTANT:
+        // Track the ball's new position
+
+        if(ballPosition === a) {
+            ballPosition = b;
+        }
+        else if(ballPosition === b) {
+            ballPosition = a;
+        }
+
+        count++;
+
+        if(count >= config.shuffleCount) {
+
+            clearInterval(interval);
+
+            setTimeout(function() {
+
+                acceptingAnswer = true;
+
+                message.textContent =
+                    "Choose a cup! 👆";
+
+            }, 300);
+        }
+
+    }, config.speed);
+}
+
+
+// ------------------------------------
+// SWAP CUP POSITIONS
+// ------------------------------------
+
+function swapCups(a, b) {
+
+    const cups = Array.from(
+        document.querySelectorAll(".cup")
+    );
+
+    if(a === b) return;
+
+    if(a < b) {
+
+        gameArea.insertBefore(
+            cups[b],
+            cups[a]
+        );
+
+    }
+    else {
+
+        gameArea.insertBefore(
+            cups[a],
+            cups[b]
+        );
+    }
+}
+
+
+// ------------------------------------
+// CHOOSE CUP
+// ------------------------------------
+
+function chooseCup(index) {
+
+    if(!acceptingAnswer) return;
+
+    acceptingAnswer = false;
+
+    const cups = document.querySelectorAll(".cup");
+
+    if(index === ballPosition) {
+
+        score += 10;
+
+        scoreText.textContent = score;
+
+        cups[index].classList.add("correct");
+
+        message.textContent =
+            "🎉 CORRECT! You found the ball! +10";
+
+        setTimeout(function() {
+
+            nextRound();
+
+        }, 1200);
+
+    }
+    else {
+
+        cups[index].classList.add("wrong");
+
+        message.textContent =
+            "❌ Wrong cup! The ball was here 👇";
+
+        cups[ballPosition].classList.add("lifted");
+
+        setTimeout(function() {
+
+            endSet();
+
+        }, 1600);
+    }
+}
+
+
+// ------------------------------------
+// NEXT ROUND
+// ------------------------------------
+
+function nextRound() {
+
+    setTimeout(function() {
+
+        startRound();
+
+    }, 300);
+}
+
+
+// ------------------------------------
+// END SET
+// ------------------------------------
+
+function endSet() {
+
+    if(currentSet < 7) {
+
+        message.textContent =
+            "Set " + (currentSet + 1) +
+            " completed!";
+
+        document.getElementById("nextBtn").style.display =
+            "inline-block";
+
+    }
+    else {
+
+        finishGame();
+
+    }
+}
+
+
+// ------------------------------------
+// NEXT SET
+// ------------------------------------
+
+function nextSet() {
+
+    currentSet++;
+
+    if(currentSet >= 8) {
+
+        finishGame();
+
+        return;
+    }
+
+    document.getElementById("nextBtn").style.display =
+        "none";
+
+    updateSet();
+
+    createCups();
+
+    message.textContent =
+        "Get ready for Set " +
+        (currentSet + 1) + "! 🚀";
+
+    setTimeout(function() {
+
+        startRound();
+
+    }, 1000);
+}
+
+
+// ------------------------------------
+// FINISH GAME
+// ------------------------------------
+
+function finishGame() {
+
+    gameStarted = false;
+    acceptingAnswer = false;
+
+    gameArea.innerHTML = "";
+
+    message.innerHTML =
+        "🏆 GAME COMPLETE!<br>" +
+        "Your final score: " + score;
+
+    document.getElementById("restartBtn").style.display =
+        "inline-block";
+
+    document.getElementById("nextBtn").style.display =
+        "none";
+}
+
+
+// ------------------------------------
+// RESTART
+// ------------------------------------
+
+function restartGame() {
+
+    currentSet = 0;
+    score = 0;
+    round = 0;
+
+    scoreText.textContent = "0";
+    roundText.textContent = "0";
+
+    document.getElementById("restartBtn").style.display =
+        "none";
+
+    updateSet();
+
+    createCups();
+
+    message.textContent =
+        "Get ready! 🎯";
+
+    gameStarted = true;
+
+    setTimeout(function() {
+
+        startRound();
+
+    }, 800);
+}
+
+</script>
+
+</body>
+</html>

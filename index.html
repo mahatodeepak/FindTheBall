@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Find The Ball - Ultimate Game</title>
+<title>Find The Ball - Version 4</title>
 
 <style>
 *{
@@ -17,165 +18,55 @@
 html,body{
     width:100%;
     min-height:100%;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#070b2b;
+    color:white;
 }
 
 body{
-    overflow-x:hidden;
-    font-family:Arial,Helvetica,sans-serif;
-    color:white;
-
-    background:
-        radial-gradient(circle at 15% 15%,rgba(87,75,255,.40),transparent 28%),
-        radial-gradient(circle at 85% 15%,rgba(0,220,255,.25),transparent 30%),
-        radial-gradient(circle at 50% 100%,rgba(184,0,255,.30),transparent 35%),
-        linear-gradient(135deg,#020315,#0b1035,#02020d);
+    min-height:100vh;
+    position:relative;
 }
 
 /* =========================
-   MOVING STARS
+   BACKGROUND
 ========================= */
 
 body::before{
     content:"";
     position:fixed;
+    inset:-50%;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(70,100,255,.30),transparent 28%),
+        radial-gradient(circle at 80% 30%,rgba(190,50,255,.25),transparent 30%),
+        radial-gradient(circle at 50% 90%,rgba(0,210,255,.18),transparent 32%);
+    animation:bgMove 12s ease-in-out infinite alternate;
+    z-index:-3;
+}
+
+body::after{
+    content:"";
+    position:fixed;
     inset:0;
-    pointer-events:none;
-
     background-image:
-        radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1px),
-        radial-gradient(circle,rgba(100,210,255,.5) 1px,transparent 1px);
-
-    background-size:75px 75px,130px 130px;
-
-    animation:starsMove 35s linear infinite;
-
-    opacity:.35;
+        radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1.5px),
+        radial-gradient(circle,rgba(255,255,255,.45) 1px,transparent 1.5px);
+    background-size:90px 90px,140px 140px;
+    background-position:0 0,40px 60px;
+    opacity:.28;
+    animation:stars 18s linear infinite;
+    z-index:-2;
 }
 
-@keyframes starsMove{
-    from{
-        background-position:0 0,0 0;
-    }
-    to{
-        background-position:700px 500px,-500px 400px;
-    }
+@keyframes bgMove{
+    from{transform:translate(-2%,-2%) scale(1);}
+    to{transform:translate(2%,2%) scale(1.08);}
 }
 
-.game{
-    width:min(1100px,96%);
-    margin:10px auto 25px;
-    position:relative;
-    z-index:2;
-}
-
-/* =========================
-   HOME TOP BAR
-========================= */
-
-.home-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:12px;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:9px;
-    font-size:13px;
-    font-weight:900;
-    letter-spacing:1.5px;
-}
-
-.logo-ball{
-    width:28px;
-    height:28px;
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle at 30% 25%,
-            #fff,
-            #ff9aaa 12%,
-            #ff3157 40%,
-            #b6002e 75%,
-            #40000c
-        );
-
-    box-shadow:
-        0 0 12px #ff3157,
-        0 0 30px rgba(255,30,80,.5);
-
-    animation:pulseBall 1.4s infinite alternate;
-}
-
-@keyframes pulseBall{
-    to{
-        transform:scale(1.12);
-    }
-}
-
-.top-coins{
-    padding:7px 12px;
-    border-radius:20px;
-
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.13);
-
-    font-size:13px;
-    font-weight:bold;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    text-align:center;
-    margin-bottom:12px;
-}
-
-.title{
-    font-size:clamp(32px,7vw,62px);
-    font-weight:1000;
-    letter-spacing:4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            #67eaff,
-            #c66cff,
-            #ff6c9d,
-            #fff
-        );
-
-    background-size:400%;
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-
-    animation:titleMove 5s linear infinite;
-
-    filter:
-        drop-shadow(0 0 18px rgba(90,220,255,.25));
-}
-
-@keyframes titleMove{
-    from{
-        background-position:0%;
-    }
-    to{
-        background-position:400%;
-    }
-}
-
-.subtitle{
-    color:#aeb9df;
-    font-size:12px;
-    margin-top:4px;
+@keyframes stars{
+    from{background-position:0 0,40px 60px;}
+    to{background-position:90px 90px,180px 150px;}
 }
 
 /* =========================
@@ -183,314 +74,167 @@ body::before{
 ========================= */
 
 .home-screen{
-    min-height:570px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    position:relative;
-    overflow:hidden;
-
-    border-radius:30px;
-
-    padding:25px;
-
-    background:
-        radial-gradient(
-            circle at 50% 30%,
-            rgba(85,110,255,.20),
-            transparent 38%
-        ),
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.10),
-            rgba(255,255,255,.025)
-        );
-
-    border:1px solid rgba(255,255,255,.13);
-
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.55),
-        inset 0 1px rgba(255,255,255,.13);
-}
-
-/* Decorative glow circles */
-
-.home-screen::before,
-.home-screen::after{
-    content:"";
     position:absolute;
-
-    border-radius:50%;
-
-    pointer-events:none;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:18px;
+    overflow:auto;
 }
 
-.home-screen::before{
-    width:280px;
-    height:280px;
-
-    background:rgba(79,80,255,.13);
-
-    filter:blur(30px);
-
-    left:-100px;
-    top:80px;
-}
-
-.home-screen::after{
-    width:300px;
-    height:300px;
-
-    background:rgba(0,220,255,.10);
-
-    filter:blur(35px);
-
-    right:-120px;
-    bottom:20px;
-}
-
-.home-content{
-    width:min(620px,100%);
+.home-container{
+    width:100%;
+    max-width:480px;
     text-align:center;
-    position:relative;
-    z-index:2;
 }
 
-/* =========================
-   HERO BALL
-========================= */
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
 
-.hero-ball-area{
-    position:relative;
-    width:180px;
-    height:150px;
-    margin:0 auto 8px;
+.logo{
+    font-size:15px;
+    font-weight:900;
+    letter-spacing:2px;
+    opacity:.9;
+}
+
+.coin-display{
+    padding:8px 13px;
+    border-radius:20px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(12px);
+    font-weight:bold;
+}
+
+.coin-icon{
+    color:#ffd84d;
+}
+
+/* HERO */
+
+.hero{
+    margin-top:8px;
 }
 
 .hero-ball{
-    position:absolute;
-
-    width:85px;
-    height:85px;
-
-    left:50%;
-    top:18px;
-
-    transform:translateX(-50%);
-
+    width:110px;
+    height:110px;
+    margin:0 auto 18px;
     border-radius:50%;
-
+    position:relative;
     background:
-        radial-gradient(
-            circle at 30% 25%,
-            #fff 0 6%,
-            #ffdce2 10%,
-            #ff4969 35%,
-            #dc0038 65%,
-            #650018 100%
-        );
-
+        radial-gradient(circle at 32% 27%,#ffffff 0 6%,#ff8b8b 7%,#ff2020 32%,#b60000 72%,#560000 100%);
     box-shadow:
-        0 0 20px #ff365b,
-        0 0 60px rgba(255,40,80,.6),
-        0 0 110px rgba(255,20,70,.25);
-
-    animation:
-        heroBallFloat 2s ease-in-out infinite,
-        heroBallGlow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes heroBallFloat{
-    0%,100%{
-        transform:translateX(-50%) translateY(0);
-    }
-    50%{
-        transform:translateX(-50%) translateY(-14px);
-    }
-}
-
-@keyframes heroBallGlow{
-    from{
-        box-shadow:
-            0 0 18px #ff365b,
-            0 0 45px rgba(255,40,80,.45);
-    }
-    to{
-        box-shadow:
-            0 0 28px #ff365b,
-            0 0 80px rgba(255,40,80,.7);
-    }
+        0 0 18px #ff2929,
+        0 0 45px rgba(255,0,0,.65),
+        0 20px 55px rgba(0,0,0,.5);
+    animation:heroBall 2.5s ease-in-out infinite;
 }
 
 .hero-ball::after{
     content:"";
     position:absolute;
-
-    width:15px;
-    height:15px;
-
+    width:16px;
+    height:8px;
     border-radius:50%;
-
-    left:22px;
-    top:18px;
-
     background:white;
-
-    box-shadow:0 0 10px white;
+    opacity:.75;
+    top:18px;
+    left:25px;
+    filter:blur(1px);
 }
 
-/* =========================
-   HOME TEXT
-========================= */
+@keyframes heroBall{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-13px) rotate(8deg);}
+}
 
-.home-content h1{
-    font-size:clamp(28px,7vw,46px);
-    margin-bottom:8px;
-
+.game-title{
+    font-size:clamp(38px,10vw,60px);
     font-weight:1000;
+    line-height:.95;
+    letter-spacing:2px;
+    text-shadow:
+        0 3px 0 #2635a0,
+        0 0 25px rgba(92,117,255,.8);
 }
 
-.home-content .tagline{
-    color:#aebce5;
-    line-height:1.6;
-    font-size:14px;
-    margin-bottom:22px;
+.game-title span{
+    color:#ffd84d;
 }
 
-/* =========================
-   INFO CARDS
-========================= */
+.tagline{
+    margin-top:12px;
+    color:#cbd2ff;
+    font-size:15px;
+}
 
-.home-info{
+/* CARDS */
+
+.info-cards{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:9px;
-
-    margin:0 auto 22px;
-    width:min(530px,100%);
+    gap:10px;
+    margin:27px 0;
 }
 
 .info-card{
-    padding:12px 7px;
-
-    border-radius:16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.12),
-            rgba(255,255,255,.035)
-        );
-
-    border:1px solid rgba(255,255,255,.12);
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.10);
+    padding:13px 7px;
+    border-radius:17px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(12px);
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 }
 
-.info-icon{
-    font-size:22px;
-    margin-bottom:5px;
-}
-
-.info-value{
-    font-size:17px;
+.info-number{
+    font-size:21px;
     font-weight:900;
+    color:#fff;
 }
 
 .info-label{
-    color:#7f8bb4;
-    font-size:9px;
-    margin-top:3px;
+    margin-top:4px;
+    font-size:10px;
+    color:#aeb7ef;
     text-transform:uppercase;
     letter-spacing:1px;
 }
 
-/* =========================
-   PLAY BUTTON
-========================= */
+/* PLAY BUTTON */
 
 .play-button{
-    position:relative;
-
-    width:min(300px,90%);
-    height:65px;
-
-    border:0;
-    border-radius:22px;
-
-    color:white;
-
-    font-size:20px;
+    width:100%;
+    border:none;
+    border-radius:24px;
+    padding:19px;
+    font-size:22px;
     font-weight:1000;
     letter-spacing:2px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5365ff,
-            #a33fff,
-            #ff3f88
-        );
-
-    background-size:200%;
-
+    color:#11142c;
+    background:linear-gradient(135deg,#ffe45c,#ffb62e);
     box-shadow:
-        0 12px 35px rgba(86,62,255,.45),
-        0 0 35px rgba(155,50,255,.20),
-        inset 0 1px rgba(255,255,255,.4);
-
-    animation:playGradient 4s linear infinite;
-
+        0 8px 0 #9a5d00,
+        0 16px 35px rgba(255,187,0,.35);
     cursor:pointer;
-}
-
-@keyframes playGradient{
-    0%{
-        background-position:0%;
-    }
-    100%{
-        background-position:200%;
-    }
-}
-
-.play-button::before{
-    content:"";
-    position:absolute;
-    inset:-4px;
-
-    border-radius:25px;
-
-    border:1px solid rgba(255,255,255,.15);
-
-    animation:playRing 1.8s infinite;
-}
-
-@keyframes playRing{
-    0%{
-        opacity:.8;
-        transform:scale(1);
-    }
-    100%{
-        opacity:0;
-        transform:scale(1.12);
-    }
-}
-
-.play-button:hover{
-    transform:translateY(-3px) scale(1.02);
+    transition:.15s;
 }
 
 .play-button:active{
-    transform:scale(.96);
+    transform:translateY(7px);
+    box-shadow:
+        0 2px 0 #9a5d00,
+        0 7px 18px rgba(255,187,0,.25);
 }
 
-.home-note{
-    margin-top:16px;
-    color:#69769f;
-    font-size:10px;
+.play-icon{
+    margin-right:8px;
 }
 
 /* =========================
@@ -499,339 +243,224 @@ body::before{
 
 .game-ui{
     display:none;
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+}
+
+.game-container{
+    width:100%;
+    max-width:700px;
+    height:100%;
+    margin:auto;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* GAME HEADER */
+
+.game-header{
+    flex-shrink:0;
+}
+
+.game-header-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.small-title{
+    font-size:21px;
+    font-weight:1000;
+    letter-spacing:1px;
+}
+
+.small-title span{
+    color:#ffd84d;
+}
+
+.sound-button{
+    width:43px;
+    height:43px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.11);
+    color:white;
+    font-size:20px;
+    cursor:pointer;
 }
 
 .stats{
     display:grid;
     grid-template-columns:repeat(5,1fr);
-    gap:7px;
-    margin-bottom:10px;
+    gap:6px;
+    margin-top:10px;
 }
 
 .stat{
     min-width:0;
-    padding:9px 4px;
-
+    padding:8px 4px;
     text-align:center;
-
-    border-radius:14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.12),
-            rgba(255,255,255,.035)
-        );
-
-    border:1px solid rgba(255,255,255,.13);
-
-    backdrop-filter:blur(14px);
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.12),
-        0 8px 25px rgba(0,0,0,.25);
+    border-radius:13px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.10);
+    backdrop-filter:blur(10px);
 }
 
 .stat-label{
-    display:block;
-    color:#8996c2;
-    font-size:9px;
-    letter-spacing:1px;
+    font-size:8px;
+    color:#9fa9e5;
     text-transform:uppercase;
+    letter-spacing:.5px;
 }
 
 .stat-value{
-    display:block;
-    margin-top:3px;
-    font-size:18px;
-    font-weight:800;
+    margin-top:2px;
+    font-size:16px;
+    font-weight:900;
 }
 
-#timer{
-    color:#6ff4ff;
-}
-
-#lives{
-    color:#ff709d;
-    letter-spacing:1px;
-}
-
-/* =========================
-   GAME STAGE
-========================= */
-
-.stage-wrap{
-    padding:6px;
-    border-radius:27px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.22),
-            rgba(255,255,255,.025)
-        );
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.55),
-        0 0 50px rgba(70,150,255,.12);
-}
+/* GAME STAGE */
 
 .stage{
     position:relative;
+    flex:1;
+    min-height:300px;
+    margin-top:10px;
+    border-radius:25px;
     overflow:hidden;
-
-    border-radius:21px;
-
-    background:#05071c;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(29,38,100,.48),
+            rgba(8,12,45,.82)
+        );
+    border:1px solid rgba(255,255,255,.13);
+    box-shadow:
+        inset 0 0 40px rgba(80,100,255,.10),
+        0 15px 45px rgba(0,0,0,.35);
 }
 
 canvas{
     display:block;
-
     width:100%;
-    height:430px;
-
+    height:100%;
     touch-action:none;
 }
 
-/* =========================
-   MESSAGE
-========================= */
+/* GAME OVER */
 
-.message{
-    min-height:28px;
-
-    margin:8px 0;
-
-    text-align:center;
-
-    font-size:17px;
-    font-weight:bold;
-
-    color:#e2ebff;
-
-    text-shadow:
-        0 0 15px rgba(100,210,255,.55);
-}
-
-/* =========================
-   CONTROLS
-========================= */
-
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:9px;
-    flex-wrap:wrap;
-}
-
-button{
-    border:0;
-    border-radius:14px;
-
-    padding:11px 20px;
-
-    color:#fff;
-
-    font-size:14px;
-    font-weight:800;
-
-    cursor:pointer;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5365ff,
-            #a64cff
-        );
-
-    box-shadow:
-        0 7px 25px rgba(90,70,255,.35),
-        inset 0 1px rgba(255,255,255,.3);
-
-    transition:.2s;
-}
-
-button:active{
-    transform:scale(.95);
-}
-
-.secondary{
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.14);
-}
-
-/* =========================
-   OVERLAY
-========================= */
-
-.overlay{
+.game-over{
     position:absolute;
     inset:0;
-
-    z-index:20;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
-    padding:20px;
-
-    background:rgba(2,4,20,.78);
-
-    backdrop-filter:blur(13px);
+    background:rgba(3,5,25,.74);
+    backdrop-filter:blur(9px);
+    z-index:10;
 }
 
-.panel{
-    width:min(520px,100%);
+.game-over.hidden{
+    display:none;
+}
 
-    padding:32px 24px;
-
+.game-over-card{
+    width:88%;
+    max-width:360px;
+    padding:28px 22px;
     text-align:center;
-
-    border-radius:26px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.15),
-            rgba(255,255,255,.035)
-        );
-
+    border-radius:25px;
+    background:rgba(24,30,82,.88);
     border:1px solid rgba(255,255,255,.18);
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.65),
-        inset 0 1px rgba(255,255,255,.15);
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
 }
 
-.panel h2{
-    font-size:clamp(30px,7vw,48px);
-    margin-bottom:12px;
+.game-over-card h2{
+    font-size:32px;
+    margin-bottom:10px;
 }
 
-.panel p{
-    color:#bcc8e8;
-    line-height:1.6;
-    margin-bottom:20px;
+.game-message{
+    color:#cdd3ff;
+    margin-bottom:18px;
+    line-height:1.5;
 }
 
-.big-ball{
-    width:65px;
-    height:65px;
-
-    margin:0 auto 20px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle at 30% 25%,
-            #fff 0 7%,
-            #ffd9df 8%,
-            #ff4162 35%,
-            #b8002a 75%,
-            #40000d
-        );
-
-    box-shadow:
-        0 0 20px #ff365b,
-        0 0 60px rgba(255,30,70,.55);
-
-    animation:ballPulse 1.4s infinite alternate;
+.restart-button{
+    width:100%;
+    border:none;
+    padding:14px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#6f82ff,#4357e8);
+    color:white;
+    font-weight:900;
+    font-size:16px;
+    cursor:pointer;
 }
 
-@keyframes ballPulse{
-    from{
-        transform:scale(.94);
-    }
-    to{
-        transform:scale(1.08);
-    }
+/* BOTTOM BUTTONS */
+
+.bottom-controls{
+    display:flex;
+    gap:8px;
+    padding-top:9px;
+    flex-shrink:0;
 }
 
-.hidden{
-    display:none !important;
-}
-
-.instructions{
-    margin-top:14px;
-    font-size:11px;
-    color:#7e8ab1;
+.control-button{
+    flex:1;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:15px;
+    padding:11px;
+    color:white;
+    background:rgba(255,255,255,.08);
+    font-weight:bold;
+    cursor:pointer;
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media(max-width:600px){
-
-    .game{
-        width:98%;
-        margin-top:6px;
-    }
+@media(max-width:420px){
 
     .home-screen{
-        min-height:500px;
-        padding:18px 12px;
-        border-radius:24px;
+        padding:14px;
     }
 
-    .hero-ball-area{
-        transform:scale(.85);
-        margin-bottom:-3px;
+    .hero-ball{
+        width:88px;
+        height:88px;
     }
 
-    .home-content h1{
-        font-size:30px;
+    .game-title{
+        font-size:42px;
     }
 
-    .home-content .tagline{
-        font-size:12px;
-        margin-bottom:17px;
-    }
-
-    .home-info{
-        gap:5px;
-        margin-bottom:19px;
+    .info-cards{
+        margin:20px 0;
     }
 
     .info-card{
-        padding:9px 4px;
+        padding:11px 5px;
     }
 
-    .info-icon{
+    .info-number{
         font-size:18px;
     }
 
-    .info-value{
-        font-size:14px;
+    .game-container{
+        padding:9px;
     }
 
-    .info-label{
-        font-size:7px;
-    }
-
-    .play-button{
-        height:58px;
+    .small-title{
         font-size:18px;
-    }
-
-    .title{
-        font-size:31px;
-    }
-
-    .subtitle{
-        font-size:10px;
-    }
-
-    .stats{
-        gap:3px;
     }
 
     .stat{
         padding:7px 2px;
-        border-radius:10px;
     }
 
     .stat-label{
@@ -841,271 +470,155 @@ button:active{
     .stat-value{
         font-size:14px;
     }
-
-    canvas{
-        height:360px;
-    }
-
-    .message{
-        font-size:14px;
-    }
-
-    button{
-        padding:10px 15px;
-        font-size:13px;
-    }
-
-    .panel{
-        padding:27px 18px;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="game">
+<!-- =========================
+     HOME SCREEN
+========================= -->
 
-    <!-- =========================
-         HOME TOP
-    ========================== -->
+<section class="home-screen" id="homeScreen">
 
-    <div class="home-top">
+    <div class="home-container">
 
-        <div class="logo">
-            <div class="logo-ball"></div>
-            FIND THE BALL
-        </div>
+        <div class="top-bar">
+            <div class="logo">ARCADE GAME</div>
 
-        <div class="top-coins">
-            🪙 <span id="homeCoins">0</span>
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         HOME SCREEN
-    ========================== -->
-
-    <div class="home-screen" id="homeScreen">
-
-        <div class="home-content">
-
-            <div class="hero-ball-area">
-
-                <div class="hero-ball"></div>
-
+            <div class="coin-display">
+                <span class="coin-icon">●</span>
+                <span id="homeCoins">0</span>
             </div>
+        </div>
 
+        <div class="hero">
 
-            <h1>
-                FIND THE BALL
+            <div class="hero-ball"></div>
+
+            <h1 class="game-title">
+                FIND<br>
+                <span>THE BALL</span>
             </h1>
 
-            <div class="tagline">
-                Watch closely. Remember the ball.
-                <br>
-                Follow the cups and find it!
+            <p class="tagline">
+                Watch carefully. Follow the cup. Find the ball!
+            </p>
+
+        </div>
+
+        <div class="info-cards">
+
+            <div class="info-card">
+                <div class="info-number" id="homeBest">0</div>
+                <div class="info-label">Best Score</div>
             </div>
 
-
-            <div class="home-info">
-
-                <div class="info-card">
-
-                    <div class="info-icon">
-                        🏆
-                    </div>
-
-                    <div
-                        class="info-value"
-                        id="homeHighScore"
-                    >
-                        0
-                    </div>
-
-                    <div class="info-label">
-                        Best Score
-                    </div>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <div class="info-icon">
-                        🎮
-                    </div>
-
-                    <div
-                        class="info-value"
-                    >
-                        8
-                    </div>
-
-                    <div class="info-label">
-                        Sets
-                    </div>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <div class="info-icon">
-                        ⚡
-                    </div>
-
-                    <div
-                        class="info-value"
-                    >
-                        24
-                    </div>
-
-                    <div class="info-label">
-                        Rounds
-                    </div>
-
-                </div>
-
+            <div class="info-card">
+                <div class="info-number">8</div>
+                <div class="info-label">Sets</div>
             </div>
 
-
-            <button
-                class="play-button"
-                onclick="startGame()"
-            >
-                ▶ &nbsp; PLAY GAME
-            </button>
-
-
-            <div class="home-note">
-                8 SETS • 24 ROUNDS • INCREASING DIFFICULTY
+            <div class="info-card">
+                <div class="info-number">24</div>
+                <div class="info-label">Rounds</div>
             </div>
 
         </div>
+
+        <button class="play-button" id="playButton">
+            <span class="play-icon">▶</span>
+            PLAY GAME
+        </button>
 
     </div>
 
+</section>
 
-    <!-- =========================
-         GAME UI
-    ========================== -->
 
-    <div
-        class="game-ui"
-        id="gameUI"
-    >
+<!-- =========================
+     GAME UI
+========================= -->
 
-        <div class="header">
+<section class="game-ui" id="gameUI">
 
-            <div class="title">
-                FIND THE BALL
+    <div class="game-container">
+
+        <div class="game-header">
+
+            <div class="game-header-top">
+
+                <div class="small-title">
+                    FIND <span>THE BALL</span>
+                </div>
+
+                <button
+                    class="sound-button"
+                    id="soundButton"
+                    aria-label="Sound">
+                    🔊
+                </button>
+
             </div>
 
-            <div class="subtitle">
-                Watch carefully • Follow the hidden ball • Beat all 8 sets
-            </div>
+            <div class="stats">
 
-        </div>
+                <div class="stat">
+                    <div class="stat-label">Set</div>
+                    <div class="stat-value" id="setText">1/8</div>
+                </div>
 
+                <div class="stat">
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value" id="scoreText">0</div>
+                </div>
 
-        <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Coins</div>
+                    <div class="stat-value" id="coinText">0</div>
+                </div>
 
-            <div class="stat">
-                <span class="stat-label">Set</span>
-                <span
-                    class="stat-value"
-                    id="set"
-                >
-                    1 / 8
-                </span>
-            </div>
+                <div class="stat">
+                    <div class="stat-label">Lives</div>
+                    <div class="stat-value" id="lifeText">❤️❤️❤️</div>
+                </div>
 
-            <div class="stat">
-                <span class="stat-label">Score</span>
-                <span
-                    class="stat-value"
-                    id="score"
-                >
-                    0
-                </span>
-            </div>
+                <div class="stat">
+                    <div class="stat-label">Time</div>
+                    <div class="stat-value" id="timeText">15</div>
+                </div>
 
-            <div class="stat">
-                <span class="stat-label">Coins</span>
-                <span
-                    class="stat-value"
-                    id="coins"
-                >
-                    🪙 0
-                </span>
-            </div>
-
-            <div class="stat">
-                <span class="stat-label">Lives</span>
-                <span
-                    class="stat-value"
-                    id="lives"
-                >
-                    ❤️❤️❤️
-                </span>
-            </div>
-
-            <div class="stat">
-                <span class="stat-label">Time</span>
-                <span
-                    class="stat-value"
-                    id="timer"
-                >
-                    15
-                </span>
             </div>
 
         </div>
 
 
-        <div class="stage-wrap">
+        <div class="stage" id="stage">
 
-            <div class="stage">
+            <canvas id="gameCanvas"></canvas>
 
-                <canvas id="gameCanvas"></canvas>
+            <div
+                class="game-over hidden"
+                id="gameOver">
 
+                <div class="game-over-card">
 
-                <!-- GAME OVER -->
+                    <h2 id="gameOverTitle">
+                        GAME OVER
+                    </h2>
 
-                <div
-                    class="overlay hidden"
-                    id="gameOver"
-                >
-
-                    <div class="panel">
-
-                        <div class="big-ball"></div>
-
-                        <h2 id="gameOverTitle">
-                            GAME OVER
-                        </h2>
-
-                        <p id="gameOverText">
-                            Better luck next time!
-                        </p>
-
-                        <button onclick="restartGame()">
-                            🔄 PLAY AGAIN
-                        </button>
-
-                        <br><br>
-
-                        <button
-                            class="secondary"
-                            onclick="goHome()"
-                        >
-                            🏠 HOME
-                        </button>
-
+                    <div
+                        class="game-message"
+                        id="gameMessage">
+                        Try again!
                     </div>
+
+                    <button
+                        class="restart-button"
+                        id="restartButton">
+                        PLAY AGAIN
+                    </button>
 
                 </div>
 
@@ -1114,119 +627,66 @@ button:active{
         </div>
 
 
-        <div
-            class="message"
-            id="message"
-        >
-            Get ready!
-        </div>
-
-
-        <div class="controls">
+        <div class="bottom-controls">
 
             <button
-                class="secondary"
-                onclick="toggleSound()"
-                id="soundButton"
-            >
-                🔊 Sound
-            </button>
-
-            <button
-                class="secondary"
-                onclick="restartGame()"
-            >
+                class="control-button"
+                id="restartSmall">
                 ↻ Restart
             </button>
 
             <button
-                class="secondary"
-                onclick="goHome()"
-            >
-                🏠 Home
+                class="control-button"
+                id="homeButton">
+                ⌂ Home
             </button>
 
         </div>
 
     </div>
 
-</div>
+</section>
 
 
 <script>
+/* =========================================================
+   FIND THE BALL - VERSION 4
+   Complete JavaScript Game
+========================================================= */
 
-/* =====================================================
-   FIND THE BALL
-   VERSION 4
-   PREMIUM MOBILE GAME
-===================================================== */
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
+const stage = document.getElementById("stage");
 
-/* =========================
-   CANVAS
-========================= */
+const homeScreen = document.getElementById("homeScreen");
+const gameUI = document.getElementById("gameUI");
+const gameOver = document.getElementById("gameOver");
 
-const canvas =
-    document.getElementById("gameCanvas");
+const playButton = document.getElementById("playButton");
+const restartButton = document.getElementById("restartButton");
+const restartSmall = document.getElementById("restartSmall");
+const homeButton = document.getElementById("homeButton");
+const soundButton = document.getElementById("soundButton");
 
-const ctx =
-    canvas.getContext("2d");
+const setText = document.getElementById("setText");
+const scoreText = document.getElementById("scoreText");
+const coinText = document.getElementById("coinText");
+const lifeText = document.getElementById("lifeText");
+const timeText = document.getElementById("timeText");
 
-let W=0;
-let H=0;
+const homeCoins = document.getElementById("homeCoins");
+const homeBest = document.getElementById("homeBest");
 
-
-/* =========================
-   GAME VARIABLES
-========================= */
-
-let currentSet=1;
-let currentRound=1;
-
-let score=0;
-let coins=0;
-let lives=3;
-
-let timeLeft=15;
-
-let acceptingAnswer=false;
-
-let gamePhase="idle";
-
-let ballCup=null;
-
-let cups=[];
-
-let particles=[];
-
-let stars=[];
-
-let timerInterval=null;
-
-let roundTimeout=null;
-
-let soundOn=true;
-
-let highScore=
-    Number(
-        localStorage.getItem(
-            "findBallHighScore"
-        ) || 0
-    );
-
-let savedCoins=
-    Number(
-        localStorage.getItem(
-            "findBallCoins"
-        ) || 0
-    );
+const gameOverTitle = document.getElementById("gameOverTitle");
+const gameMessage = document.getElementById("gameMessage");
 
 
-/* =========================
-   SETS
-========================= */
+/* =========================================================
+   GAME SETTINGS
+========================================================= */
 
-const sets=[
+const sets = [
 
     {
         cups:3,
@@ -1287,26 +747,175 @@ const sets=[
 ];
 
 
-/* =========================
-   RESIZE
-========================= */
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
+
+let W = 0;
+let H = 0;
+let dpr = 1;
+
+let currentSet = 1;
+let currentRound = 1;
+
+let score = 0;
+let coins = 0;
+let lives = 3;
+let timeLeft = 15;
+
+let highScore =
+    Number(localStorage.getItem("findBallHighScore") || 0);
+
+let savedCoins =
+    Number(localStorage.getItem("findBallCoins") || 0);
+
+let soundOn =
+    localStorage.getItem("findBallSound") !== "off";
+
+let cups = [];
+let ballCup = 0;
+
+let phase = "idle";
+
+let timerInterval = null;
+let animationFrame = null;
+
+let shuffleIndex = 0;
+let shuffleTimer = null;
+
+let particles = [];
+
+let audioContext = null;
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+function getAudio(){
+
+    if(!audioContext){
+
+        audioContext =
+            new (window.AudioContext ||
+                 window.webkitAudioContext)();
+    }
+
+    return audioContext;
+}
+
+function beep(
+    frequency=440,
+    duration=.08,
+    type="sine"
+){
+
+    if(!soundOn) return;
+
+    try{
+
+        const audio = getAudio();
+
+        const oscillator =
+            audio.createOscillator();
+
+        const gain =
+            audio.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.value = frequency;
+
+        gain.gain.setValueAtTime(
+            .0001,
+            audio.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .08,
+            audio.currentTime + .01
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            audio.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            audio.currentTime + duration + .02
+        );
+
+    }catch(e){}
+}
+
+
+/* =========================================================
+   SOUND BUTTON
+========================================================= */
+
+function updateSoundButton(){
+
+    soundButton.textContent =
+        soundOn ? "🔊" : "🔇";
+}
+
+soundButton.addEventListener("click",function(){
+
+    soundOn = !soundOn;
+
+    localStorage.setItem(
+        "findBallSound",
+        soundOn ? "on" : "off"
+    );
+
+    updateSoundButton();
+
+    if(soundOn){
+        beep(650,.08);
+    }
+});
+
+updateSoundButton();
+
+
+/* =========================================================
+   CANVAS RESIZE
+========================================================= */
 
 function resizeCanvas(){
 
-    const rect=
-        canvas.getBoundingClientRect();
+    if(gameUI.style.display === "none"){
+        return;
+    }
 
-    const dpr=
-        window.devicePixelRatio || 1;
+    const rect =
+        stage.getBoundingClientRect();
 
-    W=rect.width;
-    H=rect.height;
+    if(rect.width <= 0 || rect.height <= 0){
+        return;
+    }
 
-    canvas.width=
-        W*dpr;
+    dpr =
+        Math.min(window.devicePixelRatio || 1,2);
 
-    canvas.height=
-        H*dpr;
+    W = rect.width;
+    H = rect.height;
+
+    canvas.width =
+        Math.floor(W * dpr);
+
+    canvas.height =
+        Math.floor(H * dpr);
+
+    canvas.style.width =
+        W + "px";
+
+    canvas.style.height =
+        H + "px";
 
     ctx.setTransform(
         dpr,
@@ -1316,12 +925,6 @@ function resizeCanvas(){
         0,
         0
     );
-
-    createStars();
-
-    if(cups.length){
-        repositionCups();
-    }
 }
 
 window.addEventListener(
@@ -1330,47 +933,701 @@ window.addEventListener(
 );
 
 
-/* =========================
-   STARS
-========================= */
+/* =========================================================
+   CUP POSITION
+========================================================= */
 
-function createStars(){
+function slotX(index){
 
-    stars=[];
+    const count = cups.length;
 
-    const amount=
-        Math.max(
-            35,
-            Math.floor(W/8)
+    const side =
+        Math.min(65,W * .10);
+
+    if(count <= 1){
+        return W / 2;
+    }
+
+    return side +
+        index *
+        ((W - side * 2) /
+        (count - 1));
+}
+
+
+/* =========================================================
+   CUP SIZE
+========================================================= */
+
+function cupWidth(){
+
+    const count = cups.length;
+
+    let spacing =
+        count > 1
+        ? (W - 2 * Math.min(65,W*.10))
+          / (count - 1)
+        : W;
+
+    return Math.max(
+        48,
+        Math.min(
+            105,
+            spacing * .56
+        )
+    );
+}
+
+
+/* =========================================================
+   CREATE CUPS
+========================================================= */
+
+function createCups(){
+
+    const settings =
+        sets[currentSet - 1];
+
+    cups = [];
+
+    for(let i=0;i<settings.cups;i++){
+
+        cups.push({
+            x:slotX(i),
+            y:H*.57,
+            targetX:slotX(i),
+            targetY:H*.57,
+            lift:0,
+            scale:1
+        });
+
+    }
+
+    ballCup =
+        Math.floor(
+            Math.random() * cups.length
+        );
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+    homeScreen.style.display = "none";
+
+    gameUI.style.display = "block";
+
+    /*
+       IMPORTANT FIX:
+       The game UI was hidden when resizeCanvas()
+       originally ran. Therefore the canvas had 0 size.
+       We resize AFTER making gameUI visible.
+    */
+    resizeCanvas();
+
+    gameOver.classList.add("hidden");
+
+    currentSet = 1;
+    currentRound = 1;
+
+    score = 0;
+    coins = 0;
+    lives = 3;
+
+    updateUI();
+
+    beginRound();
+
+    try{
+        getAudio().resume();
+    }catch(e){}
+}
+
+
+/* =========================================================
+   BEGIN ROUND
+========================================================= */
+
+function beginRound(){
+
+    clearTimers();
+
+    resizeCanvas();
+
+    if(W <= 0 || H <= 0){
+        resizeCanvas();
+    }
+
+    phase = "reveal";
+
+    shuffleIndex = 0;
+
+    createCups();
+
+    particles = [];
+
+    timeLeft =
+        sets[currentSet - 1].time;
+
+    updateUI();
+
+    animate();
+
+    /*
+       Lift the cup above the ball
+       so the red ball is clearly visible.
+    */
+
+    cups.forEach((cup,index)=>{
+
+        cup.lift =
+            index === ballCup
+            ? 38
+            : 0;
+
+    });
+
+    setTimeout(()=>{
+
+        cups.forEach(cup=>{
+            cup.lift = 0;
+        });
+
+        setTimeout(()=>{
+
+            phase = "shuffle";
+
+            doShuffleMove();
+
+        },500);
+
+    },1200);
+}
+
+
+/* =========================================================
+   SHUFFLE
+========================================================= */
+
+function doShuffleMove(){
+
+    if(phase !== "shuffle"){
+        return;
+    }
+
+    const settings =
+        sets[currentSet - 1];
+
+    if(shuffleIndex >= settings.shuffles){
+
+        phase = "choose";
+
+        startTimer();
+
+        beep(520,.10);
+
+        return;
+    }
+
+    /*
+       Swap two adjacent cups.
+       The two cups move on opposite arcs,
+       preventing them from visually merging.
+    */
+
+    let a =
+        Math.floor(
+            Math.random() * (cups.length - 1)
         );
 
-    for(let i=0;i<amount;i++){
+    let b = a + 1;
 
-        stars.push({
+    const oldA = cups[a].x;
+    const oldB = cups[b].x;
 
-            x:Math.random()*W,
+    const tempCup = cups[a];
 
-            y:Math.random()*H,
+    cups[a] = cups[b];
+    cups[b] = tempCup;
 
-            r:Math.random()*1.4+.3,
+    cups[a].startX = oldB;
+    cups[b].startX = oldA;
 
-            alpha:Math.random()*.8+.2,
+    cups[a].targetX = slotX(a);
+    cups[b].targetX = slotX(b);
 
-            speed:Math.random()*.25+.05
+    cups[a].startY = H*.57;
+    cups[b].startY = H*.57;
 
-        });
+    cups[a].targetY = H*.57;
+    cups[b].targetY = H*.57;
+
+    cups[a].arc =
+        Math.min(70,H*.12);
+
+    cups[b].arc =
+        -Math.min(70,H*.12);
+
+    cups[a].moveStart =
+        performance.now();
+
+    cups[b].moveStart =
+        performance.now();
+
+    cups[a].moving = true;
+    cups[b].moving = true;
+
+    shuffleIndex++;
+
+    beep(
+        250 + shuffleIndex * 12,
+        .045,
+        "triangle"
+    );
+
+    const duration =
+        settings.speed;
+
+    shuffleTimer =
+        setTimeout(
+            doShuffleMove,
+            duration
+        );
+}
+
+
+/* =========================================================
+   UPDATE CUP MOVEMENT
+========================================================= */
+
+function updateCups(now){
+
+    cups.forEach(cup=>{
+
+        if(!cup.moving){
+            return;
+        }
+
+        const duration =
+            sets[currentSet - 1].speed;
+
+        let p =
+            (now - cup.moveStart)
+            / duration;
+
+        p =
+            Math.max(0,Math.min(1,p));
+
+        const ease =
+            p < .5
+            ? 2*p*p
+            : 1-Math.pow(-2*p+2,2)/2;
+
+        const startX =
+            cup.startX ??
+            cup.x;
+
+        const startY =
+            cup.startY ??
+            H*.57;
+
+        cup.x =
+            startX +
+            (cup.targetX-startX)*ease;
+
+        cup.y =
+            startY +
+            Math.sin(p*Math.PI) *
+            (cup.arc || 0);
+
+        if(p >= 1){
+
+            cup.x =
+                cup.targetX;
+
+            cup.y =
+                cup.targetY;
+
+            cup.moving = false;
+
+            cup.arc = 0;
+        }
+
+    });
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+    clearInterval(timerInterval);
+
+    timerInterval =
+        setInterval(()=>{
+
+            if(phase !== "choose"){
+                return;
+            }
+
+            timeLeft--;
+
+            updateUI();
+
+            if(timeLeft <= 0){
+
+                clearInterval(timerInterval);
+
+                beep(150,.18,"sawtooth");
+
+                loseLife(
+                    "Time's up!"
+                );
+            }
+
+        },1000);
+}
+
+
+/* =========================================================
+   HANDLE PLAYER CHOICE
+========================================================= */
+
+function chooseCup(clientX){
+
+    if(phase !== "choose"){
+        return;
+    }
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+    const x =
+        clientX - rect.left;
+
+    let nearest = 0;
+    let distance = Infinity;
+
+    cups.forEach((cup,index)=>{
+
+        const d =
+            Math.abs(x-cup.x);
+
+        if(d < distance){
+
+            distance = d;
+            nearest = index;
+
+        }
+
+    });
+
+    handleChoice(nearest);
+}
+
+
+/* =========================================================
+   HANDLE CHOICE RESULT
+========================================================= */
+
+function handleChoice(index){
+
+    if(phase !== "choose"){
+        return;
+    }
+
+    phase = "result";
+
+    clearInterval(timerInterval);
+
+    const chosenCup =
+        cups[index];
+
+    if(index === ballCup){
+
+        score += 100;
+        coins += 5;
+
+        createBurst(
+            chosenCup.x,
+            chosenCup.y - 65
+        );
+
+        beep(880,.10);
+        setTimeout(
+            ()=>beep(1180,.14),
+            80
+        );
+
+        chosenCup.lift = 45;
+
+        updateUI();
+
+        setTimeout(
+            roundComplete,
+            900
+        );
+
+    }else{
+
+        beep(170,.20,"sawtooth");
+
+        createBurst(
+            chosenCup.x,
+            chosenCup.y - 40
+        );
+
+        chosenCup.lift = 28;
+
+        setTimeout(()=>{
+
+            loseLife("Wrong cup!");
+
+        },500);
 
     }
 }
 
 
-/* =========================
+/* =========================================================
+   ROUND COMPLETE
+========================================================= */
+
+function roundComplete(){
+
+    if(lives <= 0){
+        return;
+    }
+
+    currentRound++;
+
+    if(currentRound > 3){
+
+        score += 250;
+        coins += 10;
+
+        if(currentSet >= 8){
+
+            winGame();
+
+            return;
+        }
+
+        currentSet++;
+        currentRound = 1;
+
+        updateUI();
+
+        setTimeout(
+            beginRound,
+            500
+        );
+
+    }else{
+
+        updateUI();
+
+        setTimeout(
+            beginRound,
+            500
+        );
+    }
+}
+
+
+/* =========================================================
+   LOSE LIFE
+========================================================= */
+
+function loseLife(message){
+
+    lives--;
+
+    updateUI();
+
+    if(lives <= 0){
+
+        endGame(
+            "GAME OVER",
+            message + " You ran out of lives."
+        );
+
+        return;
+    }
+
+    setTimeout(
+        beginRound,
+        650
+    );
+}
+
+
+/* =========================================================
+   WIN GAME
+========================================================= */
+
+function winGame(){
+
+    score += 1000;
+    coins += 50;
+
+    saveProgress();
+
+    updateUI();
+
+    gameOverTitle.textContent =
+        "🏆 YOU WIN!";
+
+    gameMessage.innerHTML =
+        "Amazing! You completed all 8 sets.<br><br>" +
+        "Final Score: <b>" + score + "</b><br>" +
+        "Coins Earned: <b>" + coins + "</b>";
+
+    gameOver.classList.remove("hidden");
+
+    phase = "over";
+
+    beep(880,.12);
+
+    setTimeout(
+        ()=>beep(1100,.12),
+        130
+    );
+
+    setTimeout(
+        ()=>beep(1400,.20),
+        260
+    );
+}
+
+
+/* =========================================================
+   END GAME
+========================================================= */
+
+function endGame(title,message){
+
+    phase = "over";
+
+    clearTimers();
+
+    saveProgress();
+
+    gameOverTitle.textContent =
+        title;
+
+    gameMessage.innerHTML =
+        message +
+        "<br><br>Score: <b>" +
+        score +
+        "</b>";
+
+    gameOver.classList.remove("hidden");
+}
+
+
+/* =========================================================
+   SAVE PROGRESS
+========================================================= */
+
+function saveProgress(){
+
+    if(score > highScore){
+
+        highScore = score;
+
+        localStorage.setItem(
+            "findBallHighScore",
+            highScore
+        );
+    }
+
+    /*
+       Add only the coins earned in this game
+       to the persistent total.
+    */
+
+    savedCoins += coins;
+
+    localStorage.setItem(
+        "findBallCoins",
+        savedCoins
+    );
+
+    homeCoins.textContent =
+        savedCoins;
+
+    homeBest.textContent =
+        highScore;
+}
+
+
+/* =========================================================
+   UI UPDATE
+========================================================= */
+
+function updateUI(){
+
+    setText.textContent =
+        currentSet + "/8";
+
+    scoreText.textContent =
+        score;
+
+    coinText.textContent =
+        coins;
+
+    timeText.textContent =
+        Math.max(0,timeLeft);
+
+    let hearts = "";
+
+    for(let i=0;i<lives;i++){
+        hearts += "❤️";
+    }
+
+    if(hearts === ""){
+        hearts = "💔";
+    }
+
+    lifeText.textContent =
+        hearts;
+
+    homeCoins.textContent =
+        savedCoins;
+
+    homeBest.textContent =
+        highScore;
+}
+
+
+/* =========================================================
+   CLEAR TIMERS
+========================================================= */
+
+function clearTimers(){
+
+    clearInterval(timerInterval);
+
+    clearTimeout(shuffleTimer);
+
+    timerInterval = null;
+    shuffleTimer = null;
+}
+
+
+/* =========================================================
    PARTICLES
-========================= */
+========================================================= */
 
-function addParticles(x,y){
+function createBurst(x,y){
 
-    for(let i=0;i<30;i++){
+    for(let i=0;i<22;i++){
 
         particles.push({
 
@@ -1378,49 +1635,45 @@ function addParticles(x,y){
             y:y,
 
             vx:
-                (Math.random()-.5)*7,
+                (Math.random()-.5)*5,
 
             vy:
-                (Math.random()-.5)*7,
+                (Math.random()-.7)*5,
 
             life:1,
 
             size:
-                Math.random()*4+1
+                2+Math.random()*4
 
         });
-
     }
 }
-
 
 function updateParticles(){
 
-    for(const p of particles){
+    particles.forEach(p=>{
 
-        p.x+=p.vx;
-        p.y+=p.vy;
+        p.x += p.vx;
+        p.y += p.vy;
 
-        p.vy+=.05;
+        p.vy += .08;
 
-        p.life-=.025;
+        p.life -= .025;
 
-    }
+    });
 
-    particles=
+    particles =
         particles.filter(
-            p=>p.life>0
+            p=>p.life > 0
         );
 }
 
-
 function drawParticles(){
 
-    for(const p of particles){
+    particles.forEach(p=>{
 
-        ctx.globalAlpha=p.life;
-
-        ctx.fillStyle="#8deaff";
+        ctx.globalAlpha =
+            Math.max(0,p.life);
 
         ctx.beginPath();
 
@@ -1432,385 +1685,72 @@ function drawParticles(){
             Math.PI*2
         );
 
-        ctx.fill();
-
-    }
-
-    ctx.globalAlpha=1;
-}
-
-
-/* =========================
-   BACKGROUND
-========================= */
-
-function drawBackground(){
-
-    const gradient=
-        ctx.createLinearGradient(
-            0,
-            0,
-            0,
-            H
-        );
-
-    gradient.addColorStop(
-        0,
-        "#111b4d"
-    );
-
-    gradient.addColorStop(
-        .55,
-        "#080d2c"
-    );
-
-    gradient.addColorStop(
-        1,
-        "#030416"
-    );
-
-    ctx.fillStyle=gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-    );
-
-
-    /* CENTER GLOW */
-
-    const glow=
-        ctx.createRadialGradient(
-            W/2,
-            H*.35,
-            20,
-            W/2,
-            H*.35,
-            H*.7
-        );
-
-    glow.addColorStop(
-        0,
-        "rgba(60,120,255,.25)"
-    );
-
-    glow.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle=glow;
-
-    ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-    );
-
-
-    /* STARS */
-
-    for(const s of stars){
-
-        s.y+=s.speed;
-
-        if(s.y>H){
-            s.y=0;
-        }
-
-        ctx.globalAlpha=s.alpha;
-
-        ctx.fillStyle="#fff";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            s.x,
-            s.y,
-            s.r,
-            0,
-            Math.PI*2
-        );
+        ctx.fillStyle =
+            "#ffd84d";
 
         ctx.fill();
 
-    }
+    });
 
-    ctx.globalAlpha=1;
-
-
-    /* TABLE */
-
-    const tableY=H*.72;
-
-    const table=
-        ctx.createLinearGradient(
-            0,
-            tableY,
-            0,
-            H
-        );
-
-    table.addColorStop(
-        0,
-        "#171d43"
-    );
-
-    table.addColorStop(
-        1,
-        "#050619"
-    );
-
-    ctx.fillStyle=table;
-
-    ctx.fillRect(
-        0,
-        tableY,
-        W,
-        H-tableY
-    );
-
-
-    ctx.fillStyle=
-        "rgba(70,150,255,.16)";
-
-    ctx.fillRect(
-        0,
-        tableY,
-        W,
-        3
-    );
+    ctx.globalAlpha = 1;
 }
 
 
-/* =========================
-   CUP POSITION
-========================= */
+/* =========================================================
+   DRAW BALL
+========================================================= */
 
-function slotX(slot,count){
+function drawBall(x,y,r){
 
-    const margin=
-        Math.max(
-            30,
-            W*.09
-        );
+    ctx.save();
 
-    if(count===1){
-        return W/2;
-    }
+    /*
+       Glow
+    */
 
-    return(
-        margin+
-        slot*
-        (
-            (W-margin*2)/
-            (count-1)
-        )
-    );
-}
+    ctx.shadowColor =
+        "rgba(255,30,30,.9)";
 
+    ctx.shadowBlur =
+        24;
 
-/* =========================
-   CUP WIDTH
-========================= */
-
-function cupWidth(){
-
-    const count=
-        sets[currentSet-1].cups;
-
-    const margin=
-        Math.max(
-            30,
-            W*.09
-        );
-
-    const spacing=
-        (W-margin*2)/
-        (count-1);
-
-    return Math.min(
-        105,
-        Math.max(
-            42,
-            spacing*.58
-        )
-    );
-}
-
-
-/* =========================
-   CREATE CUPS
-========================= */
-
-function createCups(){
-
-    const count=
-        sets[currentSet-1].cups;
-
-    cups=[];
-
-    for(let i=0;i<count;i++){
-
-        cups.push({
-
-            id:i,
-
-            slot:i,
-
-            x:slotX(
-                i,
-                count
-            ),
-
-            y:H*.58,
-
-            offsetY:0,
-
-            lift:0,
-
-            scale:1
-
-        });
-
-    }
-
-    ballCup=
-        cups[
-            Math.floor(
-                Math.random()*
-                cups.length
-            )
-        ];
-}
-
-
-/* =========================
-   REPOSITION
-========================= */
-
-function repositionCups(){
-
-    const count=
-        sets[currentSet-1].cups;
-
-    for(const cup of cups){
-
-        cup.x=
-            slotX(
-                cup.slot,
-                count
-            );
-
-        cup.y=
-            H*.58;
-
-    }
-}
-
-
-/* =========================
-   BALL
-========================= */
-
-function drawBall(x,y){
-
-    const r=
-        Math.max(
-            15,
-            cupWidth()*.21
-        );
-
-
-    /* GLOW */
-
-    const glow=
-        ctx.createRadialGradient(
-            x,
-            y,
-            r*.2,
-            x,
-            y,
-            r*3
-        );
-
-    glow.addColorStop(
-        0,
-        "rgba(255,50,90,.85)"
-    );
-
-    glow.addColorStop(
-        .35,
-        "rgba(255,40,80,.35)"
-    );
-
-    glow.addColorStop(
-        1,
-        "rgba(255,40,80,0)"
-    );
-
-    ctx.fillStyle=glow;
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x,
-        y,
-        r*3,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-
-    /* BODY */
-
-    const ball=
+    const gradient =
         ctx.createRadialGradient(
             x-r*.35,
-            y-r*.45,
-            r*.05,
+            y-r*.4,
+            r*.08,
             x,
             y,
             r
         );
 
-    ball.addColorStop(
+    gradient.addColorStop(
         0,
         "#ffffff"
     );
 
-    ball.addColorStop(
+    gradient.addColorStop(
         .12,
-        "#ffdce1"
+        "#ff8c8c"
     );
 
-    ball.addColorStop(
+    gradient.addColorStop(
         .38,
-        "#ff4565"
+        "#ff2525"
     );
 
-    ball.addColorStop(
+    gradient.addColorStop(
         .72,
-        "#dc0037"
+        "#c40000"
     );
 
-    ball.addColorStop(
+    gradient.addColorStop(
         1,
-        "#620016"
+        "#4a0000"
     );
 
-    ctx.save();
-
-    ctx.shadowColor="#ff3159";
-
-    ctx.shadowBlur=25;
-
-    ctx.fillStyle=ball;
+    ctx.fillStyle =
+        gradient;
 
     ctx.beginPath();
 
@@ -1824,101 +1764,128 @@ function drawBall(x,y){
 
     ctx.fill();
 
-    ctx.restore();
+    ctx.shadowBlur = 0;
 
+    /*
+       Highlight
+    */
 
-    /* REFLECTION */
-
-    ctx.fillStyle=
-        "rgba(255,255,255,.9)";
+    ctx.fillStyle =
+        "rgba(255,255,255,.8)";
 
     ctx.beginPath();
 
-    ctx.arc(
+    ctx.ellipse(
         x-r*.32,
         y-r*.38,
-        r*.18,
+        r*.25,
+        r*.12,
+        -.5,
         0,
         Math.PI*2
     );
 
     ctx.fill();
 
+    /*
+       Small sparkles
+    */
 
-    /* SPARKLES */
+    ctx.fillStyle =
+        "rgba(255,255,255,.75)";
 
-    for(let i=0;i<4;i++){
+    for(let i=0;i<3;i++){
 
-        const angle=
-            Date.now()/600+
-            i*Math.PI/2;
+        const angle =
+            performance.now()/500 +
+            i*2;
 
-        const sx=
-            x+
-            Math.cos(angle)*r*1.8;
+        const sx =
+            x + Math.cos(angle)*r*1.25;
 
-        const sy=
-            y+
-            Math.sin(angle)*r*1.8;
-
-        ctx.fillStyle=
-            "rgba(255,255,255,.8)";
+        const sy =
+            y + Math.sin(angle)*r*1.25;
 
         ctx.beginPath();
 
         ctx.arc(
             sx,
             sy,
-            2,
+            1.4,
             0,
             Math.PI*2
         );
 
         ctx.fill();
     }
+
+    ctx.restore();
 }
 
 
-/* =========================
-   CUP
-========================= */
+/* =========================================================
+   DRAW CUP
+========================================================= */
 
-function drawCup(cup){
+function drawCup(cup,index){
 
-    const w=
-        cupWidth()*cup.scale;
+    const w =
+        cupWidth();
 
-    const h=w*1.15;
+    const h =
+        Math.min(
+            115,
+            Math.max(
+                75,
+                H*.19
+            )
+        );
 
-    const x=cup.x;
+    const x =
+        cup.x;
 
-    const baseY=
-        cup.y+
-        cup.offsetY;
+    const baseY =
+        cup.y;
 
-    const lift=
-        cup.lift*h*.75;
+    const lift =
+        cup.lift || 0;
 
-    const y=
-        baseY-lift;
+    /*
+       Ball position:
+       Always keep it clearly visible during reveal/result.
+    */
 
+    const ballRadius =
+        Math.max(
+            10,
+            Math.min(
+                18,
+                w*.16
+            )
+        );
 
-    /* SHADOW */
+    const ballY =
+        baseY - h*.78 - lift;
+
+    /*
+       Shadow
+    */
 
     ctx.save();
 
-    ctx.globalAlpha=
-        .38*(1-cup.lift);
+    ctx.globalAlpha =
+        .28;
 
-    ctx.fillStyle="#000";
+    ctx.fillStyle =
+        "#000";
 
     ctx.beginPath();
 
     ctx.ellipse(
         x,
-        baseY+h*.43,
-        w*.47,
-        h*.11,
+        baseY+7,
+        w*.45,
+        9,
         0,
         0,
         Math.PI*2
@@ -1929,282 +1896,344 @@ function drawCup(cup){
     ctx.restore();
 
 
-    /* BALL */
+    /*
+       Draw ball first.
+       The cup is then drawn above it.
+    */
 
-    if(cup===ballCup){
+    if(
+        phase === "reveal" ||
+        phase === "result" && index === ballCup
+    ){
 
-        if(
-            gamePhase==="reveal" ||
-            cup.lift>.05
-        ){
-
-            const float=
-                Math.sin(
-                    Date.now()/180
-                )*4;
-
-            drawBall(
-                x,
-                baseY-
-                h*.58-
-                lift+
-                float
-            );
-        }
+        drawBall(
+            x,
+            ballY,
+            ballRadius
+        );
     }
 
 
-    /* CUP BODY */
+    /*
+       Cup body
+    */
 
-    const topW=w;
-    const bottomW=w*.68;
+    ctx.save();
 
-    const topY=y-h*.48;
-    const bottomY=y+h*.48;
+    const topY =
+        baseY - h - lift;
 
+    const bottomY =
+        baseY - lift;
 
-    const body=
+    /*
+       Cup glow
+    */
+
+    ctx.shadowColor =
+        "rgba(83,105,255,.55)";
+
+    ctx.shadowBlur =
+        15;
+
+    const cupGradient =
         ctx.createLinearGradient(
-            x-w/2,
-            0,
-            x+w/2,
-            0
+            x-w*.45,
+            topY,
+            x+w*.45,
+            bottomY
         );
 
-    body.addColorStop(
+    cupGradient.addColorStop(
         0,
-        "#17002f"
+        "#2735a8"
     );
 
-    body.addColorStop(
-        .17,
-        "#5220a4"
+    cupGradient.addColorStop(
+        .35,
+        "#6174ff"
     );
 
-    body.addColorStop(
-        .38,
-        "#a34fff"
+    cupGradient.addColorStop(
+        .6,
+        "#303db9"
     );
 
-    body.addColorStop(
-        .5,
-        "#e2a0ff"
-    );
-
-    body.addColorStop(
-        .64,
-        "#7729d3"
-    );
-
-    body.addColorStop(
-        .84,
-        "#3b087d"
-    );
-
-    body.addColorStop(
+    cupGradient.addColorStop(
         1,
-        "#100020"
+        "#11185c"
     );
 
-    ctx.fillStyle=body;
+    ctx.fillStyle =
+        cupGradient;
 
     ctx.beginPath();
 
     ctx.moveTo(
-        x-topW/2,
-        topY
+        x-w*.42,
+        topY+10
     );
 
-    ctx.lineTo(
-        x+topW/2,
-        topY
+    ctx.quadraticCurveTo(
+        x-w*.34,
+        bottomY,
+        x,
+        bottomY+7
     );
 
-    ctx.lineTo(
-        x+bottomW/2,
-        bottomY
-    );
-
-    ctx.lineTo(
-        x-bottomW/2,
-        bottomY
+    ctx.quadraticCurveTo(
+        x+w*.34,
+        bottomY,
+        x+w*.42,
+        topY+10
     );
 
     ctx.closePath();
 
     ctx.fill();
 
+    ctx.shadowBlur = 0;
 
-    /* OUTLINE */
+    /*
+       Top rim
+    */
 
-    ctx.save();
+    const rimGradient =
+        ctx.createLinearGradient(
+            x-w*.48,
+            topY,
+            x+w*.48,
+            topY+14
+        );
 
-    ctx.shadowColor=
-        "rgba(180,80,255,.65)";
+    rimGradient.addColorStop(
+        0,
+        "#172071"
+    );
 
-    ctx.shadowBlur=18;
+    rimGradient.addColorStop(
+        .5,
+        "#93a0ff"
+    );
 
-    ctx.strokeStyle=
-        "rgba(220,160,255,.55)";
+    rimGradient.addColorStop(
+        1,
+        "#172071"
+    );
 
-    ctx.lineWidth=2;
+    ctx.fillStyle =
+        rimGradient;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x,
+        topY+7,
+        w*.48,
+        9,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       Inner dark opening
+    */
+
+    ctx.fillStyle =
+        "#080d3c";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x,
+        topY+7,
+        w*.39,
+        6,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       Cup highlight
+    */
+
+    ctx.strokeStyle =
+        "rgba(255,255,255,.30)";
+
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x-w*.27,
+        topY+23
+    );
+
+    ctx.quadraticCurveTo(
+        x-w*.17,
+        bottomY-10,
+        x-w*.05,
+        bottomY-5
+    );
 
     ctx.stroke();
+
+
+    /*
+       Decorative star
+    */
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.35)";
+
+    const starY =
+        topY + h*.48;
+
+    drawStar(
+        x,
+        starY,
+        Math.max(5,w*.07),
+        5
+    );
 
     ctx.restore();
 
 
-    /* LIGHT */
+    /*
+       If the cup is lifted after
+       correct answer, show ball underneath.
+    */
 
-    const light=
-        ctx.createLinearGradient(
-            x-w*.35,
-            0,
-            x+w*.05,
-            0
+    if(
+        phase === "result" &&
+        index === ballCup
+    ){
+
+        drawBall(
+            x,
+            ballY,
+            ballRadius
         );
+    }
+}
 
-    light.addColorStop(
-        0,
-        "rgba(255,255,255,.4)"
-    );
 
-    light.addColorStop(
-        .5,
-        "rgba(255,255,255,.08)"
-    );
+/* =========================================================
+   DRAW STAR
+========================================================= */
 
-    light.addColorStop(
-        1,
-        "rgba(255,255,255,0)"
-    );
-
-    ctx.fillStyle=light;
+function drawStar(
+    x,
+    y,
+    radius,
+    points
+){
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        x-w*.34,
-        topY+5
-    );
+    for(let i=0;i<points*2;i++){
 
-    ctx.lineTo(
-        x-w*.12,
-        topY+5
-    );
+        const r =
+            i%2 === 0
+            ? radius
+            : radius*.42;
 
-    ctx.lineTo(
-        x-w*.02,
-        bottomY-5
-    );
+        const angle =
+            -Math.PI/2 +
+            i*Math.PI/points;
 
-    ctx.lineTo(
-        x-w*.18,
-        bottomY-5
-    );
+        const px =
+            x + Math.cos(angle)*r;
+
+        const py =
+            y + Math.sin(angle)*r;
+
+        if(i===0){
+            ctx.moveTo(px,py);
+        }else{
+            ctx.lineTo(px,py);
+        }
+    }
 
     ctx.closePath();
 
     ctx.fill();
-
-
-    /* RIM */
-
-    const rim=
-        ctx.createLinearGradient(
-            x-w/2,
-            0,
-            x+w/2,
-            0
-        );
-
-    rim.addColorStop(
-        0,
-        "#35066a"
-    );
-
-    rim.addColorStop(
-        .25,
-        "#b75cff"
-    );
-
-    rim.addColorStop(
-        .48,
-        "#ffffff"
-    );
-
-    rim.addColorStop(
-        .65,
-        "#b45cff"
-    );
-
-    rim.addColorStop(
-        1,
-        "#25004a"
-    );
-
-    ctx.fillStyle=rim;
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        x,
-        topY,
-        w/2,
-        h*.12,
-        0,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-
-    /* INSIDE */
-
-    ctx.fillStyle="#12001f";
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        x,
-        topY,
-        w*.38,
-        h*.065,
-        0,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
-
-
-    /* STAR */
-
-    ctx.fillStyle=
-        "rgba(255,255,255,.8)";
-
-    ctx.font=
-        "bold "+
-        Math.max(
-            10,
-            w*.14
-        )+
-        "px Arial";
-
-    ctx.textAlign="center";
-
-    ctx.fillText(
-        "★",
-        x,
-        y+h*.18
-    );
 }
 
 
-/* =========================
-   DRAW LOOP
-========================= */
+/* =========================================================
+   DRAW FLOOR
+========================================================= */
+
+function drawFloor(){
+
+    const floorY =
+        H*.72;
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            floorY,
+            0,
+            H
+        );
+
+    gradient.addColorStop(
+        0,
+        "rgba(80,100,220,.16)"
+    );
+
+    gradient.addColorStop(
+        1,
+        "rgba(0,0,0,.15)"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,
+        floorY,
+        W,
+        H-floorY
+    );
+
+    /*
+       glowing floor line
+    */
+
+    ctx.strokeStyle =
+        "rgba(100,130,255,.20)";
+
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        floorY
+    );
+
+    ctx.lineTo(
+        W,
+        floorY
+    );
+
+    ctx.stroke();
+}
+
+
+/* =========================================================
+   DRAW GAME
+========================================================= */
 
 function draw(){
 
@@ -2215,793 +2244,186 @@ function draw(){
         H
     );
 
-    drawBackground();
+    /*
+       Background
+    */
 
-
-    const sorted=
-        [...cups].sort(
-            (a,b)=>
-                a.offsetY-b.offsetY
+    const bg =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            H
         );
 
+    bg.addColorStop(
+        0,
+        "#151d5e"
+    );
 
-    for(const cup of sorted){
-        drawCup(cup);
-    }
+    bg.addColorStop(
+        .55,
+        "#0d1447"
+    );
 
+    bg.addColorStop(
+        1,
+        "#070b2b"
+    );
 
-    drawParticles();
+    ctx.fillStyle =
+        bg;
 
-    updateParticles();
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
 
-    requestAnimationFrame(draw);
-}
+    /*
+       Decorative lights
+    */
 
+    const glow =
+        ctx.createRadialGradient(
+            W*.5,
+            H*.35,
+            10,
+            W*.5,
+            H*.35,
+            H*.65
+        );
 
-/* =========================
-   START GAME
-========================= */
+    glow.addColorStop(
+        0,
+        "rgba(90,110,255,.14)"
+    );
 
-function startGame(){
+    glow.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
 
-    document
-        .getElementById("homeScreen")
-        .style.display="none";
+    ctx.fillStyle =
+        glow;
 
-    document
-        .getElementById("gameUI")
-        .style.display="block";
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
 
-    document
-        .getElementById("gameOver")
-        .classList.add("hidden");
-
-
-    currentSet=1;
-    currentRound=1;
-
-    score=0;
-    coins=0;
-    lives=3;
-
-    updateUI();
-
-    beginRound();
-
-
-    /* Start audio after user tap */
-
-    try{
-        getAudio().resume();
-    }catch(e){}
-}
-
-
-/* =========================
-   BEGIN ROUND
-========================= */
-
-function beginRound(){
-
-    clearTimeout(roundTimeout);
-    clearInterval(timerInterval);
-
-    acceptingAnswer=false;
-
-    gamePhase="reveal";
-
-    const config=
-        sets[currentSet-1];
-
-    timeLeft=config.time;
-
-    updateUI();
-
-    createCups();
-
+    drawFloor();
 
     cups.forEach(
-        cup=>{
-            cup.lift=0;
+        (cup,index)=>{
+            drawCup(cup,index);
         }
     );
 
-
-    document
-        .getElementById("message")
-        .textContent=
-        "🔴 WATCH THE BALL!";
-
-
-    let start=
-        performance.now();
-
-
-    function reveal(now){
-
-        const t=
-            Math.min(
-                1,
-                (now-start)/600
-            );
-
-        const ease=
-            1-
-            Math.pow(
-                1-t,
-                3
-            );
-
-
-        cups.forEach(
-            cup=>{
-                cup.lift=
-                    .60*ease;
-            }
-        );
-
-
-        if(t<1){
-
-            requestAnimationFrame(
-                reveal
-            );
-
-        }else{
-
-            roundTimeout=
-                setTimeout(()=>{
-
-                    cups.forEach(
-                        cup=>{
-                            cup.lift=0;
-                        }
-                    );
-
-                    gamePhase="shuffle";
-
-                    document
-                        .getElementById("message")
-                        .textContent=
-                        "👀 FOLLOW THE BALL!";
-
-                    shuffleCups();
-
-                },1200);
-        }
-    }
-
-
-    requestAnimationFrame(
-        reveal
-    );
+    drawParticles();
 }
 
 
-/* =========================
-   SHUFFLE
-========================= */
+/* =========================================================
+   ANIMATION LOOP
+========================================================= */
 
-function shuffleCups(){
+function animate(now){
 
-    const config=
-        sets[currentSet-1];
-
-    let moves=[];
-
-
-    for(
-        let i=0;
-        i<config.shuffles;
-        i++
-    ){
-
-        moves.push(
-            Math.floor(
-                Math.random()*
-                (config.cups-1)
-            )
-        );
+    if(!now){
+        now = performance.now();
     }
 
+    if(gameUI.style.display !== "none"){
 
-    doShuffleMove(moves);
+        updateCups(now);
+
+        updateParticles();
+
+        draw();
+    }
+
+    animationFrame =
+        requestAnimationFrame(animate);
 }
 
-
-/* =========================
-   SHUFFLE MOVE
-========================= */
-
-function doShuffleMove(moves){
-
-    if(moves.length===0){
-
-        gamePhase="answer";
-
-        acceptingAnswer=true;
-
-        startTimer();
-
-        document
-            .getElementById("message")
-            .textContent=
-            "🎯 FIND THE BALL!";
-
-        return;
-    }
+animate();
 
 
-    const leftSlot=
-        moves.shift();
-
-    const rightSlot=
-        leftSlot+1;
-
-
-    const leftCup=
-        cups.find(
-            c=>c.slot===leftSlot
-        );
-
-    const rightCup=
-        cups.find(
-            c=>c.slot===rightSlot
-        );
-
-
-    if(!leftCup || !rightCup){
-
-        doShuffleMove(moves);
-
-        return;
-    }
-
-
-    const leftX=
-        slotX(
-            leftSlot,
-            sets[currentSet-1].cups
-        );
-
-    const rightX=
-        slotX(
-            rightSlot,
-            sets[currentSet-1].cups
-        );
-
-
-    const start=
-        performance.now();
-
-    const duration=
-        sets[currentSet-1].speed;
-
-
-    function animate(now){
-
-        const raw=
-            Math.min(
-                1,
-                (now-start)/duration
-            );
-
-
-        const t=
-            raw<.5
-            ?2*raw*raw
-            :-1+(4-2*raw)*raw;
-
-
-        leftCup.x=
-            leftX+
-            (rightX-leftX)*t;
-
-        rightCup.x=
-            rightX+
-            (leftX-rightX)*t;
-
-
-        const arc=
-            Math.sin(
-                raw*Math.PI
-            )*48;
-
-
-        leftCup.offsetY=-arc;
-        rightCup.offsetY=arc;
-
-
-        if(raw<1){
-
-            requestAnimationFrame(
-                animate
-            );
-
-        }else{
-
-            leftCup.slot=rightSlot;
-            rightCup.slot=leftSlot;
-
-            leftCup.x=rightX;
-            rightCup.x=leftX;
-
-            leftCup.offsetY=0;
-            rightCup.offsetY=0;
-
-
-            setTimeout(
-                ()=>{
-                    doShuffleMove(moves);
-                },
-                70
-            );
-        }
-    }
-
-
-    requestAnimationFrame(
-        animate
-    );
-}
-
-
-/* =========================
-   TIMER
-========================= */
-
-function startTimer(){
-
-    clearInterval(
-        timerInterval
-    );
-
-
-    timerInterval=
-        setInterval(()=>{
-
-            timeLeft--;
-
-            updateUI();
-
-
-            if(timeLeft<=0){
-
-                clearInterval(
-                    timerInterval
-                );
-
-                loseRound(
-                    "⏰ TIME'S UP!"
-                );
-            }
-
-        },1000);
-}
-
-
-/* =========================
-   TOUCH / CLICK
-========================= */
+/* =========================================================
+   TOUCH / POINTER
+========================================================= */
 
 canvas.addEventListener(
     "pointerdown",
-    handleChoice
-);
+    function(e){
 
-
-function handleChoice(e){
-
-    if(!acceptingAnswer)
-        return;
-
-
-    const rect=
-        canvas.getBoundingClientRect();
-
-
-    const scaleX=
-        W/rect.width;
-
-    const scaleY=
-        H/rect.height;
-
-
-    const x=
-        (e.clientX-rect.left)*
-        scaleX;
-
-    const y=
-        (e.clientY-rect.top)*
-        scaleY;
-
-
-    let selected=null;
-
-    let closest=Infinity;
-
-
-    for(const cup of cups){
-
-        const distance=
-            Math.abs(
-                x-cup.x
-            );
-
-
-        if(
-            distance<
-            cupWidth()*.65 &&
-            distance<
-            closest
-        ){
-
-            closest=distance;
-
-            selected=cup;
-        }
-    }
-
-
-    if(!selected)
-        return;
-
-
-    acceptingAnswer=false;
-
-    clearInterval(
-        timerInterval
-    );
-
-
-    checkAnswer(selected);
-}
-
-
-/* =========================
-   CHECK ANSWER
-========================= */
-
-function checkAnswer(selected){
-
-    if(selected===ballCup){
-
-        score+=100;
-
-        coins+=5;
-
-        selected.lift=.8;
-
-
-        addParticles(
-            selected.x,
-            selected.y-70
-        );
-
-
-        playSound("win");
-
-
-        document
-            .getElementById("message")
-            .textContent=
-            "🎉 CORRECT! +100";
-
-
-        updateUI();
-
-
-        roundTimeout=
-            setTimeout(
-                nextRound,
-                1300
-            );
-
-
-    }else{
-
-        lives--;
-
-        selected.lift=.7;
-
-        ballCup.lift=.7;
-
-
-        playSound("lose");
-
-
-        document
-            .getElementById("message")
-            .textContent=
-            "❌ WRONG CUP!";
-
-
-        updateUI();
-
-
-        if(lives<=0){
-
-            roundTimeout=
-                setTimeout(
-                    gameOver,
-                    1300
-                );
-
-        }else{
-
-            roundTimeout=
-                setTimeout(
-                    nextRound,
-                    1300
-                );
-        }
-    }
-}
-
-
-/* =========================
-   LOSE ROUND
-========================= */
-
-function loseRound(text){
-
-    acceptingAnswer=false;
-
-    lives--;
-
-    ballCup.lift=.7;
-
-    playSound("lose");
-
-
-    document
-        .getElementById("message")
-        .textContent=
-        text;
-
-
-    updateUI();
-
-
-    if(lives<=0){
-
-        setTimeout(
-            gameOver,
-            1200
-        );
-
-    }else{
-
-        setTimeout(
-            nextRound,
-            1200
-        );
-    }
-}
-
-
-/* =========================
-   NEXT ROUND
-========================= */
-
-function nextRound(){
-
-    currentRound++;
-
-
-    if(currentRound>3){
-
-        currentRound=1;
-
-
-        if(currentSet>=8){
-
-            winGame();
-
+        if(phase !== "choose"){
             return;
         }
 
+        e.preventDefault();
 
-        currentSet++;
-
-        score+=250;
-
-        coins+=10;
-
-
-        saveCoins();
-
-        updateUI();
-
-
-        document
-            .getElementById("message")
-            .textContent=
-            "🔥 SET "+
-            currentSet+
-            " UNLOCKED!";
-
-
-        setTimeout(
-            beginRound,
-            1000
-        );
-
-
-        return;
+        chooseCup(e.clientX);
     }
+);
 
 
-    beginRound();
-}
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+playButton.addEventListener(
+    "click",
+    startGame
+);
+
+restartButton.addEventListener(
+    "click",
+    restartGame
+);
+
+restartSmall.addEventListener(
+    "click",
+    restartGame
+);
+
+homeButton.addEventListener(
+    "click",
+    goHome
+);
 
 
-/* =========================
-   GAME OVER
-========================= */
-
-function gameOver(){
-
-    clearInterval(
-        timerInterval
-    );
-
-    acceptingAnswer=false;
-
-
-    if(score>highScore){
-
-        highScore=score;
-
-        localStorage.setItem(
-            "findBallHighScore",
-            highScore
-        );
-    }
-
-
-    saveCoins();
-
-
-    document
-        .getElementById("gameOverTitle")
-        .textContent=
-        "GAME OVER 😢";
-
-
-    document
-        .getElementById("gameOverText")
-        .innerHTML=
-        "Your Score: <b>"+
-        score+
-        "</b><br><br>"+
-        "High Score: <b>"+
-        highScore+
-        "</b><br>"+
-        "Coins Earned: <b>"+
-        coins+
-        "</b><br>"+
-        "Reached Set: <b>"+
-        currentSet+
-        "</b>";
-
-
-    document
-        .getElementById("gameOver")
-        .classList
-        .remove("hidden");
-}
-
-
-/* =========================
-   WIN
-========================= */
-
-function winGame(){
-
-    clearInterval(
-        timerInterval
-    );
-
-    acceptingAnswer=false;
-
-    score+=1000;
-
-    updateUI();
-
-
-    if(score>highScore){
-
-        highScore=score;
-
-        localStorage.setItem(
-            "findBallHighScore",
-            highScore
-        );
-    }
-
-
-    saveCoins();
-
-    playSound("win");
-
-
-    document
-        .getElementById("gameOverTitle")
-        .textContent=
-        "🏆 YOU WON!";
-
-
-    document
-        .getElementById("gameOverText")
-        .innerHTML=
-        "AMAZING!<br><br>"+
-        "You completed all <b>8 SETS</b>!<br><br>"+
-        "Final Score: <b>"+
-        score+
-        "</b><br>"+
-        "Coins: <b>"+
-        coins+
-        "</b><br>"+
-        "High Score: <b>"+
-        highScore+
-        "</b>";
-
-
-    document
-        .getElementById("gameOver")
-        .classList
-        .remove("hidden");
-}
-
-
-/* =========================
+/* =========================================================
    RESTART
-========================= */
+========================================================= */
 
 function restartGame(){
 
-    clearInterval(
-        timerInterval
-    );
+    clearTimers();
 
-    clearTimeout(
-        roundTimeout
-    );
+    gameOver.classList.add("hidden");
 
+    /*
+       IMPORTANT FIX:
+       Make the game visible before resizing.
+    */
 
-    acceptingAnswer=false;
+    homeScreen.style.display = "none";
 
-    currentSet=1;
+    gameUI.style.display = "block";
 
-    currentRound=1;
+    resizeCanvas();
 
-    score=0;
+    currentSet = 1;
+    currentRound = 1;
 
-    coins=0;
-
-    lives=3;
-
-    timeLeft=15;
-
-    cups=[];
-
-
-    document
-        .getElementById("gameOver")
-        .classList
-        .add("hidden");
-
-
-    document
-        .getElementById("gameUI")
-        .style.display="block";
-
-
-    document
-        .getElementById("homeScreen")
-        .style.display="none";
-
+    score = 0;
+    coins = 0;
+    lives = 3;
 
     updateUI();
 
@@ -3009,295 +2431,110 @@ function restartGame(){
 }
 
 
-/* =========================
-   GO HOME
-========================= */
+/* =========================================================
+   HOME
+========================================================= */
 
 function goHome(){
 
-    clearInterval(
-        timerInterval
-    );
+    clearTimers();
 
-    clearTimeout(
-        roundTimeout
-    );
+    phase = "idle";
 
-    acceptingAnswer=false;
+    gameOver.classList.add("hidden");
 
-    gamePhase="idle";
+    gameUI.style.display = "none";
 
-    cups=[];
+    homeScreen.style.display = "flex";
 
-    document
-        .getElementById("gameUI")
-        .style.display="none";
+    updateUI();
 
+    /*
+       Stop unnecessary game animation resize issues.
+    */
 
-    document
-        .getElementById("homeScreen")
-        .style.display="flex";
-
-
-    updateHomeUI();
+    resizeCanvas();
 }
 
 
-/* =========================
-   UI
-========================= */
+/* =========================================================
+   LOAD SAVED DATA
+========================================================= */
 
-function updateUI(){
+function loadSavedData(){
 
-    document
-        .getElementById("set")
-        .textContent=
-        currentSet+
-        " / 8";
-
-
-    document
-        .getElementById("score")
-        .textContent=
-        score;
-
-
-    document
-        .getElementById("coins")
-        .textContent=
-        "🪙 "+
-        coins;
-
-
-    document
-        .getElementById("lives")
-        .textContent=
-        "❤️".repeat(
-            Math.max(
-                0,
-                lives
-            )
+    highScore =
+        Number(
+            localStorage.getItem(
+                "findBallHighScore"
+            ) || 0
         );
 
+    savedCoins =
+        Number(
+            localStorage.getItem(
+                "findBallCoins"
+            ) || 0
+        );
 
-    document
-        .getElementById("timer")
-        .textContent=
-        timeLeft;
-}
-
-
-/* =========================
-   HOME UI
-========================= */
-
-function updateHomeUI(){
-
-    document
-        .getElementById("homeHighScore")
-        .textContent=
+    homeBest.textContent =
         highScore;
 
-
-    document
-        .getElementById("homeCoins")
-        .textContent=
+    homeCoins.textContent =
         savedCoins;
 }
 
-
-/* =========================
-   SAVE COINS
-========================= */
-
-function saveCoins(){
-
-    savedCoins+=coins;
-
-    localStorage.setItem(
-        "findBallCoins",
-        savedCoins
-    );
-
-    updateHomeUI();
-}
+loadSavedData();
 
 
-/* =========================
-   SOUND
-========================= */
+/* =========================================================
+   PREVENT DOUBLE TAP ZOOM
+========================================================= */
 
-let audioContext=null;
+document.addEventListener(
+    "dblclick",
+    function(e){
+        e.preventDefault();
+    },
+    {passive:false}
+);
 
 
-function getAudio(){
+/* =========================================================
+   VISIBILITY FIX
+========================================================= */
 
-    if(!audioContext){
+document.addEventListener(
+    "visibilitychange",
+    function(){
 
-        audioContext=
-            new(
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+        if(document.hidden){
+
+            if(phase === "choose"){
+                clearInterval(timerInterval);
+            }
+
+        }else{
+
+            if(phase === "choose"){
+                startTimer();
+            }
+
+            resizeCanvas();
+        }
+
     }
-
-    return audioContext;
-}
+);
 
 
-function playTone(
-    frequency,
-    duration,
-    type="sine"
-){
+/* =========================================================
+   INITIAL UI
+========================================================= */
 
-    if(!soundOn)
-        return;
-
-
-    try{
-
-        const audio=
-            getAudio();
-
-
-        const oscillator=
-            audio.createOscillator();
-
-        const gain=
-            audio.createGain();
-
-
-        oscillator.type=type;
-
-        oscillator.frequency.value=
-            frequency;
-
-
-        gain.gain.setValueAtTime(
-            .001,
-            audio.currentTime
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            .14,
-            audio.currentTime+.02
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            audio.currentTime+
-            duration
-        );
-
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            audio.destination
-        );
-
-
-        oscillator.start();
-
-
-        oscillator.stop(
-            audio.currentTime+
-            duration
-        );
-
-    }catch(error){
-
-        /* Sound optional */
-    }
-}
-
-
-function playSound(type){
-
-    if(!soundOn)
-        return;
-
-
-    if(type==="win"){
-
-        playTone(
-            523,
-            .12
-        );
-
-
-        setTimeout(
-            ()=>{
-                playTone(
-                    659,
-                    .12
-                );
-            },
-            100
-        );
-
-
-        setTimeout(
-            ()=>{
-                playTone(
-                    784,
-                    .2
-                );
-            },
-            200
-        );
-
-
-    }else{
-
-        playTone(
-            180,
-            .22,
-            "sawtooth"
-        );
-    }
-}
-
-
-function toggleSound(){
-
-    soundOn=!soundOn;
-
-
-    document
-        .getElementById("soundButton")
-        .textContent=
-        soundOn
-        ? "🔊 Sound"
-        : "🔇 Sound";
-
-
-    if(soundOn){
-
-        playTone(
-            600,
-            .1
-        );
-    }
-}
-
-
-/* =========================
-   INITIALIZE
-========================= */
-
-resizeCanvas();
-
+updateSoundButton();
 updateUI();
-
-updateHomeUI();
-
-draw();
 
 </script>
 
 </body>
-    </html>
+</html>
